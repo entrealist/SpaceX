@@ -10,11 +10,19 @@ import android.view.ViewGroup
 
 import androidx.fragment.app.Fragment
 
+import androidx.viewpager.widget.ViewPager
+
+import com.google.android.material.tabs.TabLayout
+
 import ritwik.samples.spacex.R
 
 /**[Fragment] to showcase all the rocket launches of SpaceX.
  * @author Ritwik Jamuar*/
 class LaunchesFragment : Fragment() {
+	// Views.
+	private var tabLayout : TabLayout? = null
+	private var viewPager : ViewPager? = null
+
 	// Listeners.
 	private var listener : Listener? = null
 
@@ -36,8 +44,9 @@ class LaunchesFragment : Fragment() {
 		container : ViewGroup?,
 		savedInstanceState : Bundle?
 	) : View? {
-		// Inflate the layout for this fragment
-		return inflater.inflate ( R.layout.fragment_launches, container, false )
+		val view : View = inflater.inflate ( R.layout.fragment_launches, container, false )
+		initializeViews ( view )
+		return view
 	}
 
 	override fun onAttach ( context : Context ) {
@@ -52,6 +61,14 @@ class LaunchesFragment : Fragment() {
 	override fun onDetach () {
 		super.onDetach ()
 		listener = null
+	}
+
+	/*------------------------------------- Private Methods --------------------------------------*/
+
+	private fun initializeViews ( view : View ) {
+		// Initialize Views
+		tabLayout = view.findViewById ( R.id.fragment_launches_tab_layout )
+		viewPager = view.findViewById ( R.id.fragment_launches_view_pager )
 	}
 
 	/*---------------------------------------- Interfaces ----------------------------------------*/
