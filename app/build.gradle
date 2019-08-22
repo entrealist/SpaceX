@@ -40,6 +40,9 @@ ext {
     navigationVersion = "2.0.0"
     legacySupportVersion = "1.0.0"
 
+    // Android Support Version
+    androidSupport = "28.0.0"
+
     // Retrofit Version
     retrofitVersion = "2.6.1"
 
@@ -62,6 +65,9 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
     implementation "androidx.legacy:legacy-support-v4:$legacySupportVersion"
+
+    // Android Support
+    implementation "com.android.support:design:$androidSupport"
 
     // Retrofit2
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
