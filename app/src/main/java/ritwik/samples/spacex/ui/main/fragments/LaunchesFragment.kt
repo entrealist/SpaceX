@@ -21,7 +21,7 @@ import ritwik.samples.spacex.ui.main.fragments.adapters.LaunchesOptionsAdapter
 
 /**[Fragment] to showcase all the rocket launches of SpaceX.
  * @author Ritwik Jamuar*/
-class LaunchesFragment : Fragment() {
+class LaunchesFragment : Fragment () {
 	// Views.
 	private var tabLayout : TabLayout? = null
 	private var viewPager : ViewPager? = null

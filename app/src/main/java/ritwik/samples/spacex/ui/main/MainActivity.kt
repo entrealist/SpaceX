@@ -9,10 +9,12 @@ import androidx.fragment.app.FragmentManager
 import ritwik.samples.spacex.R
 
 import ritwik.samples.spacex.ui.main.fragments.LaunchesFragment
+import ritwik.samples.spacex.ui.main.fragments.LaunchesListFragment
 
 class MainActivity
 	: AppCompatActivity (),
-	LaunchesFragment.Listener {
+	LaunchesFragment.Listener,
+	LaunchesListFragment.Listener {
 
 	/*----------------------------------- Activity Callbacks -------------------------------------*/
 

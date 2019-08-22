@@ -20,6 +20,10 @@ class LaunchesOptionsAdapter ( supportFragmentManager : FragmentManager )
 		return fragmentList.size
 	}
 
+	override fun getPageTitle ( position : Int ) : CharSequence? {
+		return fragmentTitleList [ position ]
+	}
+
 	/*-------------------------------------- Public Methods --------------------------------------*/
 
 	fun addFragment ( fragment : Fragment, title : String ) {
