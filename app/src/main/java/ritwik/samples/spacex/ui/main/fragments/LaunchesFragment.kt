@@ -9,12 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 
 import androidx.viewpager.widget.ViewPager
 
 import com.google.android.material.tabs.TabLayout
 
 import ritwik.samples.spacex.R
+
+import ritwik.samples.spacex.ui.main.fragments.adapters.LaunchesOptionsAdapter
 
 /**[Fragment] to showcase all the rocket launches of SpaceX.
  * @author Ritwik Jamuar*/
@@ -69,10 +72,25 @@ class LaunchesFragment : Fragment() {
 		// Initialize Views
 		tabLayout = view.findViewById ( R.id.fragment_launches_tab_layout )
 		viewPager = view.findViewById ( R.id.fragment_launches_view_pager )
+
+		// Initialize the ViewPager Adapter.
+		val launchesOptionsAdapter = LaunchesOptionsAdapter ( listener!!.getFMFromActivity () )
+
+		// Add Instances of Fragments that have to be shown in the ViewPager.
+		launchesOptionsAdapter.addFragment ( LaunchesListFragment (), "Upcoming" )
+		launchesOptionsAdapter.addFragment ( LaunchesListFragment (), "Past" )
+
+		// Set the ViewPager Adapter to the ViewPager.
+		viewPager?.adapter = launchesOptionsAdapter
+
+		// Setup the Tabs with ViewPager
+		tabLayout?.setupWithViewPager ( viewPager )
 	}
 
 	/*---------------------------------------- Interfaces ----------------------------------------*/
 
 	// TODO : Add Implementation to get the Fragment Manager from Activity.
-	interface Listener {}
+	interface Listener {
+		fun getFMFromActivity () : FragmentManager
+	}
 }
