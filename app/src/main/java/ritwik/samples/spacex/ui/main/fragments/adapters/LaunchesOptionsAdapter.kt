@@ -16,7 +16,7 @@ class LaunchesOptionsAdapter ( supportFragmentManager : FragmentManager )
 		return fragmentList [ position ]
 	}
 
-	override fun getCount() : Int {
+	override fun getCount () : Int {
 		return fragmentList.size
 	}
 
