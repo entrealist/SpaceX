@@ -2,6 +2,14 @@
 <navigation
 	xmlns:android = "http://schemas.android.com/apk/res/android"
 	xmlns:app = "http://schemas.android.com/apk/res-auto"
-	android:id = "@+id/navigation_graph_main">
+	xmlns:tools = "http://schemas.android.com/tools"
+	android:id = "@+id/navigation_graph_main"
+	app:startDestination = "@id/launchesFragment">
+
+	<fragment
+		android:id = "@+id/launchesFragment"
+		android:name = "ritwik.samples.spacex.ui.main.fragments.LaunchesFragment"
+		android:label = "fragment_launches"
+		tools:layout = "@layout/fragment_launches" />
 
 </navigation>
