@@ -1,0 +1,8 @@
+<resources>
+	<string name = "app_name">SpaceX</string>
+
+	<!-- Image View Content Description -->
+	<string name = "imcd_rocket">Space X Rocket</string>
+	<string name = "imcd_space_x_logo">Space X Logo</string>
+
+</resources>
