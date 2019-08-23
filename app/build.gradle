@@ -69,6 +69,7 @@ dependencies {
 
     // Retrofit2
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
 
     // Testing
     testImplementation "junit:junit:$jUnitVersion"
