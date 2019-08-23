@@ -21,4 +21,47 @@
 
 	</style>
 
+	<style name = "RecyclerItemTextView">
+		<item name = "android:layout_width">wrap_content</item>
+		<item name = "android:layout_height">wrap_content</item>
+	</style>
+
+	<style name = "RecyclerItemTextView.CardView">
+		<item name = "android:layout_width">match_parent</item>
+		<item name = "android:layout_margin">10dp</item>
+	</style>
+
+	<style name = "RecyclerItemTextView.CardViewContainer">
+		<item name = "android:layout_width">match_parent</item>
+		<item name = "android:padding">10dp</item>
+	</style>
+
+	<style name = "RecyclerItemTextView.ValueFlightNumber">
+		<item name = "android:maxLength">10</item>
+		<item name = "android:maxLines">1</item>
+		<item name = "android:textSize">18sp</item>
+		<item name = "android:textStyle">bold</item>
+	</style>
+
+	<style name = "RecyclerItemTextView.PlaceHolderBlock">
+		<item name = "android:textSize">22sp</item>
+	</style>
+
+	<style name = "RecyclerItemTextView.ValueMissionName">
+		<item name = "android:ellipsize">end</item>
+		<item name = "android:maxWidth">300dp</item>
+		<item name = "android:maxLines">1</item>
+		<item name = "android:textSize">24sp</item>
+	</style>
+
+	<style name = "RecyclerItemTextView.ValueLaunchDateAndTime">
+		<item name = "android:maxLength">25</item>
+		<item name = "android:maxLines">1</item>
+	</style>
+
+	<style name = "RecyclerItemTextView.ValueBlockNumber">
+		<item name = "android:textSize">20sp</item>
+		<item name = "android:textStyle">bold</item>
+	</style>
+
 </resources>

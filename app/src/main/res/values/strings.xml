@@ -18,4 +18,7 @@
 	<string name = "navigation_drawer_header_app_name">Space X-plorer</string>
 	<string name = "navigation_drawer_header_contributor">By Ritwik Jamuar</string>
 
+	<!-- Recycler View Item -->
+	<string name = "recycler_item_launch_text_block">Block</string>
+
 </resources>
