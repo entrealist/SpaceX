@@ -33,6 +33,9 @@ android {
 }
 
 ext {
+    // Kotlin Versions
+    kotlinCoroutineVersion = "1.1.1"
+
     // Android Jetpack Versions
     appCompatVersion = "1.0.2"
     androidKTXVersion = "1.0.2"
@@ -54,6 +57,7 @@ dependencies {
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutineVersion"
 
     // Android Jetpack
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
