@@ -4,6 +4,8 @@
 	xmlns:tools = "http://schemas.android.com/tools"
 	package = "ritwik.samples.spacex">
 
+	<uses-permission android:name = "android.permission.INTERNET"/>
+
 	<application
 		android:allowBackup = "false"
 		android:icon = "@drawable/ic_space_x_logo"

@@ -23,10 +23,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile ( 'proguard-android-optimize.txt' ), 'proguard-rules.pro'
             multiDexEnabled = false
+            buildConfigField "String", "BASE_URL", '"https://api.spacexdata.com/v3/"'
         }
 
         debug {
             multiDexEnabled = false
+            buildConfigField "String", "BASE_URL", '"https://api.spacexdata.com/v3/"'
         }
 
     }
@@ -48,6 +50,9 @@ ext {
 
     // Google Libraries Version.
     googleMaterial = "1.0.0"
+
+    // DI Versions
+    daggerVersion = '2.12'
 
     // Retrofit Version
     retrofitVersion = "2.6.1"
@@ -78,6 +83,10 @@ dependencies {
 
     // Google Material Design.
     implementation "com.google.android.material:material:$googleMaterial"
+
+    // DI
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
 
     // Retrofit2
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
