@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 28
 
@@ -44,8 +46,14 @@ ext {
     // DI Versions
     daggerVersion = '2.12'
 
-    // Retrofit Version
+    // Retrofit Versions
     retrofitVersion = "2.6.1"
+    okHTTP3LoggingInterceptorVersion = '3.6.0'
+
+    // Picasso Versions
+    picassoVersion = "2.5.2"
+    picassoOkHTTPDownloaderVersion = "1.1.0"
+    picassoTransformationVersion = "2.2.1"
 
     // Testing Versions
     jUnitVersion = "4.12"
@@ -68,11 +76,17 @@ dependencies {
 
     // DI
     implementation "com.google.dagger:dagger:$daggerVersion"
-    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
 
     // Retrofit2
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okHTTP3LoggingInterceptorVersion"
+
+    // Picasso
+    implementation "com.squareup.picasso:picasso:$picassoVersion"
+    implementation "com.jakewharton.picasso:picasso2-okhttp3-downloader:$picassoOkHTTPDownloaderVersion"
+    implementation "jp.wasabeef:picasso-transformations:$picassoTransformationVersion"
 
     // Testing
     testImplementation "junit:junit:$jUnitVersion"
