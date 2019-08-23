@@ -21,47 +21,77 @@
 
 	</style>
 
-	<style name = "RecyclerItemTextView">
-		<item name = "android:layout_width">wrap_content</item>
+	<!--                                             Custom Cards Styles                                             -->
+
+	<style name = "CustomCards">
+		<item name = "android:layout_width">match_parent</item>
 		<item name = "android:layout_height">wrap_content</item>
 	</style>
 
-	<style name = "RecyclerItemTextView.CardView">
-		<item name = "android:layout_width">match_parent</item>
+	<style name = "CustomCards.LaunchMissions">
 		<item name = "android:layout_margin">10dp</item>
 	</style>
 
-	<style name = "RecyclerItemTextView.CardViewContainer">
+	<style name = "CustomCards.NextLaunchDateCountdown">
+		<item name = "android:layout_margin">10dp</item>
+	</style>
+
+	<style name = "CustomCards.LaunchMissionsContainer">
 		<item name = "android:layout_width">match_parent</item>
 		<item name = "android:padding">10dp</item>
 	</style>
 
-	<style name = "RecyclerItemTextView.ValueFlightNumber">
+	<!--                                            TextView Custom Styles                                           -->
+
+	<style name = "TextViewStyleCustom">
+		<item name = "android:layout_width">wrap_content</item>
+		<item name = "android:layout_height">wrap_content</item>
+	</style>
+
+	<style name = "TextViewStyleCustom.PlaceholderNextDeadline">
+		<item name = "android:textSize">20sp</item>
+	</style>
+
+	<style name = "TextViewStyleCustom.ValueNextDeadline">
+		<item name = "android:layout_margin">10dp</item>
+		<item name = "android:textSize">24sp</item>
+	</style>
+
+	<style name = "TextViewStyleCustom.ValueFlightNumber">
 		<item name = "android:maxLength">10</item>
 		<item name = "android:maxLines">1</item>
 		<item name = "android:textSize">18sp</item>
 		<item name = "android:textStyle">bold</item>
 	</style>
 
-	<style name = "RecyclerItemTextView.PlaceHolderBlock">
+	<style name = "TextViewStyleCustom.PlaceHolderBlock">
 		<item name = "android:textSize">22sp</item>
 	</style>
 
-	<style name = "RecyclerItemTextView.ValueMissionName">
+	<style name = "TextViewStyleCustom.ValueMissionName">
 		<item name = "android:ellipsize">end</item>
 		<item name = "android:maxWidth">300dp</item>
 		<item name = "android:maxLines">1</item>
 		<item name = "android:textSize">24sp</item>
 	</style>
 
-	<style name = "RecyclerItemTextView.ValueLaunchDateAndTime">
+	<style name = "TextViewStyleCustom.ValueLaunchDateAndTime">
 		<item name = "android:maxLength">25</item>
 		<item name = "android:maxLines">1</item>
 	</style>
 
-	<style name = "RecyclerItemTextView.ValueBlockNumber">
+	<style name = "TextViewStyleCustom.ValueBlockNumber">
 		<item name = "android:textSize">20sp</item>
 		<item name = "android:textStyle">bold</item>
 	</style>
+
+	<!--                                          RecyclerView Custom Styles                                         -->
+
+	<style name = "RecyclerViewStyleCustom">
+		<item name = "android:layout_width">match_parent</item>
+		<item name = "android:layout_height">0dp</item>
+	</style>
+
+	<style name = "RecyclerViewStyleCustom.Launches" />
 
 </resources>

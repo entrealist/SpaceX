@@ -8,7 +8,7 @@
 
 	<androidx.cardview.widget.CardView
 		android:id = "@+id/recycler_item_launch_card_view"
-		style = "@style/RecyclerItemTextView.CardView"
+		style = "@style/CustomCards.LaunchMissions"
 		app:cardBackgroundColor = "#9ED2FF"
 		app:cardCornerRadius = "5dp"
 		app:layout_constraintBottom_toBottomOf = "parent"
@@ -17,11 +17,11 @@
 		app:layout_constraintTop_toTopOf = "parent">
 
 		<androidx.constraintlayout.widget.ConstraintLayout
-			style = "@style/RecyclerItemTextView.CardViewContainer">
+			style = "@style/CustomCards.LaunchMissionsContainer">
 
 			<TextView
 				android:id = "@+id/recycler_item_launch_text_view_value_flight_number"
-				style = "@style/RecyclerItemTextView.ValueFlightNumber"
+				style = "@style/TextViewStyleCustom.ValueFlightNumber"
 				app:layout_constraintBottom_toTopOf = "@+id/recycler_item_launch_text_view_value_mission_name"
 				app:layout_constraintEnd_toStartOf = "@+id/recycler_item_launch_text_view_placeholder_block"
 				app:layout_constraintHorizontal_bias = "0"
@@ -31,7 +31,7 @@
 
 			<TextView
 				android:id = "@+id/recycler_item_launch_text_view_placeholder_block"
-				style = "@style/RecyclerItemTextView.PlaceHolderBlock"
+				style = "@style/TextViewStyleCustom.PlaceHolderBlock"
 				android:text = "@string/recycler_item_launch_text_block"
 				app:layout_constraintBottom_toTopOf = "@+id/recycler_item_launch_text_view_value_block_number"
 				app:layout_constraintEnd_toEndOf = "parent"
@@ -43,7 +43,7 @@
 
 			<TextView
 				android:id = "@+id/recycler_item_launch_text_view_value_mission_name"
-				style = "@style/RecyclerItemTextView.ValueMissionName"
+				style = "@style/TextViewStyleCustom.ValueMissionName"
 				app:layout_constraintBottom_toTopOf = "@+id/recycler_item_launch_text_view_value_launch_date_and_time"
 				app:layout_constraintEnd_toEndOf = "parent"
 				app:layout_constraintHorizontal_bias = "0"
@@ -52,7 +52,7 @@
 
 			<TextView
 				android:id = "@+id/recycler_item_launch_text_view_value_launch_date_and_time"
-				style = "@style/RecyclerItemTextView.ValueLaunchDateAndTime"
+				style = "@style/TextViewStyleCustom.ValueLaunchDateAndTime"
 				app:layout_constraintBottom_toBottomOf = "parent"
 				app:layout_constraintEnd_toEndOf = "parent"
 				app:layout_constraintHorizontal_bias = "0"
@@ -61,7 +61,7 @@
 
 			<TextView
 				android:id = "@+id/recycler_item_launch_text_view_value_block_number"
-				style = "@style/RecyclerItemTextView.ValueBlockNumber"
+				style = "@style/TextViewStyleCustom.ValueBlockNumber"
 				app:layout_constraintBottom_toBottomOf = "parent"
 				app:layout_constraintEnd_toEndOf = "parent"
 				app:layout_constraintHorizontal_bias = "1"

@@ -21,4 +21,7 @@
 	<!-- Recycler View Item -->
 	<string name = "recycler_item_launch_text_block">Block</string>
 
+	<!-- Fragment -->
+	<string name = "fragment_launches_list_text_next_launch_in">Next Launch in</string>
+
 </resources>
