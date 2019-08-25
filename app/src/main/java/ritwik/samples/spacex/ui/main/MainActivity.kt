@@ -15,17 +15,31 @@ import androidx.drawerlayout.widget.DrawerLayout
 
 import androidx.fragment.app.FragmentManager
 
+import androidx.lifecycle.Observer
+
 import com.google.android.material.navigation.NavigationView
 
 import ritwik.samples.spacex.R
 
+import ritwik.samples.spacex.ui.main.di.DaggerMainComponent
+import ritwik.samples.spacex.ui.main.di.MainComponent
+import ritwik.samples.spacex.ui.main.di.MainModule
+
 import ritwik.samples.spacex.ui.main.fragments.LaunchesFragment
 import ritwik.samples.spacex.ui.main.fragments.LaunchesListFragment
+
+import ritwik.samples.spacex.ui.main.mvvm.MainModel
+import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
+
+import javax.inject.Inject
 
 class MainActivity
 	: AppCompatActivity (),
 	LaunchesFragment.Listener,
 	LaunchesListFragment.Listener {
+	// ViewModel.
+	@Inject lateinit var viewModel : MainViewModel
+
 	// Views.
 	private var toolbar : Toolbar? = null
 	private var drawerLayout : DrawerLayout? = null
@@ -67,6 +81,7 @@ class MainActivity
 	override fun onCreate ( savedInstanceState : Bundle? ) {
 		super.onCreate ( savedInstanceState )
 		setContentView ( R.layout.activity_main )
+		inject ()
 		initializeViews ()
 	}
 
@@ -86,6 +101,14 @@ class MainActivity
 
 	/*------------------------------------- Private Methods --------------------------------------*/
 
+	private fun inject () {
+		val component : MainComponent = DaggerMainComponent
+			.builder ()
+			.mainModule ( MainModule ( this ) )
+			.build ()
+		component.injectActivity ( this )
+	}
+
 	/**Method to initialize and configure the views of MainActivity.*/
 	private fun initializeViews () {
 		initializeNavigationDrawer ()
@@ -95,7 +118,7 @@ class MainActivity
 	/**Method to initialize and configure the Toolbar in MainActivity.*/
 	private fun initializeToolbar () {
 		// Instantiate Toolbar.
-		toolbar = findViewById < Toolbar > ( R.id.activity_main_toolbar )
+		toolbar = findViewById ( R.id.activity_main_toolbar )
 
 		// Set the Toolbar to ActionBar.
 		setSupportActionBar ( toolbar )
@@ -107,10 +130,10 @@ class MainActivity
 	/**Method to initialize and configure the DrawerLayout and NavigationView in MainActivity.*/
 	private fun initializeNavigationDrawer () {
 		// Initialize the Drawer Layout.
-		drawerLayout = findViewById < DrawerLayout > ( R.id.activity_main_drawer_layout )
+		drawerLayout = findViewById ( R.id.activity_main_drawer_layout )
 
 		// Initialize the Navigation View.
-		navigationView = findViewById < NavigationView > ( R.id.activity_main_navigation_view )
+		navigationView = findViewById ( R.id.activity_main_navigation_view )
 
 		// Set the NavigationItemSelectedListener to NavigationView in order to listen the
 		// selection made by the user in the Navigation Drawer.
@@ -121,5 +144,9 @@ class MainActivity
 
 	override fun getFMFromActivity () : FragmentManager {
 		return supportFragmentManager
+	}
+
+	val observer = Observer < MainModel > {
+		// Notify changes in the Model.
 	}
 }
