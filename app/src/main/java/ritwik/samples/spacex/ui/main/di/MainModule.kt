@@ -48,7 +48,7 @@ class MainModule (
 	fun providesMainViewModelFactory (
 		repository : MainRepository
 	) : MainViewModelFactory {
-		return MainViewModelFactory ( repository = repository, observer = activity.observer )
+		return MainViewModelFactory ( repository = repository )
 	}
 
 	/*----------------------------- MainViewModelFactory Dependencies ----------------------------*/
@@ -58,7 +58,7 @@ class MainModule (
 	fun providesMainRepository (
 		restServices : RESTServices
 	) : MainRepository {
-		return MainRepository ( restServices = restServices )
+		return MainRepository.create ( restServices )
 	}
 
 	/*-------------------------------- MainRepository Dependencies -------------------------------*/

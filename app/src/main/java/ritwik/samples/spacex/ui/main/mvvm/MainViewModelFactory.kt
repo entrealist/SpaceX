@@ -1,23 +1,21 @@
 package ritwik.samples.spacex.ui.main.mvvm
 
-import androidx.lifecycle.Observer
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
 /**Factory provider of [MainViewModel].
  * @author Ritwik Jamuar.*/
 class MainViewModelFactory (
-	private val repository : MainRepository,
-	private val observer : Observer < MainModel >
+	private val repository : MainRepository
 ) : ViewModelProvider.NewInstanceFactory () {
 	/*--------------------- ViewModelProvider.NewInstanceFactory () Callbacks --------------------*/
 
 	@Suppress ( "UNCHECKED_CAST" )
-	override fun < T : ViewModel? > create (modelClass : Class < T > ) : T {
+	override fun < T : ViewModel? > create ( modelClass : Class < T > ) : T {
+		// Provide the instance of ViewModel from here.,
 		return MainViewModel (
-			// Provide the instance of ViewModel from here.
-			MainModel ( null ),
-			repository = this.repository,
-			observer = this.observer ) as T
+			repository = this.repository
+		) as T
 	}
 }

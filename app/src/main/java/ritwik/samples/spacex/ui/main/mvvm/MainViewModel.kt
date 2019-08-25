@@ -1,6 +1,5 @@
 package ritwik.samples.spacex.ui.main.mvvm
 
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 
@@ -9,9 +8,7 @@ import ritwik.samples.spacex.ui.main.MainActivity
 /**ViewModel of [MainActivity].
  * @author Ritwik Jamuar.*/
 class MainViewModel (
-	private val model : MainModel,
-	private val repository : MainRepository,
-	private val observer : Observer < MainModel >
+	val repository : MainRepository
 ) : ViewModel () {
 	/*------------------------------------- Companion Object -------------------------------------*/
 
@@ -23,5 +20,23 @@ class MainViewModel (
 		fun create ( activity : MainActivity, factory : MainViewModelFactory ) : MainViewModel {
 			return ViewModelProviders.of ( activity, factory ).get ( MainViewModel::class.java )
 		}
+	}
+
+	/*------------------------------------ ViewModel Callbacks -----------------------------------*/
+
+	override fun onCleared () {
+		super.onCleared ()
+		repository.completableJob.cancel ()
+	}
+
+	/*-------------------------------------- Public Methods --------------------------------------*/
+
+	/**Gets the Launches of given type.
+	 * @param type Specify the type of Launches to fetch. It can be either LAUNCH_TYPE_UPCOMING
+	 * or LAUNCH_TYPE_PAST.
+	 * Notifies the Observer that either [MainRepository.upcomingLaunchesLiveData] or
+	 * [MainRepository.pastLaunchesLiveData] is changed.*/
+	fun getLaunches ( type : Int ) {
+		repository.getLaunches ( type )
 	}
 }

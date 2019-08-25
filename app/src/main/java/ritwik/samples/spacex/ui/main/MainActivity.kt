@@ -15,8 +15,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 
 import androidx.fragment.app.FragmentManager
 
-import androidx.lifecycle.Observer
-
 import com.google.android.material.navigation.NavigationView
 
 import ritwik.samples.spacex.R
@@ -28,7 +26,6 @@ import ritwik.samples.spacex.ui.main.di.MainModule
 import ritwik.samples.spacex.ui.main.fragments.LaunchesFragment
 import ritwik.samples.spacex.ui.main.fragments.LaunchesListFragment
 
-import ritwik.samples.spacex.ui.main.mvvm.MainModel
 import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
 
 import javax.inject.Inject
@@ -146,7 +143,7 @@ class MainActivity
 		return supportFragmentManager
 	}
 
-	val observer = Observer < MainModel > {
-		// Notify changes in the Model.
+	override fun getVM () : MainViewModel {
+		return viewModel
 	}
 }
