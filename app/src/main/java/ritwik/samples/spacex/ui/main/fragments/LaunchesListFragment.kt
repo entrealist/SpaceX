@@ -8,24 +8,43 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
+import androidx.databinding.DataBindingUtil
+
 import androidx.fragment.app.Fragment
 
 import androidx.lifecycle.Observer
+
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import ritwik.samples.spacex.R
 
 import ritwik.samples.spacex.application.database.LAUNCH_TYPE_PAST
 import ritwik.samples.spacex.application.database.LAUNCH_TYPE_UPCOMING
 
+import ritwik.samples.spacex.databinding.FragmentLaunchesListBinding
+
 import ritwik.samples.spacex.pojo.Launch
 
 import ritwik.samples.spacex.printLog
+
+import ritwik.samples.spacex.ui.main.fragments.adapters.LaunchListAdapter
 
 import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
 
 /**[Fragment] to show the list of upcomingLaunches of SpaceX.
  * @author Ritwik Jamuar.*/
 class LaunchesListFragment : Fragment () {
+	// Views.
+	private lateinit var launchRecycler : RecyclerView
+
+	// Adapters.
+	private lateinit var launchRecyclerAdapter : LaunchListAdapter
+
+	// Bindings.
+	private lateinit var binding : FragmentLaunchesListBinding
+
+	// Variables.
 	private var launchType : Int = -1
 
 	// Listener.
@@ -51,14 +70,16 @@ class LaunchesListFragment : Fragment () {
 		container : ViewGroup?,
 		savedInstanceState : Bundle?
 	) : View? {
-		val view : View = inflater
+		binding = DataBindingUtil
 			.inflate (
+				inflater,
 				R.layout.fragment_launches_list,
 				container,
 				false
 			)
-		initializeViews ( view )
-		return view
+		binding.lifecycleOwner = viewLifecycleOwner
+		initializeViews ( binding.root )
+		return binding.root
 	}
 
 	override fun onResume () {
@@ -83,8 +104,35 @@ class LaunchesListFragment : Fragment () {
 
 	/*-------------------------------------- Private Methods -------------------------------------*/
 
+	/**Instantiate the [View]s associated with this fragment.
+	 * @param view Instance of [View] to get the instance of composite views.*/
 	private fun initializeViews ( view : View ) {
-		// TODO : Initialize the Views Here.
+		// Initialize Views.
+		launchRecycler = view.findViewById ( R.id.fragment_launches_list_recycler_view_launches )
+
+		// Initialize Adapters.
+		launchRecyclerAdapter = LaunchListAdapter ( listener!!.getVM () )
+
+		initializeRecyclerView ()
+		applyBindingData ()
+	}
+
+	/**Set-Up the [RecyclerView].*/
+	private fun initializeRecyclerView () {
+		// Set the Layout Manager for RecyclerView.
+		launchRecycler.layoutManager = LinearLayoutManager ( context )
+
+		// Set the Adapter to RecyclerView.
+		launchRecycler.adapter = launchRecyclerAdapter
+	}
+
+	/**Applies the DataBinding of this fragment.
+	 * In Layman Terms, setting the value of Variable Used under <data> tag to set the value from
+	 * here.*/
+	private fun applyBindingData () {
+		binding.apply {
+			binding.isUpcoming = launchType == LAUNCH_TYPE_UPCOMING
+		}
 	}
 
 	/**Attaches [Observer]s to this Fragment to receive any changes from Upcoming Launches or
@@ -103,16 +151,24 @@ class LaunchesListFragment : Fragment () {
 
 	/*----------------------------------------- Observers ----------------------------------------*/
 
+	/**[Observer] for observing changes in [List] of Upcoming [Launch]es.*/
 	private val upcomingLaunchesObserver = Observer < List < Launch > > {
 		// Notify changes in the Upcoming Launches Fragment.
 		printLog ( TAG, "Upcoming Launches Changed" )
 		printLog ( TAG, it?.toString () )
+
+		// Add the List of Upcoming Launches to the Adapter.
+		launchRecyclerAdapter.replaceLaunchesList ( it )
 	}
 
+	/**[Observer] for observing changes in [List] of Past [Launch]es.*/
 	private val pastLaunchesObserver = Observer < List < Launch > > {
 		// Notify changes in the Past Launches Fragment.
 		printLog ( TAG, "Past Launches Changed" )
 		printLog ( TAG, it?.toString () )
+
+		// Add the List of Past Launches to the Adapter.
+		launchRecyclerAdapter.replaceLaunchesList ( it )
 	}
 
 	/*---------------------------------------- Interfaces ----------------------------------------*/

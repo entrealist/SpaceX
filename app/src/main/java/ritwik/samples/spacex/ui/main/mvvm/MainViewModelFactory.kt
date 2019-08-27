@@ -1,6 +1,5 @@
 package ritwik.samples.spacex.ui.main.mvvm
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 

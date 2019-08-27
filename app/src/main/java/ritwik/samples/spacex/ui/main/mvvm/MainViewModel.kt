@@ -3,6 +3,8 @@ package ritwik.samples.spacex.ui.main.mvvm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 
+import ritwik.samples.spacex.pojo.Launch
+
 import ritwik.samples.spacex.ui.main.MainActivity
 
 /**ViewModel of [MainActivity].
@@ -38,5 +40,12 @@ class MainViewModel (
 	 * [MainRepository.pastLaunchesLiveData] is changed.*/
 	fun getLaunches ( type : Int ) {
 		repository.getLaunches ( type )
+	}
+
+	/**On-Click Method for performing actions when a [Launch] Event from [List] of [Launch]es is
+	 * selected:
+	 * @param launch Instance of [Launch].*/
+	fun onLaunchClicked ( launch : Launch ) {
+		// TODO : Perform some action when a Launch is clicked in the UI.
 	}
 }

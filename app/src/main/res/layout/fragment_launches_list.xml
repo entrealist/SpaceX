@@ -1,56 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<layout
 	xmlns:android = "http://schemas.android.com/apk/res/android"
 	xmlns:app = "http://schemas.android.com/apk/res-auto"
 	xmlns:tools = "http://schemas.android.com/tools"
-	android:layout_width = "match_parent"
-	android:layout_height = "match_parent"
-	android:background = "@color/colorWhite"
 	tools:context = ".ui.main.fragments.LaunchesListFragment">
 
-	<androidx.cardview.widget.CardView
-		android:id = "@+id/fragment_launches_list_card_view_container_next_launch_deadline"
-		style = "@style/CustomCards.NextLaunchDateCountdown"
-		app:cardBackgroundColor = "#BDFFFA"
-		app:cardCornerRadius = "5dp"
-		app:cardElevation = "5dp"
-		app:layout_constraintBottom_toTopOf = "@+id/fragment_launches_list_recycler_view_launches"
-		app:layout_constraintEnd_toEndOf = "parent"
-		app:layout_constraintStart_toStartOf = "parent"
-		app:layout_constraintTop_toTopOf = "parent">
+	<data>
 
-		<androidx.constraintlayout.widget.ConstraintLayout
-			android:layout_width = "match_parent"
-			android:layout_height = "wrap_content"
-			android:padding = "10dp">
+		<import type = "android.view.View"/>
 
-			<TextView
-				android:id = "@+id/fragment_launches_list_text_view_placeholder_next_launch_deadline"
-				style = "@style/TextViewStyleCustom.PlaceholderNextDeadline"
-				android:text = "@string/fragment_launches_list_text_next_launch_in"
-				app:layout_constraintBottom_toTopOf = "@+id/fragment_launches_list_text_view_value_next_launch_deadline"
-				app:layout_constraintEnd_toEndOf = "parent"
-				app:layout_constraintStart_toStartOf = "parent"
-				app:layout_constraintTop_toTopOf = "parent" />
+		<variable
+			name = "isUpcoming"
+			type = "Boolean" />
 
-			<TextView
-				android:id = "@+id/fragment_launches_list_text_view_value_next_launch_deadline"
-				style = "@style/TextViewStyleCustom.ValueNextDeadline"
-				app:layout_constraintBottom_toBottomOf = "parent"
-				app:layout_constraintEnd_toEndOf = "parent"
-				app:layout_constraintStart_toStartOf = "parent"
-				app:layout_constraintTop_toBottomOf = "@+id/fragment_launches_list_text_view_placeholder_next_launch_deadline" />
+	</data>
 
-		</androidx.constraintlayout.widget.ConstraintLayout>
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width = "match_parent"
+		android:layout_height = "match_parent"
+		android:background = "@color/colorWhite">
 
-	</androidx.cardview.widget.CardView>
+		<androidx.cardview.widget.CardView
+			android:id = "@+id/fragment_launches_list_card_view_container_next_launch_deadline"
+			style = "@style/CustomCards.NextLaunchDateCountdown"
+			android:visibility = "@{isUpcoming ? View.VISIBLE : View.GONE}"
+			app:cardBackgroundColor = "#BDFFFA"
+			app:cardCornerRadius = "5dp"
+			app:cardElevation = "5dp"
+			app:layout_constraintBottom_toTopOf = "@+id/fragment_launches_list_recycler_view_launches"
+			app:layout_constraintEnd_toEndOf = "parent"
+			app:layout_constraintStart_toStartOf = "parent"
+			app:layout_constraintTop_toTopOf = "parent">
 
-	<androidx.recyclerview.widget.RecyclerView
-		android:id = "@+id/fragment_launches_list_recycler_view_launches"
-		style = "@style/RecyclerViewStyleCustom.Launches"
-		app:layout_constraintBottom_toBottomOf = "parent"
-		app:layout_constraintEnd_toEndOf = "parent"
-		app:layout_constraintStart_toStartOf = "parent"
-		app:layout_constraintTop_toBottomOf = "@+id/fragment_launches_list_card_view_container_next_launch_deadline" />
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:layout_width = "match_parent"
+				android:layout_height = "wrap_content"
+				android:padding = "10dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+				<TextView
+					android:id = "@+id/fragment_launches_list_text_view_placeholder_next_launch_deadline"
+					style = "@style/TextViewStyleCustom.PlaceholderNextDeadline"
+					android:text = "@string/fragment_launches_list_text_next_launch_in"
+					app:layout_constraintBottom_toTopOf = "@+id/fragment_launches_list_text_view_value_next_launch_deadline"
+					app:layout_constraintEnd_toEndOf = "parent"
+					app:layout_constraintStart_toStartOf = "parent"
+					app:layout_constraintTop_toTopOf = "parent" />
+
+				<TextView
+					android:id = "@+id/fragment_launches_list_text_view_value_next_launch_deadline"
+					style = "@style/TextViewStyleCustom.ValueNextDeadline"
+					app:layout_constraintBottom_toBottomOf = "parent"
+					app:layout_constraintEnd_toEndOf = "parent"
+					app:layout_constraintStart_toStartOf = "parent"
+					app:layout_constraintTop_toBottomOf = "@+id/fragment_launches_list_text_view_placeholder_next_launch_deadline" />
+
+			</androidx.constraintlayout.widget.ConstraintLayout>
+
+		</androidx.cardview.widget.CardView>
+
+		<androidx.recyclerview.widget.RecyclerView
+			android:id = "@+id/fragment_launches_list_recycler_view_launches"
+			style = "@style/RecyclerViewStyleCustom.Launches"
+			app:layoutManager = "androidx.recyclerview.widget.LinearLayoutManager"
+			app:layout_constraintBottom_toBottomOf = "parent"
+			app:layout_constraintEnd_toEndOf = "parent"
+			app:layout_constraintStart_toStartOf = "parent"
+			app:layout_constraintTop_toBottomOf = "@+id/fragment_launches_list_card_view_container_next_launch_deadline"
+			tools:listitem = "@layout/recycler_item_launch"/>
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -92,6 +92,8 @@
 		<item name = "android:layout_height">0dp</item>
 	</style>
 
-	<style name = "RecyclerViewStyleCustom.Launches" />
+	<style name = "RecyclerViewStyleCustom.Launches">
+		<item name = "android:scrollbars">vertical</item>
+	</style>
 
 </resources>
