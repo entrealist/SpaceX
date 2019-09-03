@@ -32,6 +32,10 @@ import ritwik.samples.spacex.ui.main.fragments.adapters.LaunchListAdapter
 
 import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
 
+import java.util.*
+
+import kotlin.Comparator
+
 /**[Fragment] to show the list of upcomingLaunches of SpaceX.
  * @author Ritwik Jamuar.*/
 class LaunchesListFragment : Fragment () {
@@ -167,8 +171,22 @@ class LaunchesListFragment : Fragment () {
 		printLog ( TAG, "Past Launches Changed" )
 		printLog ( TAG, it?.toString () )
 
+		// Sort the past launches in Descending Order.
+		Collections.sort ( it, descendingLaunchesComparator )
+
 		// Add the List of Past Launches to the Adapter.
 		launchRecyclerAdapter.replaceLaunchesList ( it )
+	}
+
+	/**[Comparator] for Comparing two [Launch]es and put them in descending order.*/
+	private val descendingLaunchesComparator = Comparator < Launch > {
+		launch1 : Launch, launch2 : Launch ->
+		when {
+			launch1.flightNumber!! == launch2.flightNumber!! -> 0
+			launch1.flightNumber > launch2.flightNumber -> -1
+			launch1.flightNumber < launch2.flightNumber -> 1
+			else -> 0
+		}
 	}
 
 	/*---------------------------------------- Interfaces ----------------------------------------*/
