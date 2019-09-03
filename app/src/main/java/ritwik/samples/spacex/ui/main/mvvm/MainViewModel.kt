@@ -46,6 +46,13 @@ class MainViewModel (
 		repository.getLaunches ( type )
 	}
 
+	/**Gets all the Rockets used by SpaceX.
+	 * Notifies the [androidx.lifecycle.Observer] of [MainRepository.allRocketsLiveData] about
+	 * change in the List of [ritwik.samples.spacex.pojo.rockets.Rocket]*/
+	fun getRockets () {
+		repository.getAllRockets ()
+	}
+
 	/**On-Click Method for performing actions when a [Launch] Event from [List] of [Launch]es is
 	 * selected:
 	 * @param launch Instance of [Launch].*/

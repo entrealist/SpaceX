@@ -11,6 +11,7 @@ import ritwik.samples.spacex.application.database.LAUNCH_TYPE_UPCOMING
 import ritwik.samples.spacex.application.database.RESTServices
 
 import ritwik.samples.spacex.pojo.launches.Launch
+import ritwik.samples.spacex.pojo.rockets.Rocket
 
 /**Repository of [MainViewModel].
  * @author Ritwik Jamuar.*/
@@ -20,12 +21,14 @@ class MainRepository (
 	// LiveData's
 	var upcomingLaunchesLiveData = MutableLiveData < List <Launch> > ()
 	var pastLaunchesLiveData = MutableLiveData < List <Launch> > ()
+	var allRocketsLiveData = MutableLiveData < List < Rocket > > ()
 
 	// Jobs
 	val completableJob : Job = Job ()
 
 	// Lists.
 	private var launches : List <Launch>? = null
+	private var rockets :	List < Rocket >? = null
 
 	/*------------------------------------- Companion Object -------------------------------------*/
 
@@ -84,6 +87,25 @@ class MainRepository (
 							pastLaunchesLiveData.value = launches
 						}
 					}
+				}
+			}
+	}
+
+	/**Fetches the [List] of [Rocket] from [RESTServices] and notify the
+	 * [androidx.lifecycle.Observer] of [allRocketsLiveData].*/
+	fun getAllRockets () {
+		CoroutineScope ( Dispatchers.IO + completableJob )
+			.launch {
+				// Get the response on the basis of type.
+				val response : Response < List < Rocket > >? = restServices?.getAllRockets ()
+
+				// Convert the Retrofit Response to list of Rockets.
+				rockets = response?.body ()
+
+				// Notify the update of Response in Main Thread.
+				withContext ( Dispatchers.Main ) {
+					// Notify Live Data about change in the List of Rockets.
+					allRocketsLiveData.value = rockets
 				}
 			}
 	}
