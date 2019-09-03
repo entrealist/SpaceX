@@ -10,7 +10,7 @@ import ritwik.samples.spacex.application.database.LAUNCH_TYPE_PAST
 import ritwik.samples.spacex.application.database.LAUNCH_TYPE_UPCOMING
 import ritwik.samples.spacex.application.database.RESTServices
 
-import ritwik.samples.spacex.pojo.Launch
+import ritwik.samples.spacex.pojo.launches.Launch
 
 /**Repository of [MainViewModel].
  * @author Ritwik Jamuar.*/
@@ -18,14 +18,14 @@ class MainRepository (
 	private val restServices : RESTServices?
 ) {
 	// LiveData's
-	var upcomingLaunchesLiveData = MutableLiveData < List < Launch > > ()
-	var pastLaunchesLiveData = MutableLiveData < List < Launch > > ()
+	var upcomingLaunchesLiveData = MutableLiveData < List <Launch> > ()
+	var pastLaunchesLiveData = MutableLiveData < List <Launch> > ()
 
 	// Jobs
 	val completableJob : Job = Job ()
 
 	// Lists.
-	private var launches : List < Launch >? = null
+	private var launches : List <Launch>? = null
 
 	/*------------------------------------- Companion Object -------------------------------------*/
 
@@ -56,7 +56,7 @@ class MainRepository (
 		CoroutineScope ( Dispatchers.IO + completableJob )
 			.launch {
 				// Get the response on the basis of type.
-				val response : Response < List < Launch > >? = when ( type ) {
+				val response : Response < List <Launch> >? = when ( type ) {
 					LAUNCH_TYPE_UPCOMING -> {
 						restServices?.getUpcomingLaunchesAsync ()
 					}

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 import ritwik.samples.spacex.databinding.RecyclerItemLaunchBinding
 
-import ritwik.samples.spacex.pojo.Launch
+import ritwik.samples.spacex.pojo.launches.Launch
 
 import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
 
@@ -17,7 +17,7 @@ class LaunchListAdapter (
 	private val viewModel : MainViewModel
 ) : RecyclerView.Adapter < LaunchListViewHolder > () {
 	// Lists.
-	private var launchesList : List < Launch > = listOf ()
+	private var launchesList : List <Launch> = listOf ()
 
 	/*------------------------------ RecyclerView.Adapter Callbacks ------------------------------*/
 
@@ -80,7 +80,7 @@ class LaunchListAdapter (
 
 	/**Replaces the List of Launch with the given list as parameter.
 	 * @param launches [List] of [Launch].*/
-	fun replaceLaunchesList ( launches : List < Launch > ) {
+	fun replaceLaunchesList ( launches : List <Launch> ) {
 		this.launchesList = launches
 		notifyDataSetChanged ()
 	}

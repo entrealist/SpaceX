@@ -24,7 +24,7 @@ import ritwik.samples.spacex.application.database.LAUNCH_TYPE_UPCOMING
 
 import ritwik.samples.spacex.databinding.FragmentLaunchesListBinding
 
-import ritwik.samples.spacex.pojo.Launch
+import ritwik.samples.spacex.pojo.launches.Launch
 
 import ritwik.samples.spacex.printLog
 
@@ -156,7 +156,7 @@ class LaunchesListFragment : Fragment () {
 	/*----------------------------------------- Observers ----------------------------------------*/
 
 	/**[Observer] for observing changes in [List] of Upcoming [Launch]es.*/
-	private val upcomingLaunchesObserver = Observer < List < Launch > > {
+	private val upcomingLaunchesObserver = Observer < List <Launch> > {
 		// Notify changes in the Upcoming Launches Fragment.
 		printLog ( TAG, "Upcoming Launches Changed" )
 		printLog ( TAG, it?.toString () )
@@ -166,7 +166,7 @@ class LaunchesListFragment : Fragment () {
 	}
 
 	/**[Observer] for observing changes in [List] of Past [Launch]es.*/
-	private val pastLaunchesObserver = Observer < List < Launch > > {
+	private val pastLaunchesObserver = Observer < List <Launch> > {
 		// Notify changes in the Past Launches Fragment.
 		printLog ( TAG, "Past Launches Changed" )
 		printLog ( TAG, it?.toString () )
@@ -179,7 +179,7 @@ class LaunchesListFragment : Fragment () {
 	}
 
 	/**[Comparator] for Comparing two [Launch]es and put them in descending order.*/
-	private val descendingLaunchesComparator = Comparator < Launch > {
+	private val descendingLaunchesComparator = Comparator <Launch> {
 		launch1 : Launch, launch2 : Launch ->
 		when {
 			launch1.flightNumber!! == launch2.flightNumber!! -> 0

@@ -1,4 +1,4 @@
-package ritwik.samples.spacex.pojo
+package ritwik.samples.spacex.pojo.launches
 
 import com.squareup.moshi.Json
 
