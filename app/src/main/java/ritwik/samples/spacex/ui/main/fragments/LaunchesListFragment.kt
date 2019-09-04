@@ -159,7 +159,7 @@ class LaunchesListFragment : Fragment () {
 	private val upcomingLaunchesObserver = Observer < List <Launch> > {
 		// Notify changes in the Upcoming Launches Fragment.
 		printLog ( TAG, "Upcoming Launches Changed" )
-		printLog ( TAG, it?.toString () )
+		/*printLog ( TAG, it?.toString () )*/
 
 		// Add the List of Upcoming Launches to the Adapter.
 		launchRecyclerAdapter.replaceLaunchesList ( it )
@@ -169,7 +169,7 @@ class LaunchesListFragment : Fragment () {
 	private val pastLaunchesObserver = Observer < List <Launch> > {
 		// Notify changes in the Past Launches Fragment.
 		printLog ( TAG, "Past Launches Changed" )
-		printLog ( TAG, it?.toString () )
+		/*printLog ( TAG, it?.toString () )*/
 
 		// Sort the past launches in Descending Order.
 		Collections.sort ( it, descendingLaunchesComparator )
