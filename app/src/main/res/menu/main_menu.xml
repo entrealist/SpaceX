@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+	xmlns:android = "http://schemas.android.com/apk/res/android">
+
+	<group
+		android:id = "@+id/menu_group_spacecraft"
+		android:checkableBehavior = "none">
+
+		<item
+			android:id = "@+id/menu_item_launches"
+			android:icon = "@drawable/ic_launches"
+			android:title = "@string/menu_launches" />
+
+		<item
+			android:id = "@+id/menu_item_vehicle"
+			android:icon = "@drawable/ic_vehicles"
+			android:title = "@string/menu_vehicle" />
+
+		<item
+			android:id = "@+id/menu_item_core"
+			android:icon = "@drawable/ic_cores"
+			android:title = "@string/menu_core" />
+
+	</group>
+
+	<item
+		android:title = "@string/menu_about">
+
+		<menu>
+
+			<item
+				android:id = "@+id/menu_item_company"
+				android:icon = "@drawable/ic_company"
+				android:title = "@string/menu_company" />
+
+			<item
+				android:id = "@+id/menu_item_history"
+				android:icon = "@drawable/ic_history"
+				android:title = "@string/menu_history" />
+
+		</menu>
+
+	</item>
+
+	<item
+		android:title = "@string/menu_other">
+
+		<menu>
+
+			<item
+				android:id = "@+id/menu_item_about"
+				android:icon = "@drawable/ic_about_us"
+				android:title = "@string/menu_about"/>
+
+		</menu>
+
+	</item>
+
+</menu>
