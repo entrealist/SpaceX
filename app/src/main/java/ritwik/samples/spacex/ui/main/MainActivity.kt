@@ -3,7 +3,6 @@ package ritwik.samples.spacex.ui.main
 import android.os.Bundle
 
 import android.view.Menu
-import android.view.MenuItem
 
 import androidx.appcompat.app.AppCompatActivity
 
@@ -15,6 +14,11 @@ import androidx.drawerlayout.widget.DrawerLayout
 
 import androidx.fragment.app.FragmentManager
 
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+
+import androidx.navigation.ui.NavigationUI
+
 import com.google.android.material.navigation.NavigationView
 
 import ritwik.samples.spacex.R
@@ -25,15 +29,18 @@ import ritwik.samples.spacex.ui.main.di.MainModule
 
 import ritwik.samples.spacex.ui.main.fragments.LaunchesFragment
 import ritwik.samples.spacex.ui.main.fragments.LaunchesListFragment
+import ritwik.samples.spacex.ui.main.fragments.VehicleFragment
 
 import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
 
 import javax.inject.Inject
 
+
 class MainActivity
 	: AppCompatActivity (),
 	LaunchesFragment.Listener,
-	LaunchesListFragment.Listener {
+	LaunchesListFragment.Listener,
+	VehicleFragment.Listener {
 	// ViewModel.
 	@Inject lateinit var viewModel : MainViewModel
 
@@ -41,33 +48,21 @@ class MainActivity
 	private var toolbar : Toolbar? = null
 	private var drawerLayout : DrawerLayout? = null
 	private var navigationView : NavigationView? = null
+	private var navigationController : NavController? = null
 
 	/**[NavigationView.OnNavigationItemSelectedListener] for listening the user selection of
 	 * option in Navigation Drawer.*/
 	private val navigationItemSelectedListener = NavigationView.OnNavigationItemSelectedListener {
+		it.isChecked = true
+		drawerLayout?.closeDrawers ()
+		// TODO : Need to find a better implementation of Fragment Navigation.
 		when ( it.itemId ) {
 			R.id.menu_item_launches -> {
-
+				navigationController?.popBackStack ( R.id.launchesFragment, true )
 			}
 
 			R.id.menu_item_vehicle -> {
-
-			}
-
-			R.id.menu_item_core -> {
-
-			}
-
-			R.id.menu_item_company -> {
-
-			}
-
-			R.id.menu_item_history -> {
-
-			}
-
-			R.id.menu_item_about -> {
-
+				navigationController?.navigate ( R.id.action_launchesFragment_to_vehicleFragment )
 			}
 		}
 		true
@@ -87,13 +82,16 @@ class MainActivity
 		return super.onCreateOptionsMenu ( menu )
 	}
 
-	override fun onOptionsItemSelected ( item : MenuItem? ) : Boolean {
-		when ( item?.itemId ) {
-			android.R.id.home -> {
-				drawerLayout?.closeDrawer ( GravityCompat.START )
-			}
+	override fun onSupportNavigateUp () : Boolean {
+		return NavigationUI.navigateUp ( navigationController!!, drawerLayout )
+	}
+
+	override fun onBackPressed () {
+		if ( drawerLayout!!.isDrawerOpen ( GravityCompat.START ) ) {
+			drawerLayout?.closeDrawer ( GravityCompat.START )
+		} else {
+			super.onBackPressed ()
 		}
-		return true
 	}
 
 	/*------------------------------------- Private Methods --------------------------------------*/
@@ -108,8 +106,8 @@ class MainActivity
 
 	/**Method to initialize and configure the views of MainActivity.*/
 	private fun initializeViews () {
-		initializeNavigationDrawer ()
 		initializeToolbar ()
+		initializeNavigationDrawer ()
 	}
 
 	/**Method to initialize and configure the Toolbar in MainActivity.*/
@@ -131,6 +129,11 @@ class MainActivity
 
 		// Initialize the Navigation View.
 		navigationView = findViewById ( R.id.activity_main_navigation_view )
+
+		navigationController = Navigation.findNavController ( this, R.id.activity_main_fragment )
+
+		NavigationUI.setupActionBarWithNavController ( this, navigationController!!, drawerLayout!! )
+		NavigationUI.setupWithNavController ( navigationView!!, navigationController!! )
 
 		// Set the NavigationItemSelectedListener to NavigationView in order to listen the
 		// selection made by the user in the Navigation Drawer.
