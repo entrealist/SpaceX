@@ -2,19 +2,25 @@ package ritwik.samples.spacex.ui.launcher
 
 import android.content.Intent
 
-import android.os.Bundle
 import android.os.Handler
-
-import androidx.appcompat.app.AppCompatActivity
 
 import ritwik.samples.spacex.R
 
+import ritwik.samples.spacex.common.BaseActivity
+
 import ritwik.samples.spacex.ui.main.MainActivity
 
-class LauncherActivity : AppCompatActivity () {
-	// Other Components
-	private var mHandler : Handler? = null
-	private val mDELAY : Long = 2000
+/**[Long] value specifying the delay in opening another [android.app.Activity].*/
+const val mDELAY : Long = 2000
+
+/**[android.app.Activity] to show Launcher Screen.
+ * @author Ritwik Jamuar.*/
+class LauncherActivity : BaseActivity () {
+
+	// Handlers.
+	private var handler : Handler? = null
+
+	/*----------------------------------------- Runnables ----------------------------------------*/
 
 	private val mRunnable : Runnable = Runnable {
 		if ( ! isFinishing ) {
@@ -22,21 +28,28 @@ class LauncherActivity : AppCompatActivity () {
 		}
 	}
 
-	override fun onCreate ( savedInstanceState : Bundle? ) {
-		setTheme ( R.style.AppTheme )
-		super.onCreate ( savedInstanceState )
-		setContentView ( R.layout.activity_launcher )
-		initialize ()
+	/*---------------------------------- BaseActivity Callbacks ----------------------------------*/
+
+	override fun inject () {}
+
+	override fun initialize () {
+		handler = Handler ()
+		handler?.postDelayed ( mRunnable, mDELAY )
 	}
 
-	private fun initialize () {
-		mHandler = Handler ()
-		mHandler!!.postDelayed ( mRunnable, mDELAY )
+	override fun getLayoutRes () : Int { return R.layout.activity_launcher }
+
+	override fun cleanUp () {
+		handler = null
 	}
 
+	/*------------------------------------- Private Methods --------------------------------------*/
+
+	/**Starts the [MainActivity] and [finish] this [android.app.Activity].*/
 	private fun startMainActivity () {
 		val intent = Intent ( applicationContext, MainActivity::class.java )
 		startActivity ( intent )
 		finish ()
 	}
+
 }
