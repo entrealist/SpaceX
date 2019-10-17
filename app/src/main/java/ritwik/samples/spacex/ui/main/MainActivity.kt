@@ -1,10 +1,6 @@
 package ritwik.samples.spacex.ui.main
 
-import android.os.Bundle
-
 import android.view.Menu
-
-import androidx.appcompat.app.AppCompatActivity
 
 import androidx.appcompat.widget.Toolbar
 
@@ -23,6 +19,8 @@ import com.google.android.material.navigation.NavigationView
 
 import ritwik.samples.spacex.R
 
+import ritwik.samples.spacex.common.BaseActivity
+
 import ritwik.samples.spacex.ui.main.di.DaggerMainComponent
 import ritwik.samples.spacex.ui.main.di.MainComponent
 import ritwik.samples.spacex.ui.main.di.MainModule
@@ -37,7 +35,7 @@ import javax.inject.Inject
 
 
 class MainActivity
-	: AppCompatActivity (),
+	: BaseActivity (),
 	LaunchesFragment.Listener,
 	LaunchesListFragment.Listener,
 	VehicleFragment.Listener {
@@ -68,14 +66,27 @@ class MainActivity
 		true
 	}
 
-	/*----------------------------------- Activity Callbacks -------------------------------------*/
+	/*---------------------------------- BaseActivity Callbacks ----------------------------------*/
 
-	override fun onCreate ( savedInstanceState : Bundle? ) {
-		super.onCreate ( savedInstanceState )
-		setContentView ( R.layout.activity_main )
-		inject ()
+	override fun inject () {
+		val component : MainComponent = DaggerMainComponent
+			.builder ()
+			.mainModule ( MainModule ( this ) )
+			.build ()
+		component.injectActivity ( this )
+	}
+
+	override fun initialize () {
 		initializeViews ()
 	}
+
+	override fun getLayoutRes () : Int { return R.layout.activity_main }
+
+	override fun cleanUp () {
+		// TODO : Add code for de-reference.
+	}
+
+	/*----------------------------------- Activity Callbacks -------------------------------------*/
 
 	override fun onCreateOptionsMenu ( menu : Menu? ) : Boolean {
 		menuInflater.inflate ( R.menu.main_menu, menu )
@@ -95,14 +106,6 @@ class MainActivity
 	}
 
 	/*------------------------------------- Private Methods --------------------------------------*/
-
-	private fun inject () {
-		val component : MainComponent = DaggerMainComponent
-			.builder ()
-			.mainModule ( MainModule ( this ) )
-			.build ()
-		component.injectActivity ( this )
-	}
 
 	/**Method to initialize and configure the views of MainActivity.*/
 	private fun initializeViews () {
