@@ -2,11 +2,7 @@ package ritwik.samples.spacex.ui.main.fragments
 
 import android.content.Context
 
-import android.os.Bundle
-
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -20,11 +16,14 @@ import ritwik.samples.spacex.R
 import ritwik.samples.spacex.application.database.LAUNCH_TYPE_PAST
 import ritwik.samples.spacex.application.database.LAUNCH_TYPE_UPCOMING
 
+import ritwik.samples.spacex.common.BaseFragment
+
 import ritwik.samples.spacex.components.adapters.LaunchesOptionsAdapter
 
 /**[Fragment] to showcase all the Upcoming and Past Launches conducted by SpaceX.
  * @author Ritwik Jamuar*/
-class LaunchesFragment : Fragment () {
+class LaunchesFragment : BaseFragment () {
+
 	// Views.
 	private var tabLayout : TabLayout? = null
 	private var viewPager : ViewPager? = null
@@ -37,43 +36,13 @@ class LaunchesFragment : Fragment () {
 	companion object {
 
 		@JvmStatic
-		fun newInstance () =
-			LaunchesFragment ()
-				.apply {
-					arguments = Bundle ()
-				}
+		fun create () = LaunchesFragment ()
 
 	}
 
-	/*------------------------------------ Fragment Callbacks ------------------------------------*/
+	/*---------------------------------- BaseFragment Callbacks ----------------------------------*/
 
-	override fun onCreateView (
-		inflater : LayoutInflater,
-		container : ViewGroup?,
-		savedInstanceState : Bundle?
-	) : View? {
-		val view : View = inflater.inflate ( R.layout.fragment_launches, container, false )
-		initializeViews ( view )
-		return view
-	}
-
-	override fun onAttach ( context : Context ) {
-		super.onAttach ( context )
-		if ( context is Listener ) {
-			listener = context
-		} else {
-			throw RuntimeException ( "$context must implement Listener" )
-		}
-	}
-
-	override fun onDetach () {
-		super.onDetach ()
-		listener = null
-	}
-
-	/*------------------------------------- Private Methods --------------------------------------*/
-
-	private fun initializeViews ( view : View ) {
+	override fun initializeViews ( view : View ) {
 		// Initialize Views
 		tabLayout = view.findViewById ( R.id.fragment_launches_tab_layout )
 		viewPager = view.findViewById ( R.id.fragment_launches_view_pager )
@@ -92,10 +61,31 @@ class LaunchesFragment : Fragment () {
 		tabLayout?.setupWithViewPager ( viewPager )
 	}
 
+	override fun getLayoutRes () : Int { return R.layout.fragment_launches }
+
+	override fun setListener ( context : Context ) {
+		if ( context is Listener ) {
+			listener = context
+		} else {
+			throw RuntimeException ( "$context must implement Listener" )
+		}
+	}
+
+	override fun cleanUp () {
+		listener = null
+		tabLayout = null
+		viewPager = null
+	}
+
+	override fun tag () : String { return LaunchesFragment::class.java.simpleName }
+
 	/*---------------------------------------- Interfaces ----------------------------------------*/
 
 	// TODO : Add Implementation to get the Fragment Manager from Activity.
 	interface Listener {
+
 		fun getFMFromActivity () : FragmentManager
+
 	}
+
 }
