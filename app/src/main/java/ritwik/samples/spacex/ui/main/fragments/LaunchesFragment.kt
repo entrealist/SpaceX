@@ -20,7 +20,7 @@ import ritwik.samples.spacex.R
 import ritwik.samples.spacex.application.database.LAUNCH_TYPE_PAST
 import ritwik.samples.spacex.application.database.LAUNCH_TYPE_UPCOMING
 
-import ritwik.samples.spacex.ui.main.fragments.adapters.LaunchesOptionsAdapter
+import ritwik.samples.spacex.components.adapters.LaunchesOptionsAdapter
 
 /**[Fragment] to showcase all the Upcoming and Past Launches conducted by SpaceX.
  * @author Ritwik Jamuar*/
@@ -35,12 +35,14 @@ class LaunchesFragment : Fragment () {
 	/*------------------------------------- Companion Object -------------------------------------*/
 
 	companion object {
+
 		@JvmStatic
 		fun newInstance () =
 			LaunchesFragment ()
 				.apply {
 					arguments = Bundle ()
 				}
+
 	}
 
 	/*------------------------------------ Fragment Callbacks ------------------------------------*/

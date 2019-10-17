@@ -1,4 +1,4 @@
-package ritwik.samples.spacex.ui.main.fragments.adapters
+package ritwik.samples.spacex.components.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,6 +9,9 @@ import ritwik.samples.spacex.databinding.RecyclerItemLaunchBinding
 
 import ritwik.samples.spacex.pojo.launches.Launch
 
+import ritwik.samples.spacex.components.viewHolders.LaunchListBindingViewHolder
+import ritwik.samples.spacex.components.viewHolders.LaunchListViewHolder
+
 import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
 
 /**[RecyclerView.Adapter] of [RecyclerView] that shows list of launches.
@@ -16,6 +19,7 @@ import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
 class LaunchListAdapter (
 	private val viewModel : MainViewModel
 ) : RecyclerView.Adapter < LaunchListViewHolder > () {
+
 	// Lists.
 	private var launchesList : List <Launch> = listOf ()
 

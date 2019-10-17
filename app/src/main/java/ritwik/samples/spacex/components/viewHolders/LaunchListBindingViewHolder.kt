@@ -1,4 +1,4 @@
-package ritwik.samples.spacex.ui.main.fragments.adapters
+package ritwik.samples.spacex.components.viewHolders
 
 import android.view.View
 
@@ -14,6 +14,7 @@ class LaunchListBindingViewHolder (
 	override val containerView : View,
 	val binding : RecyclerItemLaunchBinding
 ) : LaunchListViewHolder ( containerView ), LifecycleOwner {
+
 	// LifeCycle Registry.
 	private val lifecycleRegistry = LifecycleRegistry ( this )
 
@@ -42,4 +43,5 @@ class LaunchListBindingViewHolder (
 	fun markDetach () {
 		lifecycleRegistry.markState ( Lifecycle.State.DESTROYED )
 	}
+
 }
