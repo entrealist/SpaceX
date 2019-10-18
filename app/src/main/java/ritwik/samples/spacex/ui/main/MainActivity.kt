@@ -10,6 +10,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 
 import androidx.fragment.app.FragmentManager
 
+import androidx.lifecycle.Observer
+
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 
@@ -48,6 +50,20 @@ class MainActivity
 	private var navigationView : NavigationView? = null
 	private var navigationController : NavController? = null
 
+	/*----------------------------------------- Observers ----------------------------------------*/
+
+	/**[Observer] for observing change in Internet Connectivity.*/
+	private val noInternetObserver = Observer < Boolean > {
+		// TODO : Show some UI that states no Internet Connectivity.
+	}
+
+	/**[Observer] for observing the error value.*/
+	private val errorObserver = Observer < String > {
+		// TODO : Show some UI that shows error from RESTful API.
+	}
+
+	/*------------------------------ NavigationItemSelectedListener ------------------------------*/
+
 	/**[NavigationView.OnNavigationItemSelectedListener] for listening the user selection of
 	 * option in Navigation Drawer.*/
 	private val navigationItemSelectedListener = NavigationView.OnNavigationItemSelectedListener {
@@ -78,6 +94,7 @@ class MainActivity
 
 	override fun initialize () {
 		initializeViews ()
+		attachObservers ()
 	}
 
 	override fun getLayoutRes () : Int = R.layout.activity_main
@@ -141,6 +158,12 @@ class MainActivity
 		// Set the NavigationItemSelectedListener to NavigationView in order to listen the
 		// selection made by the user in the Navigation Drawer.
 		navigationView?.setNavigationItemSelectedListener ( navigationItemSelectedListener )
+	}
+
+	/**Attaches [Observer]s to this [android.app.Activity].*/
+	private fun attachObservers () {
+		viewModel.noInternetLiveData.observe ( this, noInternetObserver )
+		viewModel.errorLiveData.observe ( this, errorObserver )
 	}
 
 	/*------------------------------- MainFragmentListener Callbacks -----------------------------*/

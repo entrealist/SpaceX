@@ -1,56 +1,68 @@
 package ritwik.samples.spacex.ui.main.mvvm
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProviders
+
+import ritwik.samples.spacex.application.database.LAUNCH_TYPE_PAST
+import ritwik.samples.spacex.application.database.LAUNCH_TYPE_UPCOMING
 
 import ritwik.samples.spacex.pojo.launches.Launch
+import ritwik.samples.spacex.pojo.rockets.Rocket
 
-import ritwik.samples.spacex.ui.main.MainActivity
+import ritwik.samples.spacex.utilities.API_DATE_FORMAT
+import ritwik.samples.spacex.utilities.DESIRED_DATE_FORMAT
+import ritwik.samples.spacex.utilities.dateFormatter
 
-import java.text.SimpleDateFormat
-
-import java.util.Locale
-
-/**ViewModel of [MainActivity].
+/**ViewModel of [ritwik.samples.spacex.ui.main.MainActivity].
  * @author Ritwik Jamuar.*/
 class MainViewModel (
 	val repository : MainRepository
 ) : ViewModel () {
+
+	// LiveData.
+	val upcomingLaunchesLiveData = MutableLiveData < List < Launch > > ()
+	val pastLaunchesLiveData = MutableLiveData < List < Launch > > ()
+	val allRocketsLiveData = MutableLiveData < List < Rocket > > ()
+	val noInternetLiveData = MutableLiveData < Boolean > ()
+	val errorLiveData = MutableLiveData < String > ()
+
 	/*------------------------------------- Companion Object -------------------------------------*/
 
 	companion object {
+
 		/**Creates/Gets an instance of [MainViewModel].
-		 * @param activity Instance of [MainActivity] : View of the [MainViewModel].
-		 * @param factory Instance of [MainViewModelFactory] : Factory Provider of [MainViewModel].
-		 * @return Instance of [MainViewModel] : ViewModel of [MainActivity].*/
-		fun create ( activity : MainActivity, factory : MainViewModelFactory ) : MainViewModel {
-			return ViewModelProviders.of ( activity, factory ).get ( MainViewModel::class.java )
-		}
+		 * @param repository Repository of [ritwik.samples.spacex.ui.main.MainActivity].
+		 * @return Instance of [MainViewModel] : ViewModel of [ritwik.samples.spacex.ui.main.MainActivity].*/
+		fun create ( repository : MainRepository ) : MainViewModel = MainViewModel ( repository )
+
 	}
 
 	/*------------------------------------ ViewModel Callbacks -----------------------------------*/
 
 	override fun onCleared () {
 		super.onCleared ()
-		repository.completableJob.cancel ()
+		repository.cleanUp ()
 	}
 
 	/*-------------------------------------- Public Methods --------------------------------------*/
 
 	/**Gets the Launches of given type.
-	 * @param type Specify the type of Launches to fetch. It can be either LAUNCH_TYPE_UPCOMING
-	 * or LAUNCH_TYPE_PAST.
-	 * Notifies the Observer that either [MainRepository.upcomingLaunchesLiveData] or
-	 * [MainRepository.pastLaunchesLiveData] is changed.*/
+	 * Notifies the Observer that either [upcomingLaunchesLiveData] or [pastLaunchesLiveData] is
+	 * changed.
+	 * @param type Specify the type of Launches to fetch. It can be either [LAUNCH_TYPE_UPCOMING]
+	 * or [LAUNCH_TYPE_PAST]*/
 	fun getLaunches ( type : Int ) {
-		repository.getLaunches ( type )
+		when ( type ) {
+			LAUNCH_TYPE_UPCOMING -> repository.getLaunches ( type, upcomingLaunchesLiveData, noInternetLiveData, errorLiveData )
+			LAUNCH_TYPE_PAST -> repository.getLaunches ( type, pastLaunchesLiveData, noInternetLiveData, errorLiveData )
+		}
 	}
 
 	/**Gets all the Rockets used by SpaceX.
-	 * Notifies the [androidx.lifecycle.Observer] of [MainRepository.allRocketsLiveData] about
+	 * Notifies the [androidx.lifecycle.Observer] of [allRocketsLiveData] about
 	 * change in the List of [ritwik.samples.spacex.pojo.rockets.Rocket]*/
 	fun getRockets () {
-		repository.getAllRockets ()
+		repository.getAllRockets ( allRocketsLiveData, noInternetLiveData, errorLiveData )
 	}
 
 	/**On-Click Method for performing actions when a [Launch] Event from [List] of [Launch]es is
@@ -65,17 +77,9 @@ class MainViewModel (
 	 * @return [String] containing formatted Date and Time.
 	 * Refer below Link for more detail on SimpleDateFormat:
 	 * https://www.journaldev.com/17899/java-simpledateformat-java-date-format */
-	fun convertUTCDateTime ( utcDate : String? ) : String {
-		// Define an Input Format of Date and Time.
-		val inputFormat = SimpleDateFormat ( "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH )
-
-		// Define an Output Format of Date and Time.
-		val outputFormat = SimpleDateFormat ( "dd MMM yyyy, hh:mm a", Locale.ENGLISH )
-
-		// Parse the UTC Date and Time to get Date.
-		val date = inputFormat.parse ( utcDate )
-
-		// Format the Date to our own Format of Date and Time.
-		return outputFormat.format ( date )
+	fun convertDateTime ( utcDate : String? ) : String {
+		if ( utcDate == null ) return ""
+		return dateFormatter ( utcDate, API_DATE_FORMAT, DESIRED_DATE_FORMAT )
 	}
+
 }

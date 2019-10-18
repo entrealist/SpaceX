@@ -67,6 +67,44 @@ class LaunchesListFragment : BaseFragment () {
 
 	}
 
+	/*----------------------------------------- Observers ----------------------------------------*/
+
+	/**[Observer] for observing changes in [List] of Upcoming [Launch]es.*/
+	private val upcomingLaunchesObserver = Observer < List <Launch> > {
+		// Notify changes in the Upcoming Launches Fragment.
+		printLog(tag, "Upcoming Launches Changed")
+		/*printLog ( TAG, it?.toString () )*/
+
+		// Add the List of Upcoming Launches to the Adapter.
+		launchRecyclerAdapter?.replaceLaunchesList ( it )
+	}
+
+	/**[Observer] for observing changes in [List] of Past [Launch]es.*/
+	private val pastLaunchesObserver = Observer < List <Launch> > {
+		// Notify changes in the Past Launches Fragment.
+		printLog(tag, "Past Launches Changed")
+		/*printLog ( TAG, it?.toString () )*/
+
+		// Sort the past launches in Descending Order.
+		Collections.sort ( it, descendingLaunchesComparator )
+
+		// Add the List of Past Launches to the Adapter.
+		launchRecyclerAdapter?.replaceLaunchesList ( it )
+	}
+
+	/*---------------------------------------- Comparators ---------------------------------------*/
+
+	/**[Comparator] for Comparing two [Launch]es and put them in descending order.*/
+	private val descendingLaunchesComparator = Comparator < Launch > {
+		launch1 : Launch, launch2 : Launch ->
+		when {
+			launch1.flightNumber!! == launch2.flightNumber!! -> 0
+			launch1.flightNumber > launch2.flightNumber -> -1
+			launch1.flightNumber < launch2.flightNumber -> 1
+			else -> 0
+		}
+	}
+
 	/*---------------------------------- BaseFragment Callbacks ----------------------------------*/
 
 	override fun initializeViews ( view : View ) {
@@ -143,53 +181,18 @@ class LaunchesListFragment : BaseFragment () {
 	private fun attachObservers () {
 		when ( launchType ) {
 			LAUNCH_TYPE_UPCOMING -> {
-				listener?.getVM ()?.repository?.upcomingLaunchesLiveData?.observe (this, upcomingLaunchesObserver )
+				listener?.getVM ()?.upcomingLaunchesLiveData?.observe (this, upcomingLaunchesObserver )
 			}
 
 			LAUNCH_TYPE_PAST -> {
-				listener?.getVM ()?.repository?.pastLaunchesLiveData?.observe (this, pastLaunchesObserver )
+				listener?.getVM ()?.pastLaunchesLiveData?.observe (this, pastLaunchesObserver )
 			}
 		}
 	}
 
+	/**Request the [androidx.lifecycle.ViewModel] to fetch the Launches of given type.*/
 	private fun getLaunches () {
-		listener?.getVM ()?.getLaunches (launchType )
-	}
-
-	/*----------------------------------------- Observers ----------------------------------------*/
-
-	/**[Observer] for observing changes in [List] of Upcoming [Launch]es.*/
-	private val upcomingLaunchesObserver = Observer < List <Launch> > {
-		// Notify changes in the Upcoming Launches Fragment.
-		printLog(tag, "Upcoming Launches Changed")
-		/*printLog ( TAG, it?.toString () )*/
-
-		// Add the List of Upcoming Launches to the Adapter.
-		launchRecyclerAdapter?.replaceLaunchesList ( it )
-	}
-
-	/**[Observer] for observing changes in [List] of Past [Launch]es.*/
-	private val pastLaunchesObserver = Observer < List <Launch> > {
-		// Notify changes in the Past Launches Fragment.
-		printLog(tag, "Past Launches Changed")
-		/*printLog ( TAG, it?.toString () )*/
-
-		// Sort the past launches in Descending Order.
-		Collections.sort ( it, descendingLaunchesComparator )
-
-		// Add the List of Past Launches to the Adapter.
-		launchRecyclerAdapter?.replaceLaunchesList ( it )
-	}
-
-	/**[Comparator] for Comparing two [Launch]es and put them in descending order.*/
-	private val descendingLaunchesComparator = Comparator <Launch> {
-		launch1 : Launch, launch2 : Launch ->
-		when {
-			launch1.flightNumber!! == launch2.flightNumber!! -> 0
-			launch1.flightNumber > launch2.flightNumber -> -1
-			launch1.flightNumber < launch2.flightNumber -> 1
-			else -> 0
-		}
+		listener?.getVM ()?.getLaunches ( launchType )
 	}
 
 	/*---------------------------------------- Interfaces ----------------------------------------*/

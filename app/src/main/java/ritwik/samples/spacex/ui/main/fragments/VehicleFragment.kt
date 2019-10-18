@@ -8,9 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
+import androidx.lifecycle.Observer
+
 import ritwik.samples.spacex.R
 
 import ritwik.samples.spacex.common.BaseFragment
+
+import ritwik.samples.spacex.pojo.rockets.Rocket
 
 /**[androidx.fragment.app.Fragment] to showcase all the types of Rockets used by SpaceX..
  * @author Ritwik Jamuar.*/
@@ -29,12 +33,20 @@ class VehicleFragment : BaseFragment () {
 
 	}
 
+	/*----------------------------------------- Observers ----------------------------------------*/
+
+	/**[Observer] for observing changes in [List] of All [Rocket]s.*/
+	private val allRocketsObserver = Observer < List < Rocket > > {
+		// TODO : Populate the List of Rockets in the Adapter.
+	}
+
 	/*---------------------------------- BaseFragment Callbacks ----------------------------------*/
 
 	override fun getLayoutRes () : Int = R.layout.fragment_vehicle
 
 	override fun initializeViews ( view : View ) {
 		// TODO : Add Code related to initialization of Views associated with this Fragment.
+		attachObservers ()
 	}
 
 	override fun setListener ( context : Context ) {
@@ -58,6 +70,13 @@ class VehicleFragment : BaseFragment () {
 		container : ViewGroup?,
 		savedInstanceState : Bundle? )
 		: View? = null
+
+	/*-------------------------------------- Private Methods -------------------------------------*/
+
+	/**Attaches [Observer]s to this [androidx.fragment.app.Fragment].*/
+	private fun attachObservers () {
+		listener?.getVM ()?.allRocketsLiveData?.observe ( this, allRocketsObserver )
+	}
 
 	/*---------------------------------------- Interfaces ----------------------------------------*/
 
