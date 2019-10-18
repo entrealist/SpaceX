@@ -10,8 +10,6 @@ import android.view.ViewGroup
 
 import androidx.databinding.DataBindingUtil
 
-import androidx.fragment.app.Fragment
-
 import androidx.lifecycle.Observer
 
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,13 +30,11 @@ import ritwik.samples.spacex.utilities.printLog
 
 import ritwik.samples.spacex.components.adapters.LaunchListAdapter
 
-import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
-
 import java.util.*
 
 import kotlin.Comparator
 
-/**[Fragment] to show the list of upcomingLaunches of SpaceX.
+/**[androidx.fragment.app.Fragment] to show the list of upcomingLaunches of SpaceX.
  * @author Ritwik Jamuar.*/
 class LaunchesListFragment : BaseFragment () {
 
@@ -147,17 +143,17 @@ class LaunchesListFragment : BaseFragment () {
 	private fun attachObservers () {
 		when ( launchType ) {
 			LAUNCH_TYPE_UPCOMING -> {
-				listener?.getVM ()?.repository?.upcomingLaunchesLiveData?.observe ( this, upcomingLaunchesObserver )
+				listener?.getVM ()?.repository?.upcomingLaunchesLiveData?.observe (this, upcomingLaunchesObserver )
 			}
 
 			LAUNCH_TYPE_PAST -> {
-				listener?.getVM ()?.repository?.pastLaunchesLiveData?.observe ( this, pastLaunchesObserver )
+				listener?.getVM ()?.repository?.pastLaunchesLiveData?.observe (this, pastLaunchesObserver )
 			}
 		}
 	}
 
 	private fun getLaunches () {
-		listener?.getVM ()?.getLaunches ( launchType )
+		listener?.getVM ()?.getLaunches (launchType )
 	}
 
 	/*----------------------------------------- Observers ----------------------------------------*/
@@ -199,11 +195,6 @@ class LaunchesListFragment : BaseFragment () {
 	/*---------------------------------------- Interfaces ----------------------------------------*/
 
 	/**Interface for providing callback to [ritwik.samples.spacex.ui.main.MainActivity].*/
-	interface Listener {
+	interface Listener : MainFragmentListener
 
-		/**Fetches the [MainViewModel] from [ritwik.samples.spacex.ui.main.MainActivity].
-		 * @return Instance of [MainViewModel].*/
-		fun getVM () : MainViewModel
-
-	}
 }

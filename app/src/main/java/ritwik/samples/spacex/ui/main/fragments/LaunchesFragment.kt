@@ -9,9 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-
 import androidx.viewpager.widget.ViewPager
 
 import com.google.android.material.tabs.TabLayout
@@ -25,7 +22,7 @@ import ritwik.samples.spacex.common.BaseFragment
 
 import ritwik.samples.spacex.components.adapters.LaunchesOptionsAdapter
 
-/**[Fragment] to showcase all the Upcoming and Past Launches conducted by SpaceX.
+/**[androidx.fragment.app.Fragment] to showcase all the Upcoming and Past Launches conducted by SpaceX.
  * @author Ritwik Jamuar*/
 class LaunchesFragment : BaseFragment () {
 
@@ -94,11 +91,6 @@ class LaunchesFragment : BaseFragment () {
 
 	/*---------------------------------------- Interfaces ----------------------------------------*/
 
-	// TODO : Add Implementation to get the Fragment Manager from Activity.
-	interface Listener {
-
-		fun getFMFromActivity () : FragmentManager
-
-	}
+	interface Listener : MainFragmentListener
 
 }

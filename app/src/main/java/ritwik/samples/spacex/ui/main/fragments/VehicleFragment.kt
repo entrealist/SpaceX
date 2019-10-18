@@ -8,14 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-
 import ritwik.samples.spacex.R
 
 import ritwik.samples.spacex.common.BaseFragment
 
-/**[Fragment] to showcase all the types of Rockets used by SpaceX..
+/**[androidx.fragment.app.Fragment] to showcase all the types of Rockets used by SpaceX..
  * @author Ritwik Jamuar.*/
 class VehicleFragment : BaseFragment () {
 	// Listeners.
@@ -65,9 +62,6 @@ class VehicleFragment : BaseFragment () {
 	/*---------------------------------------- Interfaces ----------------------------------------*/
 
 	/**Interface that acts as a Listener for [VehicleFragment] to whoever implements it.*/
-	interface Listener {
-		/**Gets the [FragmentManager] from [android.app.Activity].
-		 * @return Instance of [FragmentManager] from the parent [android.app.Activity].*/
-		fun getFMFromActivity () : FragmentManager
-	}
+	interface Listener : MainFragmentListener
+
 }

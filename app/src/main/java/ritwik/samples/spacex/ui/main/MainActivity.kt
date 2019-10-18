@@ -80,7 +80,7 @@ class MainActivity
 		initializeViews ()
 	}
 
-	override fun getLayoutRes () : Int { return R.layout.activity_main }
+	override fun getLayoutRes () : Int = R.layout.activity_main
 
 	override fun cleanUp () {
 		// TODO : Add code for de-reference.
@@ -143,13 +143,10 @@ class MainActivity
 		navigationView?.setNavigationItemSelectedListener ( navigationItemSelectedListener )
 	}
 
-	/*---------------------------- LaunchesFragment.Listener Callbacks ---------------------------*/
+	/*------------------------------- MainFragmentListener Callbacks -----------------------------*/
 
-	override fun getFMFromActivity () : FragmentManager {
-		return supportFragmentManager
-	}
+	override fun getFMFromActivity () : FragmentManager = supportFragmentManager
 
-	override fun getVM () : MainViewModel {
-		return viewModel
-	}
+	override fun getVM () : MainViewModel = viewModel
+
 }
