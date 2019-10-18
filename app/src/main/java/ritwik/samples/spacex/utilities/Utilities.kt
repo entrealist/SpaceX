@@ -1,4 +1,4 @@
-package ritwik.samples.spacex
+package ritwik.samples.spacex.utilities
 
 /**
  * Utility class for Containing Common Methods to be used across the application.

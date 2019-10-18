@@ -28,7 +28,7 @@ import ritwik.samples.spacex.databinding.FragmentLaunchesListBinding
 
 import ritwik.samples.spacex.pojo.launches.Launch
 
-import ritwik.samples.spacex.printLog
+import ritwik.samples.spacex.utilities.printLog
 
 import ritwik.samples.spacex.components.adapters.LaunchListAdapter
 
@@ -165,7 +165,7 @@ class LaunchesListFragment : BaseFragment () {
 	/**[Observer] for observing changes in [List] of Upcoming [Launch]es.*/
 	private val upcomingLaunchesObserver = Observer < List <Launch> > {
 		// Notify changes in the Upcoming Launches Fragment.
-		printLog ( tag, "Upcoming Launches Changed" )
+		printLog(tag, "Upcoming Launches Changed")
 		/*printLog ( TAG, it?.toString () )*/
 
 		// Add the List of Upcoming Launches to the Adapter.
@@ -175,7 +175,7 @@ class LaunchesListFragment : BaseFragment () {
 	/**[Observer] for observing changes in [List] of Past [Launch]es.*/
 	private val pastLaunchesObserver = Observer < List <Launch> > {
 		// Notify changes in the Past Launches Fragment.
-		printLog ( tag, "Past Launches Changed" )
+		printLog(tag, "Past Launches Changed")
 		/*printLog ( TAG, it?.toString () )*/
 
 		// Sort the past launches in Descending Order.
