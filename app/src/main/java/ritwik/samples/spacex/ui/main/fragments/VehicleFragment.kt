@@ -13,39 +13,34 @@ import androidx.fragment.app.FragmentManager
 
 import ritwik.samples.spacex.R
 
+import ritwik.samples.spacex.common.BaseFragment
+
 /**[Fragment] to showcase all the types of Rockets used by SpaceX..
  * @author Ritwik Jamuar.*/
-class VehicleFragment : Fragment () {
+class VehicleFragment : BaseFragment () {
 	// Listeners.
 	private var listener : Listener? = null
 
 	/*------------------------------------- Companion Object -------------------------------------*/
 
 	companion object {
+
 		/**Factory method to create a new instance of [VehicleFragment].
 		 * @return A new instance of [VehicleFragment].*/
 		@JvmStatic
-		fun newInstance () =
-			VehicleFragment ()
-				.apply {
-					arguments = Bundle ()
-				}
+		fun create () = VehicleFragment ()
+
 	}
 
-	/*------------------------------------ Fragment Callbacks ------------------------------------*/
+	/*---------------------------------- BaseFragment Callbacks ----------------------------------*/
 
-	override fun onCreateView (
-		inflater : LayoutInflater,
-		container : ViewGroup?,
-		savedInstanceState : Bundle?
-	) : View? {
-		val view : View = inflater.inflate ( R.layout.fragment_vehicle, container, false )
-		initializeViews ( view )
-		return view
+	override fun getLayoutRes () : Int = R.layout.fragment_vehicle
+
+	override fun initializeViews ( view : View ) {
+		// TODO : Add Code related to initialization of Views associated with this Fragment.
 	}
 
-	override fun onAttach ( context : Context ) {
-		super.onAttach ( context )
+	override fun setListener ( context : Context ) {
 		if ( context is Listener ) {
 			listener = context
 		} else {
@@ -53,18 +48,19 @@ class VehicleFragment : Fragment () {
 		}
 	}
 
-	override fun onDetach () {
-		super.onDetach ()
+	override fun cleanUp () {
 		listener = null
 	}
 
-	/*------------------------------------- Private Methods --------------------------------------*/
+	override fun tag () : String = VehicleFragment::class.java.simpleName
 
-	/**Instantiate the [View]s associated with this fragment.
-	 * @param view Instance of [View] to get the instance of composite views.*/
-	private fun initializeViews ( view : View ) {
-		// TODO : Add Code related to initialization of Views associated with this Fragment.
-	}
+	override fun isDataBinding () : Boolean = false
+
+	override fun applyBinding (
+		inflater : LayoutInflater,
+		container : ViewGroup?,
+		savedInstanceState : Bundle? )
+		: View? = null
 
 	/*---------------------------------------- Interfaces ----------------------------------------*/
 

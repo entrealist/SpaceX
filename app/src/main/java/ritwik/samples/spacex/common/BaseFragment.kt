@@ -21,7 +21,11 @@ abstract class BaseFragment : Fragment () {
 		container : ViewGroup?,
 		savedInstanceState : Bundle?
 	) : View? {
-		return inflater.inflate ( getLayoutRes (), container, false )
+		return if ( isDataBinding () ) {
+			applyBinding ( inflater, container, savedInstanceState )
+		} else {
+			inflater.inflate (getLayoutRes (), container, false )
+		}
 	}
 
 	override fun onViewCreated (view : View, savedInstanceState : Bundle? ) {
@@ -61,5 +65,23 @@ abstract class BaseFragment : Fragment () {
 	 * For extending [Fragment]s, return Simple Name of the [Fragment] class.
 	 * @return [String] denoting the Tag of the [Fragment].*/
 	abstract fun tag () : String
+
+	/**Tells that the implementing [Fragment] is using Data Binding Library.
+	 * To implementing Fragments, Return true only when the implementing [Fragment] is using Data
+	 * Binding Library or not, else, always return false.
+	 * @return [Boolean] that denotes whether Data Binding is used for the implementing
+	 * [Fragment] or not.*/
+	abstract fun isDataBinding () : Boolean
+
+	/**Tells the implementing [Fragment] to implement their Data Bindings and then return the [View]
+	 * from the Data Binding.
+	 * If Data Binding is not used, then simply return null in conjunction with returning false
+	 * to [isDataBinding].
+	 * @return [View] from Data Binding, if the implementing Fragment used Data Binding, else null.*/
+	abstract fun applyBinding (
+		inflater : LayoutInflater,
+		container : ViewGroup?,
+		savedInstanceState : Bundle?
+	) : View?
 
 }

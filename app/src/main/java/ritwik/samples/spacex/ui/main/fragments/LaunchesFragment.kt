@@ -2,7 +2,12 @@ package ritwik.samples.spacex.ui.main.fragments
 
 import android.content.Context
 
+import android.os.Bundle
+
+import android.view.LayoutInflater
+
 import android.view.View
+import android.view.ViewGroup
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -61,7 +66,7 @@ class LaunchesFragment : BaseFragment () {
 		tabLayout?.setupWithViewPager ( viewPager )
 	}
 
-	override fun getLayoutRes () : Int { return R.layout.fragment_launches }
+	override fun getLayoutRes () : Int = R.layout.fragment_launches
 
 	override fun setListener ( context : Context ) {
 		if ( context is Listener ) {
@@ -77,7 +82,15 @@ class LaunchesFragment : BaseFragment () {
 		viewPager = null
 	}
 
-	override fun tag () : String { return LaunchesFragment::class.java.simpleName }
+	override fun tag () : String = LaunchesFragment::class.java.simpleName
+
+	override fun isDataBinding () : Boolean = false
+
+	override fun applyBinding (
+		inflater : LayoutInflater,
+		container : ViewGroup?,
+		savedInstanceState : Bundle? )
+		: View? = null
 
 	/*---------------------------------------- Interfaces ----------------------------------------*/
 
