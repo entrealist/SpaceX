@@ -1,7 +1,15 @@
 package ritwik.samples.spacex.ui.main.mvvm
 
+import android.widget.ImageView
+
+import androidx.databinding.BindingAdapter
+
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+
+import ritwik.samples.spacex.R
+
+import ritwik.samples.spacex.application.App
 
 import ritwik.samples.spacex.application.database.LAUNCH_TYPE_PAST
 import ritwik.samples.spacex.application.database.LAUNCH_TYPE_UPCOMING
@@ -12,6 +20,8 @@ import ritwik.samples.spacex.pojo.rockets.Rocket
 import ritwik.samples.spacex.utilities.API_DATE_FORMAT
 import ritwik.samples.spacex.utilities.DESIRED_DATE_FORMAT
 import ritwik.samples.spacex.utilities.dateFormatter
+
+const val BINDING_IMAGE_URL = "imageURL"
 
 /**ViewModel of [ritwik.samples.spacex.ui.main.MainActivity].
  * @author Ritwik Jamuar.*/
@@ -34,6 +44,21 @@ class MainViewModel (
 		 * @param repository Repository of [ritwik.samples.spacex.ui.main.MainActivity].
 		 * @return Instance of [MainViewModel] : ViewModel of [ritwik.samples.spacex.ui.main.MainActivity].*/
 		fun create ( repository : MainRepository ) : MainViewModel = MainViewModel ( repository )
+
+		@BindingAdapter( BINDING_IMAGE_URL )
+		@JvmStatic
+		fun setImageURL ( imageView : ImageView, url : String? ) {
+			url?.let {
+				App
+					.instance
+					.getAppComponent ()
+					.getPicasso ()
+					.load ( url )
+					.placeholder ( R.drawable.ic_launcher_background )
+					.error ( R.drawable.ic_launcher_background )
+					.into ( imageView )
+			}
+		}
 
 	}
 
@@ -68,7 +93,11 @@ class MainViewModel (
 	/**On-Click Method for performing actions when a [Launch] Event from [List] of [Launch]es is
 	 * selected:
 	 * @param launch Instance of [Launch].*/
-	fun onLaunchClicked ( launch : Launch) {
+	fun onLaunchClicked ( launch : Launch ) {
+		// TODO : Perform some action when a Launch is clicked in the UI.
+	}
+
+	fun onRocketSpecsClicked (rocket : Rocket ) {
 		// TODO : Perform some action when a Launch is clicked in the UI.
 	}
 

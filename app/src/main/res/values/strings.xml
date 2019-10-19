@@ -4,6 +4,8 @@
 	<!-- Image View Content Description -->
 	<string name = "imcd_rocket" >Space X Rocket</string >
 	<string name = "imcd_space_x_logo" >Space X Logo</string >
+	<string name = "imcd_rocket_image">Rocket</string>
+	<string name = "imcd_more_info">More Info</string>
 
 	<!-- Menu Items -->
 	<string name = "menu_vehicle" >Vehicle</string >
@@ -20,6 +22,7 @@
 
 	<!-- Recycler View Item -->
 	<string name = "recycler_item_launch_text_block" >Block</string >
+	<string name = "recycler_item_rocket_text_specs">Rocket Specs</string>
 
 	<!-- Fragment -->
 	<string name = "fragment_launches_list_text_next_launch_in" >Next Launch in</string >
