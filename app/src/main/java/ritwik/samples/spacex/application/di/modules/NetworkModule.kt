@@ -6,58 +6,35 @@ import dagger.Provides
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 
-import okhttp3.logging.HttpLoggingInterceptor
-
 import ritwik.samples.spacex.application.di.scopes.AppScope
+
+import ritwik.samples.spacex.helpers.InterceptorHelper
 
 /**[Module] for providing the instance of [OkHttpClient] and [Cache] to [RetrofitModule].
  * @author Ritwik Jamuar*/
-@Module ( includes = [ ContextModule::class, CacheModule::class ] )
-class NetworkModule {
-	private val tag : String = "Network"
-
-	/**[Provides] Method for providing instance of [HttpLoggingInterceptor].
-	 * [HttpLoggingInterceptor] is to be used by [OkHttpClient] for HTTP Interception.
-	 * @return Instance of [HttpLoggingInterceptor].*/
-	@AppScope
-	@Provides
-	fun providesHTTPLoggingInterceptor () : HttpLoggingInterceptor {
-		// Initialize the HTTP Logging Interceptor with Lambda Expression to print every log
-		// messages in the Network
-		val loggingInterceptor = HttpLoggingInterceptor {
-			printLog ( it )
-		}
-
-		// Set the Level of Logging to BODY so that all the information about request and
-		// response is shown.
-		// TODO : Change the Logging Level to NONE at the time of application publishing to Play
-		//  Store so that no network logs are shown in Logcat.
-		loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-
-		return loggingInterceptor
-	}
+@Module (
+	includes = [
+		CacheModule::class,
+		InterceptorModule::class
+	]
+) class NetworkModule {
 
 	/**[Provides] Method for providing instance of [OkHttpClient].
 	 * [OkHttpClient] is to be used by [retrofit2.Retrofit] as it's HTTP Client.
-	 * @param loggingInterceptor [HttpLoggingInterceptor] for HTTP Interception.
+	 * @param interceptorHelper [InterceptorHelper] that provides different Network Interceptors.
 	 * @param cache [Cache] for storing Network Cache.
 	 * @return Instance of [OkHttpClient].*/
 	@AppScope
 	@Provides
 	fun providesOkHTTPClient (
-		loggingInterceptor : HttpLoggingInterceptor,
+		interceptorHelper : InterceptorHelper,
 		cache : Cache
-	) : OkHttpClient {
-		return OkHttpClient
+	) : OkHttpClient =
+		OkHttpClient
 			.Builder ()
-			.addInterceptor ( loggingInterceptor ) // Set the HTTP Logging Interceptor.
+			.addInterceptor ( interceptorHelper.getLoggingInterceptor () ) // Set the HTTP Logging Interceptor.
+			.addNetworkInterceptor ( interceptorHelper.getCacheInterceptor () )
 			.cache ( cache ) // Set the Cache.
 			.build ()
-	}
 
-	/**Prints the Log to Logcat.
-	 * @param message [String] containing the message to be displayed.*/
-	private fun printLog ( message : String? ) {
-		android.util.Log.e ( tag, message )
-	}
 }

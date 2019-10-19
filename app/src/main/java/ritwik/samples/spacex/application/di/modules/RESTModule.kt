@@ -11,14 +11,18 @@ import ritwik.samples.spacex.application.di.scopes.AppScope
 
 /**[Module] for providing instance of [RESTServices].
  * @author Ritwik Jamuar*/
-@Module ( includes = [ RetrofitModule::class ] )
-class RESTModule {
+@Module (
+	includes = [
+		RetrofitModule::class
+	]
+) class RESTModule {
+
 	/**[Provides] Method for providing instance of [RESTServices].
 	 * @param retrofit [Retrofit] Instance configured in [RetrofitModule].
 	 * @return Instance of [RESTServices].]*/
 	@AppScope
 	@Provides
-	fun providesRESTServices ( retrofit : Retrofit ) : RESTServices {
-		return retrofit.create ( RESTServices::class.java )
-	}
+	fun providesRESTServices ( retrofit : Retrofit ) : RESTServices =
+		retrofit.create ( RESTServices::class.java )
+
 }

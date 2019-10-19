@@ -18,19 +18,17 @@ import ritwik.samples.spacex.application.di.scopes.ApplicationContext
  * @author Ritwik Jamuar*/
 @Module
 class ContextModule ( private val context : Context ) {
+
 	/**[Provides] Method for providing instance of Context.
 	 * @return [Context] of Activity.*/
 	@AppScope
 	@Provides
-	fun providesContext () : Context {
-		return context
-	}
+	fun providesContext () : Context = context
 
 	/**[Provides] Method for providing instance of Context.
 	 * @return [Context] of Application.*/
 	@ApplicationContext
 	@Provides
-	fun providesApplicationContext () : Context {
-		return context.applicationContext
-	}
+	fun providesApplicationContext () : Context = context.applicationContext
+
 }

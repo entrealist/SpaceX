@@ -40,12 +40,7 @@ class MainRepository (
 		/**Creates the Instance of [MainRepository].
 		 * @param restServices Instance of [RESTServices].
 		 * @return Instance of [MainRepository]*/
-		fun create ( restServices : RESTServices? ) : MainRepository {
-			val repository = MainRepository ( restServices )
-			repository.upcomingLaunches.value = ArrayList (0 )
-			repository.pastLaunches.value = ArrayList (0 )
-			return repository
-		}
+		fun create ( restServices : RESTServices? ) : MainRepository = MainRepository ( restServices )
 
 	}
 

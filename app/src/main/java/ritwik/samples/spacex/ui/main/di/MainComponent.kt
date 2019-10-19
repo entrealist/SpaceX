@@ -5,11 +5,16 @@ import dagger.Component
 import ritwik.samples.spacex.ui.main.MainActivity
 
 /**[Component] for providing [ritwik.samples.spacex.ui.main.mvvm.MainViewModel] to [MainActivity].
- * @author Ritwik Jamuar*/
-@Component ( modules = [ MainModule::class ] )
+ * @author Ritwik Jamuar.*/
 @MainScope
-interface MainComponent {
+@Component (
+	modules = [
+		MainModule::class
+	]
+) interface MainComponent {
+
 	/**Injects the [MainActivity] onto [MainModule] for dependency fulfillment.
-	 * @param activity Instance of [MainActivity]*/
+	 * @param activity Instance of [MainActivity].*/
 	fun injectActivity ( activity : MainActivity )
+
 }

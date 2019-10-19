@@ -1,5 +1,7 @@
 package ritwik.samples.spacex.ui.main.di
 
+import androidx.lifecycle.ViewModelProviders
+
 import dagger.Module
 import dagger.Provides
 
@@ -37,9 +39,8 @@ class MainModule (
 
 	@Provides
 	@MainScope
-	fun providesMainViewModel ( factory : MainViewModelFactory ) : MainViewModel {
-		return MainViewModel.create ( activity, factory )
-	}
+	fun providesMainViewModel ( factory : MainViewModelFactory ) : MainViewModel =
+		ViewModelProviders.of ( activity, factory ).get ( MainViewModel::class.java )
 
 	/*--------------------------------- MainViewModel Dependencies -------------------------------*/
 
@@ -47,9 +48,7 @@ class MainModule (
 	@MainScope
 	fun providesMainViewModelFactory (
 		repository : MainRepository
-	) : MainViewModelFactory {
-		return MainViewModelFactory ( repository = repository )
-	}
+	) : MainViewModelFactory = MainViewModelFactory ( repository = repository )
 
 	/*----------------------------- MainViewModelFactory Dependencies ----------------------------*/
 
@@ -57,15 +56,16 @@ class MainModule (
 	@MainScope
 	fun providesMainRepository (
 		restServices : RESTServices
-	) : MainRepository {
-		return MainRepository.create ( restServices )
-	}
+	) : MainRepository = MainRepository.create ( restServices )
 
 	/*-------------------------------- MainRepository Dependencies -------------------------------*/
 
 	@Provides
 	@MainScope
-	fun providesRESTServices () : RESTServices {
-		return App.getInstance ( activity ).getAppComponent ().getRESTServices ()
-	}
+	fun providesRESTServices () : RESTServices =
+		App
+			.getInstance ( activity )
+			.getAppComponent ()
+			.getRESTServices ()
+
 }

@@ -14,8 +14,12 @@ import ritwik.samples.spacex.application.di.scopes.AppScope
 /**[Component] for providing the common libraries that will be used throughout the application.
  * @author Ritwik Jamuar*/
 @AppScope
-@Component ( modules = [ RESTModule::class, PicassoModule::class ] )
-interface AppComponent {
+@Component (
+	modules = [
+		RESTModule::class,
+		PicassoModule::class
+	]
+) interface AppComponent {
 
 	/**Provides the instance of [RESTServices].
 	 * @return Instance of [RESTServices]*/
