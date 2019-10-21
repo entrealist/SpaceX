@@ -14,6 +14,7 @@ import ritwik.samples.spacex.application.App
 import ritwik.samples.spacex.application.database.LAUNCH_TYPE_PAST
 import ritwik.samples.spacex.application.database.LAUNCH_TYPE_UPCOMING
 
+import ritwik.samples.spacex.pojo.capsules.Capsule
 import ritwik.samples.spacex.pojo.launches.Launch
 import ritwik.samples.spacex.pojo.rockets.Rocket
 
@@ -33,6 +34,7 @@ class MainViewModel (
 	val upcomingLaunchesLiveData = MutableLiveData < List < Launch > > ()
 	val pastLaunchesLiveData = MutableLiveData < List < Launch > > ()
 	val allRocketsLiveData = MutableLiveData < List < Rocket > > ()
+	val allCapsulesLiveData = MutableLiveData < List < Capsule > > ()
 	val noInternetLiveData = MutableLiveData < Boolean > ()
 	val errorLiveData = MutableLiveData < String > ()
 
@@ -90,6 +92,10 @@ class MainViewModel (
 		repository.getAllRockets ( allRocketsLiveData, noInternetLiveData, errorLiveData )
 	}
 
+	fun getCapsules () {
+		repository.getAllCapsules ( allCapsulesLiveData, noInternetLiveData, errorLiveData )
+	}
+
 	/**On-Click Method for performing actions when a [Launch] Event from [List] of [Launch]es is
 	 * selected:
 	 * @param launch Instance of [Launch].*/
@@ -97,7 +103,11 @@ class MainViewModel (
 		// TODO : Perform some action when a Launch is clicked in the UI.
 	}
 
-	fun onRocketSpecsClicked (rocket : Rocket ) {
+	fun onRocketSpecsClicked ( rocket : Rocket ) {
+		// TODO : Perform some action when a Launch is clicked in the UI.
+	}
+
+	fun onCapsuleSpecsClicked ( capsule : Capsule ) {
 		// TODO : Perform some action when a Launch is clicked in the UI.
 	}
 

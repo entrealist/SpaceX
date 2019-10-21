@@ -10,18 +10,22 @@ import ritwik.samples.spacex.application.database.LAUNCH_TYPE_PAST
 import ritwik.samples.spacex.application.database.LAUNCH_TYPE_UPCOMING
 import ritwik.samples.spacex.application.database.RESTServices
 
+import ritwik.samples.spacex.pojo.capsules.Capsule
 import ritwik.samples.spacex.pojo.launches.Launch
 import ritwik.samples.spacex.pojo.rockets.Rocket
+
+import ritwik.samples.spacex.utilities.hasNetwork
 
 /**Repository of [MainViewModel].
  * @author Ritwik Jamuar.*/
 class MainRepository (
-	private val restServices : RESTServices?
+	private var restServices : RESTServices?
 ) {
 	// LiveData's
 	private lateinit var upcomingLaunches : MutableLiveData < List < Launch > >
 	private lateinit var pastLaunches : MutableLiveData < List < Launch > >
 	private lateinit var allRockets : MutableLiveData < List < Rocket > >
+	private lateinit var allCapsules : MutableLiveData < List < Capsule > >
 	private lateinit var noInternet : MutableLiveData < Boolean >
 	private lateinit var error : MutableLiveData < String >
 
@@ -133,11 +137,59 @@ class MainRepository (
 			}
 	}
 
-	/**
-	 * Performs Cleanup of the resources associated with this repository.
-	 */
+	fun getAllCapsules (
+		capsulesLiveData : MutableLiveData < List < Capsule > >,
+		noInternet : MutableLiveData < Boolean >,
+		error : MutableLiveData < String >
+	) {
+
+		this.allCapsules = capsulesLiveData
+		this.noInternet = noInternet
+		this.error = error
+
+		if ( hasNetwork () ) {
+			CoroutineScope ( Dispatchers.IO + completableJob )
+				.launch {
+
+					// Get the response.
+					val response : Response < List < Capsule > >? = restServices?.getAllCapsules ()
+
+					withContext ( Dispatchers.Main ) {
+
+						response?.let {
+							when ( response.code () ) {
+								200 -> {
+									// Convert the Retrofit's Response to list of Capsules.
+									val capsules = response.body ()
+
+									if ( capsules == null ) {
+										error.postValue ( "No Response Found" )
+									} else {
+										allCapsules.value = capsules
+									}
+
+								}
+
+								else -> {
+									error.postValue ( "Something went wrong" )
+								}
+							}
+
+						}
+
+					}
+
+				}
+		} else {
+			noInternet.postValue ( true )
+		}
+
+	}
+
+	/**Performs Cleanup of the resources associated with this repository.*/
 	fun cleanUp () {
 		completableJob.cancel ()
+		restServices = null
 	}
 
 }
