@@ -71,7 +71,15 @@ class MainActivity
 		// TODO : Need to find a better implementation of Fragment Navigation.
 		when ( it.itemId ) {
 			R.id.menu_item_launches -> {
-				navigationController?.popBackStack ( R.id.launchesFragment, true )
+				navigationController?.currentDestination?.let { destination ->
+					when ( destination.label ) {
+						resources.getString ( R.string.view_label_vehicles ) -> {
+							navigationController?.navigate ( R.id.action_vehicleFragment_to_launchesFragment )
+						}
+
+						else -> { /* Do nothing. */ }
+					}
+				}
 			}
 
 			R.id.menu_item_vehicle -> {
@@ -90,6 +98,7 @@ class MainActivity
 			_, destination, _ ->
 			when ( destination.label ) {
 				resources.getString ( R.string.view_label_launches ) -> toggleDrawerLock (true )
+				resources.getString ( R.string.view_label_vehicles ) -> toggleDrawerLock ( true )
 				else -> toggleDrawerLock (false )
 			}
 		}

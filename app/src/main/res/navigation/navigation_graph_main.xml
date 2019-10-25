@@ -18,7 +18,9 @@
 			app:enterAnim = "@anim/nav_default_enter_anim"
 			app:exitAnim = "@anim/nav_default_exit_anim"
 			app:popEnterAnim = "@anim/nav_default_pop_exit_anim"
-			app:popExitAnim = "@anim/nav_default_pop_enter_anim" />
+			app:popExitAnim = "@anim/nav_default_pop_enter_anim"
+			app:popUpTo = "@+id/vehicleFragment"
+			app:popUpToInclusive = "true" />
 
 	</fragment>
 
@@ -26,6 +28,18 @@
 		android:id = "@+id/vehicleFragment"
 		android:name = "ritwik.samples.spacex.ui.main.fragments.VehicleFragment"
 		android:label = "@string/view_label_vehicles"
-		tools:layout = "@layout/fragment_vehicle" />
+		tools:layout = "@layout/fragment_vehicle" >
+
+		<action
+			android:id = "@+id/action_vehicleFragment_to_launchesFragment"
+			app:destination = "@+id/launchesFragment"
+			app:enterAnim = "@anim/nav_default_enter_anim"
+			app:exitAnim = "@anim/nav_default_exit_anim"
+			app:popEnterAnim = "@anim/nav_default_pop_exit_anim"
+			app:popExitAnim = "@anim/nav_default_pop_enter_anim"
+			app:popUpTo = "@+id/launchesFragment"
+			app:popUpToInclusive = "true" />
+
+	</fragment>
 
 </navigation>
