@@ -20,7 +20,7 @@ import ritwik.samples.spacex.application.database.LAUNCH_TYPE_UPCOMING
 
 import ritwik.samples.spacex.common.BaseFragment
 
-import ritwik.samples.spacex.components.adapters.LaunchesOptionsAdapter
+import ritwik.samples.spacex.components.adapters.ViewPagerFragmentsAdapter
 
 /**[androidx.fragment.app.Fragment] to showcase all the Upcoming and Past Launches conducted by SpaceX.
  * @author Ritwik Jamuar*/
@@ -50,16 +50,16 @@ class LaunchesFragment : BaseFragment () {
 		viewPager = view.findViewById ( R.id.fragment_launches_view_pager )
 
 		// Initialize the ViewPager Adapter.
-		val launchesOptionsAdapter = LaunchesOptionsAdapter ( childFragmentManager )
+		val viewPagerFragmentsAdapter = ViewPagerFragmentsAdapter ( childFragmentManager )
 
 		// Add Instances of Fragments that have to be shown in the ViewPager.
-		launchesOptionsAdapter.addFragment ( LaunchesListFragment.newInstance ( LAUNCH_TYPE_UPCOMING ), "Upcoming" )
-		launchesOptionsAdapter.addFragment ( LaunchesListFragment.newInstance ( LAUNCH_TYPE_PAST ), "Past" )
+		viewPagerFragmentsAdapter.addFragment ( LaunchesListFragment.newInstance ( LAUNCH_TYPE_UPCOMING ), "Upcoming" )
+		viewPagerFragmentsAdapter.addFragment ( LaunchesListFragment.newInstance ( LAUNCH_TYPE_PAST ), "Past" )
 
 		// Set the ViewPager Adapter to the ViewPager.
-		viewPager?.adapter = launchesOptionsAdapter
+		viewPager?.adapter = viewPagerFragmentsAdapter
 
-		// Setup the Tabs with ViewPager
+		// Setup the Tabs with ViewPager.
 		tabLayout?.setupWithViewPager ( viewPager )
 	}
 

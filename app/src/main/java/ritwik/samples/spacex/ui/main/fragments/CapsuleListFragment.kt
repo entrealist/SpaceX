@@ -16,19 +16,19 @@ import ritwik.samples.spacex.R
 
 import ritwik.samples.spacex.common.BaseFragment
 
-import ritwik.samples.spacex.components.adapters.RocketListAdapter
+import ritwik.samples.spacex.components.adapters.CapsuleListAdapter
 
-import ritwik.samples.spacex.pojo.rockets.Rocket
+import ritwik.samples.spacex.pojo.capsules.Capsule
 
-/**[androidx.fragment.app.Fragment] to show the list of all the Rockets used by SpaceX.
+/**[androidx.fragment.app.Fragment] to show the list of all the Capsules used by SpaceX.
  * @author Ritwik Jamuar.*/
-class RocketListFragment : BaseFragment () {
+class CapsuleListFragment : BaseFragment () {
 
 	// Views.
 	private var recyclerView : RecyclerView? = null
 
 	// Adapters.
-	private var adapter : RocketListAdapter? = null
+	private var adapter : CapsuleListAdapter? = null
 
 	// Listeners.
 	private var listener : Listener? = null
@@ -37,30 +37,30 @@ class RocketListFragment : BaseFragment () {
 
 	companion object {
 
-		/**Factory method to create a new instance of [RocketListFragment].
-		 * @return A new instance of [RocketListFragment].*/
+		/**Factory method to create a new instance of [CapsuleListFragment].
+		 * @return A new instance of [CapsuleListFragment].*/
 		@JvmStatic
-		fun create () = RocketListFragment ()
+		fun create () = CapsuleListFragment ()
 
 	}
 
 	/*----------------------------------------- Observers ----------------------------------------*/
 
-	private val allRocketsObserver = Observer < List < Rocket > > {
-		adapter?.replaceLaunchesList ( it )
+	private val allCapsulesObserver = Observer < List < Capsule > > {
+		adapter?.replaceCapsuleList ( it )
 	}
 
 	/*---------------------------------- BaseFragment Callbacks ----------------------------------*/
 
-	override fun getLayoutRes () : Int = R.layout.fragment_rocket_list
+	override fun getLayoutRes () : Int = R.layout.fragment_capsule_list
 
 	override fun initializeViews ( view : View ) {
 		initializeRecyclerView ( view )
 		attachObservers ()
-		getRockets ()
+		getCapsules ()
 	}
 
-	override fun setListener ( context : Context ) {
+	override fun setListener ( context : Context) {
 		if ( context is Listener ) {
 			listener = context
 		} else {
@@ -74,7 +74,7 @@ class RocketListFragment : BaseFragment () {
 		adapter = null
 	}
 
-	override fun tag () : String = RocketListFragment::class.java.simpleName
+	override fun tag () : String = CapsuleListFragment::class.java.simpleName
 
 	override fun isDataBinding () : Boolean = false
 
@@ -87,26 +87,26 @@ class RocketListFragment : BaseFragment () {
 	/*-------------------------------------- Private Methods -------------------------------------*/
 
 	private fun initializeRecyclerView ( view : View ) {
-		recyclerView = view.findViewById ( R.id.fragment_rocket_list_recycler_view )
+		recyclerView = view.findViewById ( R.id.fragment_capsule_list_recycler_view )
 
 		listener?.let { listener ->
-			adapter = RocketListAdapter ( listener.getVM () )
+			adapter = CapsuleListAdapter ( listener.getVM () )
 		}
 
 		recyclerView?.adapter = adapter
 	}
 
 	private fun attachObservers () {
-		listener?.getVM ()?.allRocketsLiveData?.observe (this, allRocketsObserver )
+		listener?.getVM ()?.allCapsulesLiveData?.observe (this, allCapsulesObserver )
 	}
 
-	private fun getRockets () {
-		listener?.getVM ()?.getRockets ()
+	private fun getCapsules () {
+		listener?.getVM ()?.getCapsules ()
 	}
 
 	/*---------------------------------------- Interfaces ----------------------------------------*/
 
-	/**Interface that acts as a Listener for [VehicleFragment] to whoever implements it.*/
+	/**Interface that acts as a Listener for [CapsuleListFragment] to whoever implements it.*/
 	interface Listener : MainFragmentListener
 
 }

@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 
 /**[FragmentStatePagerAdapter] to be used as an Adapter of ViewPager.
  * @author Ritwik Jamuar.*/
-class LaunchesOptionsAdapter ( supportFragmentManager : FragmentManager )
+class ViewPagerFragmentsAdapter ( supportFragmentManager : FragmentManager )
 	: FragmentStatePagerAdapter ( supportFragmentManager ) {
 
 	// Variables.

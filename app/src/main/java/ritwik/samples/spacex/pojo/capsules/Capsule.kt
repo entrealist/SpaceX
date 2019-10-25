@@ -7,7 +7,7 @@ data class Capsule (
 	@field: Json ( name = "capsule_id" ) val capsuleID : String,
 	@field: Json ( name = "status" ) val status : String,
 	@field: Json ( name = "original_launch" ) val launchTimeUTC : String,
-	@field: Json ( name = "original_launch_unix" ) val launchTimeUnix : Long,
+	@field: Json ( name = "original_launch_unix" ) val launchTimeUnix : Long?,
 	@field: Json ( name = "missions" ) val missions : List < Mission >,
 	@field: Json ( name = "landings" ) val landings : Long,
 	@field: Json ( name = "type" ) val type : String,

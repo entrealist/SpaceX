@@ -8,17 +8,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-import androidx.lifecycle.Observer
+import androidx.viewpager.widget.ViewPager
+
+import com.google.android.material.tabs.TabLayout
 
 import ritwik.samples.spacex.R
 
 import ritwik.samples.spacex.common.BaseFragment
 
-import ritwik.samples.spacex.pojo.rockets.Rocket
+import ritwik.samples.spacex.components.adapters.ViewPagerFragmentsAdapter
 
 /**[androidx.fragment.app.Fragment] to showcase all the types of Rockets used by SpaceX..
  * @author Ritwik Jamuar.*/
 class VehicleFragment : BaseFragment () {
+
+	// Views.
+	private var tabLayout : TabLayout? = null
+	private var viewPager : ViewPager? = null
+
 	// Listeners.
 	private var listener : Listener? = null
 
@@ -33,20 +40,12 @@ class VehicleFragment : BaseFragment () {
 
 	}
 
-	/*----------------------------------------- Observers ----------------------------------------*/
-
-	/**[Observer] for observing changes in [List] of All [Rocket]s.*/
-	private val allRocketsObserver = Observer < List < Rocket > > {
-		// TODO : Populate the List of Rockets in the Adapter.
-	}
-
 	/*---------------------------------- BaseFragment Callbacks ----------------------------------*/
 
 	override fun getLayoutRes () : Int = R.layout.fragment_vehicle
 
 	override fun initializeViews ( view : View ) {
-		// TODO : Add Code related to initialization of Views associated with this Fragment.
-		attachObservers ()
+		initializeViewPagerAndAdapter ( view )
 	}
 
 	override fun setListener ( context : Context ) {
@@ -59,6 +58,8 @@ class VehicleFragment : BaseFragment () {
 
 	override fun cleanUp () {
 		listener = null
+		tabLayout = null
+		viewPager = null
 	}
 
 	override fun tag () : String = VehicleFragment::class.java.simpleName
@@ -73,9 +74,23 @@ class VehicleFragment : BaseFragment () {
 
 	/*-------------------------------------- Private Methods -------------------------------------*/
 
-	/**Attaches [Observer]s to this [androidx.fragment.app.Fragment].*/
-	private fun attachObservers () {
-		listener?.getVM ()?.allRocketsLiveData?.observe ( this, allRocketsObserver )
+	private fun initializeViewPagerAndAdapter ( view : View ) {
+		// Initialize Views
+		tabLayout = view.findViewById ( R.id.fragment_vehicle_tab_layout )
+		viewPager = view.findViewById ( R.id.fragment_vehicle_view_pager )
+
+		// Initialize the ViewPager Adapter.
+		val viewPagerFragmentsAdapter = ViewPagerFragmentsAdapter ( childFragmentManager )
+
+		// Add Instances of Fragments that have to be shown in the ViewPager.
+		viewPagerFragmentsAdapter.addFragment ( RocketListFragment.create (), "Rockets" )
+		viewPagerFragmentsAdapter.addFragment ( CapsuleListFragment.create (), "Capsules" )
+
+		// Set the ViewPager Adapter to the ViewPager.
+		viewPager?.adapter = viewPagerFragmentsAdapter
+
+		// Setup the Tabs with ViewPager.
+		tabLayout?.setupWithViewPager ( viewPager )
 	}
 
 	/*---------------------------------------- Interfaces ----------------------------------------*/

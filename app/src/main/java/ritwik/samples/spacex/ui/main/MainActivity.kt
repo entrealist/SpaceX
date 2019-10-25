@@ -26,10 +26,7 @@ import ritwik.samples.spacex.common.BaseActivity
 import ritwik.samples.spacex.ui.main.di.DaggerMainComponent
 import ritwik.samples.spacex.ui.main.di.MainComponent
 import ritwik.samples.spacex.ui.main.di.MainModule
-
-import ritwik.samples.spacex.ui.main.fragments.LaunchesFragment
-import ritwik.samples.spacex.ui.main.fragments.LaunchesListFragment
-import ritwik.samples.spacex.ui.main.fragments.VehicleFragment
+import ritwik.samples.spacex.ui.main.fragments.*
 
 import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
 
@@ -40,7 +37,9 @@ class MainActivity
 	: BaseActivity (),
 	LaunchesFragment.Listener,
 	LaunchesListFragment.Listener,
-	VehicleFragment.Listener {
+	VehicleFragment.Listener,
+	RocketListFragment.Listener,
+	CapsuleListFragment.Listener {
 	// ViewModel.
 	@Inject lateinit var viewModel : MainViewModel
 
