@@ -9,7 +9,7 @@
 	<fragment
 		android:id = "@+id/launchesFragment"
 		android:name = "ritwik.samples.spacex.ui.main.fragments.LaunchesFragment"
-		android:label = "fragment_launches"
+		android:label = "@string/view_label_launches"
 		tools:layout = "@layout/fragment_launches" >
 
 		<action
@@ -25,7 +25,7 @@
 	<fragment
 		android:id = "@+id/vehicleFragment"
 		android:name = "ritwik.samples.spacex.ui.main.fragments.VehicleFragment"
-		android:label = "fragment_vehicle"
+		android:label = "@string/view_label_vehicles"
 		tools:layout = "@layout/fragment_vehicle" />
 
 </navigation>

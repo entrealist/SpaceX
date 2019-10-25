@@ -26,12 +26,12 @@ import ritwik.samples.spacex.common.BaseActivity
 import ritwik.samples.spacex.ui.main.di.DaggerMainComponent
 import ritwik.samples.spacex.ui.main.di.MainComponent
 import ritwik.samples.spacex.ui.main.di.MainModule
+
 import ritwik.samples.spacex.ui.main.fragments.*
 
 import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
 
 import javax.inject.Inject
-
 
 class MainActivity
 	: BaseActivity (),
@@ -80,6 +80,19 @@ class MainActivity
 		}
 		true
 	}
+
+	/*-------------------------- Navigation Destination Changed Listener -------------------------*/
+
+	/**[NavController.OnDestinationChangedListener] to detect the change in [Navigation]'s
+	 * destination.*/
+	private val navigationDestinationChangeListener =
+		NavController.OnDestinationChangedListener {
+			_, destination, _ ->
+			when ( destination.label ) {
+				resources.getString ( R.string.view_label_launches ) -> toggleDrawerLock (true )
+				else -> toggleDrawerLock (false )
+			}
+		}
 
 	/*---------------------------------- BaseActivity Callbacks ----------------------------------*/
 
@@ -150,6 +163,7 @@ class MainActivity
 		navigationView = findViewById ( R.id.activity_main_navigation_view )
 
 		navigationController = Navigation.findNavController ( this, R.id.activity_main_fragment )
+		navigationController?.addOnDestinationChangedListener ( navigationDestinationChangeListener )
 
 		NavigationUI.setupActionBarWithNavController ( this, navigationController!!, drawerLayout!! )
 		NavigationUI.setupWithNavController ( navigationView!!, navigationController!! )
@@ -163,6 +177,20 @@ class MainActivity
 	private fun attachObservers () {
 		viewModel.noInternetLiveData.observe ( this, noInternetObserver )
 		viewModel.errorLiveData.observe ( this, errorObserver )
+	}
+
+	/**Toggles the Lock Mode of [DrawerLayout] used in this [android.app.Activity].
+	 * @param enabled [Boolean] to decide the lock of [DrawerLayout].*/
+	private fun toggleDrawerLock ( enabled : Boolean ) {
+		// Decide the Lock Mode.
+		val lockMode = if ( enabled ) {
+			DrawerLayout.LOCK_MODE_UNLOCKED
+		} else {
+			DrawerLayout.LOCK_MODE_LOCKED_CLOSED
+		}
+
+		// Set the Lock Mode.
+		drawerLayout?.setDrawerLockMode ( lockMode )
 	}
 
 	/*------------------------------- MainFragmentListener Callbacks -----------------------------*/

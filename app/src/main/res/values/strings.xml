@@ -28,6 +28,9 @@
 	<string name = "recycler_item_capsule_text_missions" >Missions</string >
 	<string name = "recycler_item_capsule_text_specs" >Capsule Specs</string >
 
+	<!-- Navigation View Label -->
+	<string name = "view_label_launches">Launches</string>
+	<string name = "view_label_vehicles">Vehicles</string>
 
 	<!-- Fragment -->
 	<string name = "fragment_launches_list_text_next_launch_in" >Next Launch in</string >
