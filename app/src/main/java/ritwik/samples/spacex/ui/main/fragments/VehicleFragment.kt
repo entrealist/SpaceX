@@ -4,74 +4,103 @@ import android.content.Context
 
 import android.os.Bundle
 
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 
-import androidx.fragment.app.Fragment
+import androidx.databinding.ViewDataBinding
+
 import androidx.fragment.app.FragmentManager
+
+import androidx.viewpager.widget.ViewPager
+
+import com.google.android.material.tabs.TabLayout
 
 import ritwik.samples.spacex.R
 
-/**[Fragment] to showcase all the types of Rockets used by SpaceX..
+import ritwik.samples.spacex.common.BaseFragment
+
+import ritwik.samples.spacex.ui.main.fragments.adapters.VehicleAdapter
+
+/**[androidx.fragment.app.Fragment] to showcase all the types of Rockets used by SpaceX..
  * @author Ritwik Jamuar.*/
-class VehicleFragment : Fragment () {
-	// Listeners.
-	private var listener : Listener? = null
+class VehicleFragment : BaseFragment() {
 
-	/*------------------------------------- Companion Object -------------------------------------*/
+    // Views.
+    private var tabLayout: TabLayout? = null
+    private var viewPager: ViewPager? = null
 
-	companion object {
-		/**Factory method to create a new instance of [VehicleFragment].
-		 * @return A new instance of [VehicleFragment].*/
-		@JvmStatic
-		fun newInstance () =
-			VehicleFragment ()
-				.apply {
-					arguments = Bundle ()
-				}
-	}
+    // Listeners.
+    private var listener: Listener? = null
 
-	/*------------------------------------ Fragment Callbacks ------------------------------------*/
+    /*------------------------------------- Companion Object -------------------------------------*/
 
-	override fun onCreateView (
-		inflater : LayoutInflater,
-		container : ViewGroup?,
-		savedInstanceState : Bundle?
-	) : View? {
-		val view : View = inflater.inflate ( R.layout.fragment_vehicle, container, false )
-		initializeViews ( view )
-		return view
-	}
+    companion object {
+        /**Factory method to create a new instance of [VehicleFragment].
+         * @return A new instance of [VehicleFragment].*/
+        @JvmStatic
+        fun newInstance() =
+            VehicleFragment()
+                .apply {
+                    arguments = Bundle()
+                }
+    }
 
-	override fun onAttach ( context : Context ) {
-		super.onAttach ( context )
-		if ( context is Listener ) {
-			listener = context
-		} else {
-			throw RuntimeException ( "$context must implement Listener" )
-		}
-	}
+    /*------------------------------------ Fragment Callbacks ------------------------------------*/
 
-	override fun onDetach () {
-		super.onDetach ()
-		listener = null
-	}
+    override fun setListener(context: Context) {
+        if (context is Listener) {
+            listener = context
+        } else {
+            throw RuntimeException("$context must implement Listener")
+        }
+    }
 
-	/*------------------------------------- Private Methods --------------------------------------*/
+    override fun attachObservers() {}
 
-	/**Instantiate the [View]s associated with this fragment.
-	 * @param view Instance of [View] to get the instance of composite views.*/
-	private fun initializeViews ( view : View ) {
-		// TODO : Add Code related to initialization of Views associated with this Fragment.
-	}
+    override fun layoutRes(): Int = R.layout.fragment_vehicle
 
-	/*---------------------------------------- Interfaces ----------------------------------------*/
+    override fun isDataBinding(): Boolean = false
 
-	/**Interface that acts as a Listener for [VehicleFragment] to whoever implements it.*/
-	interface Listener {
-		/**Gets the [FragmentManager] from [android.app.Activity].
-		 * @return Instance of [FragmentManager] from the parent [android.app.Activity].*/
-		fun getFMFromActivity () : FragmentManager
-	}
+    override fun provideDataBinding(binding: ViewDataBinding) {}
+
+    override fun initializeViews(view: View) {
+        // Initialize Views
+        tabLayout = view.findViewById(R.id.fragment_vehicle_tab_layout)
+        viewPager = view.findViewById(R.id.fragment_vehicle_view_pager)
+
+        // Initialize the ViewPager Adapter.
+        val viewPagerAdapter = VehicleAdapter(childFragmentManager)
+
+        // Add Instances of Fragments that have to be shown in the ViewPager.
+        viewPagerAdapter.addFragment(RocketFragment.create(), "Rockets")
+
+        // Set the ViewPager Adapter to the ViewPager.
+        viewPager?.adapter = viewPagerAdapter
+
+        // Setup the Tabs with ViewPager
+        tabLayout?.setupWithViewPager(viewPager)
+    }
+
+    override fun initializeViews() {}
+
+    override fun cleanUp() {
+        viewPager?.adapter = null
+        tabLayout = null
+        viewPager = null
+    }
+
+    override fun removeListener() {
+        listener = null
+    }
+
+    /*---------------------------------------- Interfaces ----------------------------------------*/
+
+    /**Interface Listener for any [android.app.Activity] that uses this [androidx.fragment.app.Fragment].*/
+    interface Listener {
+
+        /**Gets the [FragmentManager] from [android.app.Activity].
+         * @return Instance of [FragmentManager] from the parent [android.app.Activity].*/
+        fun getFMFromActivity(): FragmentManager
+
+    }
+
 }
