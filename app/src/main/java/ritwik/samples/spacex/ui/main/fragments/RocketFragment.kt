@@ -1,25 +1,117 @@
 package ritwik.samples.spacex.ui.main.fragments
 
+import android.content.Context
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+
+import androidx.databinding.ViewDataBinding
+
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import ritwik.samples.spacex.R
 
-/**
- * A simple [Fragment] subclass.
- */
-class RocketFragment : Fragment() {
+import ritwik.samples.spacex.common.BaseFragment
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_rocket, container, false)
+import ritwik.samples.spacex.pojo.rockets.Rocket
+
+import ritwik.samples.spacex.ui.main.fragments.adapters.RocketAdapter
+
+import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
+
+import java.lang.RuntimeException
+
+/**[BaseFragment] that shows the list of [Rocket]s.
+ * @author Ritwik Jamuar.*/
+class RocketFragment : BaseFragment() {
+
+    // Views.
+    private lateinit var rockets: RecyclerView
+
+    // Adapters.
+    private var adapter: RocketAdapter? = null
+
+    // Layout Managers.
+    private var layoutManager: LinearLayoutManager? = null
+
+    // Listener.
+    private var listener: Listener? = null
+
+    /*------------------------------------- Companion Object -------------------------------------*/
+
+    companion object {
+
+        /**Creates an instance of [RocketFragment].
+         * @return New Instance of [RocketFragment].*/
+        @JvmStatic
+        fun create(): RocketFragment = RocketFragment()
+
+    }
+
+    /*-------------------------------------- View Listeners --------------------------------------*/
+
+    /**Listener instance of [RocketAdapter.Listener].*/
+    private val adapterListener = object : RocketAdapter.Listener {
+        override fun onSpecificationClicked(rocket: Rocket) {
+            // TODO: Open Details of Rocket.
+        }
+    }
+
+    /*---------------------------------- BaseFragment Callbacks ----------------------------------*/
+
+    override fun setListener(context: Context) {
+        if (context is Listener) {
+            listener = context
+        } else {
+            throw RuntimeException("$context must implement Listener")
+        }
+    }
+
+    override fun attachObservers() {
+
+    }
+
+    override fun layoutRes(): Int = R.layout.fragment_rocket
+
+    override fun isDataBinding(): Boolean = false
+
+    override fun provideDataBinding(binding: ViewDataBinding) {}
+
+    override fun initializeViews(view: View) {
+        // Instantiate Adapter and Layout Manager.
+        adapter = RocketAdapter(adapterListener)
+        layoutManager = LinearLayoutManager(context)
+
+        // Instantiate RecyclerView.
+        rockets = view.findViewById(R.id.fragment_rocket_recycler_view_rockets)
+
+        // Set-up Layout Manager and Adapter.
+        rockets.layoutManager = layoutManager
+        rockets.adapter = adapter
+    }
+
+    override fun initializeViews() {}
+
+    override fun cleanUp() {
+        layoutManager = null
+        adapter = null
+
+        rockets.adapter = null
+    }
+
+    override fun removeListener() {
+        listener = null
+    }
+
+    /*---------------------------------------- Interfaces ----------------------------------------*/
+
+    /**Interface Listener for any [android.app.Activity] that uses this [androidx.fragment.app.Fragment].*/
+    interface Listener {
+
+        /**Provides the [androidx.lifecycle.ViewModel] of the attaching [android.app.Activity].
+         * @return [androidx.lifecycle.ViewModel] of [ritwik.samples.spacex.ui.main.MainActivity]*/
+        fun getVM(): MainViewModel
+
     }
 
 }
