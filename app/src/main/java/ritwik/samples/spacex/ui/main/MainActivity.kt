@@ -19,7 +19,11 @@ import androidx.navigation.ui.NavigationUI
 
 import com.google.android.material.navigation.NavigationView
 
+import com.squareup.picasso.Picasso
+
 import ritwik.samples.spacex.R
+
+import ritwik.samples.spacex.application.App
 
 import ritwik.samples.spacex.common.BaseActivity
 
@@ -152,11 +156,10 @@ class MainActivity
 
 	/*---------------------------- LaunchesFragment.Listener Callbacks ---------------------------*/
 
-	override fun getFMFromActivity () : FragmentManager {
-		return supportFragmentManager
-	}
+	override fun getFMFromActivity () : FragmentManager = supportFragmentManager
 
-	override fun getVM () : MainViewModel {
-		return viewModel
-	}
+	override fun getVM () : MainViewModel = viewModel
+
+	override fun getPicasso(): Picasso = App.getInstance(this).getAppComponent().getPicasso()
+
 }
