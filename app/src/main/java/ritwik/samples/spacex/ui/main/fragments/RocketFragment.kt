@@ -6,6 +6,8 @@ import android.view.View
 
 import androidx.databinding.ViewDataBinding
 
+import androidx.lifecycle.Observer
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -57,6 +59,13 @@ class RocketFragment : BaseFragment() {
         }
     }
 
+    /*----------------------------------------- Observers ----------------------------------------*/
+
+    /**[Observer] of [List] of [Rocket].*/
+    private val rocketObserver = Observer<List<Rocket>> {
+        adapter?.replaceList(it)
+    }
+
     /*---------------------------------- BaseFragment Callbacks ----------------------------------*/
 
     override fun setListener(context: Context) {
@@ -68,7 +77,7 @@ class RocketFragment : BaseFragment() {
     }
 
     override fun attachObservers() {
-
+        listener?.getVM()?.repository?.allRocketsLiveData?.observe(this, rocketObserver)
     }
 
     override fun layoutRes(): Int = R.layout.fragment_rocket
@@ -88,6 +97,8 @@ class RocketFragment : BaseFragment() {
         // Set-up Layout Manager and Adapter.
         rockets.layoutManager = layoutManager
         rockets.adapter = adapter
+
+        getRockets()
     }
 
     override fun initializeViews() {}
@@ -101,6 +112,13 @@ class RocketFragment : BaseFragment() {
 
     override fun removeListener() {
         listener = null
+    }
+
+    /*-------------------------------------- Private Methods -------------------------------------*/
+
+    /**Fetches the [List] of [Rocket]s.*/
+    private fun getRockets() {
+        listener?.getVM()?.getRockets()
     }
 
     /*---------------------------------------- Interfaces ----------------------------------------*/
