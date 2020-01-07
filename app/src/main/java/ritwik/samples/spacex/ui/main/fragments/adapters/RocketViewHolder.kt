@@ -1,6 +1,9 @@
 package ritwik.samples.spacex.ui.main.fragments.adapters
 
 import android.view.View
+
+import com.squareup.picasso.Picasso
+
 import ritwik.samples.spacex.R
 
 import ritwik.samples.spacex.common.BaseViewHolder
@@ -17,6 +20,7 @@ import ritwik.samples.spacex.pojo.rockets.Rocket
 class RocketViewHolder(
     override val containerView: View,
     private val binding: RecyclerItemRocketBinding,
+    private val picasso: Picasso,
     private val listener: Listener
 ) : BaseViewHolder(containerView) {
 
@@ -24,7 +28,7 @@ class RocketViewHolder(
 
     /**Click Listener of Whole Item.*/
     private val rootClickListener: View.OnClickListener = View.OnClickListener {
-        val isExpanded = binding.expanded ?:false
+        val isExpanded = binding.expanded ?: false
         val drawable = if (isExpanded) {
             R.drawable.ic_arrow_drop_up_black_24dp
         } else {
@@ -59,6 +63,11 @@ class RocketViewHolder(
     /**Sets the [Rocket] to [RecyclerItemRocketBinding].
      * @param rocket Instance of [Rocket] which will be set.*/
     fun setRocketDetails(rocket: Rocket) {
+        rocket.flickrImages?.let {
+            picasso
+                .load(it[0])
+                .into(binding.recyclerItemRocketImageViewRocketImage)
+        }
         binding.rocket = rocket
     }
 
