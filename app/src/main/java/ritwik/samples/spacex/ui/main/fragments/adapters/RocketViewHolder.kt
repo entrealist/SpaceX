@@ -34,6 +34,9 @@ class RocketViewHolder(
         } else {
             R.drawable.ic_arrow_drop_down_black_24dp
         }
+        binding.expanded?.let {
+            binding.expanded = !it
+        }
         binding.recyclerItemRocketImageViewButtonDrop.setImageResource(drawable)
     }
 
@@ -69,6 +72,7 @@ class RocketViewHolder(
                 .into(binding.recyclerItemRocketImageViewRocketImage)
         }
         binding.rocket = rocket
+        binding.expanded = false
     }
 
     /*---------------------------------------- Interfaces ----------------------------------------*/
