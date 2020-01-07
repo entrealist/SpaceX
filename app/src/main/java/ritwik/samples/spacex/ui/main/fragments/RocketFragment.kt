@@ -11,6 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
+import com.squareup.picasso.Picasso
+
 import ritwik.samples.spacex.R
 
 import ritwik.samples.spacex.common.BaseFragment
@@ -88,7 +90,7 @@ class RocketFragment : BaseFragment() {
 
     override fun initializeViews(view: View) {
         // Instantiate Adapter and Layout Manager.
-        adapter = RocketAdapter(adapterListener)
+        adapter = RocketAdapter(adapterListener, listener!!.getPicasso())
         layoutManager = LinearLayoutManager(context)
 
         // Instantiate RecyclerView.
@@ -129,6 +131,10 @@ class RocketFragment : BaseFragment() {
         /**Provides the [androidx.lifecycle.ViewModel] of the attaching [android.app.Activity].
          * @return [androidx.lifecycle.ViewModel] of [ritwik.samples.spacex.ui.main.MainActivity]*/
         fun getVM(): MainViewModel
+
+        /**Provides [Picasso] from attaching [android.app.Activity].
+         * @return Instance of [Picasso].*/
+        fun getPicasso(): Picasso
 
     }
 
