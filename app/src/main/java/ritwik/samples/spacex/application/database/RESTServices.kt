@@ -4,6 +4,7 @@ import retrofit2.Response
 
 import retrofit2.http.GET
 
+import ritwik.samples.spacex.pojo.capsules.Capsule
 import ritwik.samples.spacex.pojo.launches.Launch
 import ritwik.samples.spacex.pojo.rockets.Rocket
 
@@ -26,5 +27,11 @@ interface RESTServices {
 	 * @return [Response] of type: [List] of [Rocket].*/
 	@GET ( ENDPOINT_ROCKETS )
 	suspend fun getAllRockets () : Response < List < Rocket > >
+
+	/**
+	 * Gets the List of all the Capsules owned by SpaceX.
+	 * @return [Response] of type: [List] of [Capsule].*/
+	@GET ( ENDPOINT_CAPSULES )
+	suspend fun getAllCapsules () : Response < List < Capsule > >
 
 }
