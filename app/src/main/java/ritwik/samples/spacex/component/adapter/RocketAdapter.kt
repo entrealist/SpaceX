@@ -1,4 +1,4 @@
-package ritwik.samples.spacex.ui.main.fragments.adapters
+package ritwik.samples.spacex.component.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,6 +10,7 @@ import ritwik.samples.spacex.common.BaseSingleVHAdapter
 import ritwik.samples.spacex.databinding.RecyclerItemRocketBinding
 
 import ritwik.samples.spacex.pojo.rockets.Rocket
+import ritwik.samples.spacex.component.viewHolder.RocketViewHolder
 
 /**[androidx.recyclerview.widget.RecyclerView.Adapter] for handling the [List] of [Rocket]
  * @param listener Interface Object that receives the callback.
@@ -22,7 +23,8 @@ class RocketAdapter(
     /*----------------------------------- ViewHolder Listeners -----------------------------------*/
 
     /**Listener instance of [RocketViewHolder].*/
-    private val viewHolderListener = object : RocketViewHolder.Listener {
+    private val viewHolderListener = object :
+        RocketViewHolder.Listener {
         override fun onSpecificationClicked(position: Int) {
             listener.onSpecificationClicked(getList()[position])
         }
@@ -39,7 +41,12 @@ class RocketAdapter(
         )
 
         // Instantiate the ViewHolder.
-        return RocketViewHolder(binding.root, binding, picasso, viewHolderListener)
+        return RocketViewHolder(
+            binding.root,
+            binding,
+            picasso,
+            viewHolderListener
+        )
     }
 
     override fun onBind(holder: RocketViewHolder, position: Int) {

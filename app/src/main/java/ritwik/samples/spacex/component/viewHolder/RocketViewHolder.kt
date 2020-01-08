@@ -1,4 +1,4 @@
-package ritwik.samples.spacex.ui.main.fragments.adapters
+package ritwik.samples.spacex.component.viewHolder
 
 import android.view.View
 

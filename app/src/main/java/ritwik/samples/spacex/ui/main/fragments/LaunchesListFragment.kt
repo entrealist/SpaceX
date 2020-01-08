@@ -28,7 +28,7 @@ import ritwik.samples.spacex.pojo.launches.Launch
 
 import ritwik.samples.spacex.printLog
 
-import ritwik.samples.spacex.ui.main.fragments.adapters.LaunchListAdapter
+import ritwik.samples.spacex.component.adapter.LaunchListAdapter
 
 import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
 
@@ -115,7 +115,8 @@ class LaunchesListFragment : Fragment () {
 		launchRecycler = view.findViewById ( R.id.fragment_launches_list_recycler_view_launches )
 
 		// Initialize Adapters.
-		launchRecyclerAdapter = LaunchListAdapter ( listener!!.getVM () )
+		launchRecyclerAdapter =
+            LaunchListAdapter(listener!!.getVM())
 
 		initializeRecyclerView ()
 		applyBindingData ()

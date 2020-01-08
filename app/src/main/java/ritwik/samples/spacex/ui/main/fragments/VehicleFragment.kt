@@ -18,7 +18,7 @@ import ritwik.samples.spacex.R
 
 import ritwik.samples.spacex.common.BaseFragment
 
-import ritwik.samples.spacex.ui.main.fragments.adapters.VehicleAdapter
+import ritwik.samples.spacex.component.adapter.VehicleAdapter
 
 /**[androidx.fragment.app.Fragment] to showcase all the types of Rockets used by SpaceX..
  * @author Ritwik Jamuar.*/
@@ -68,7 +68,10 @@ class VehicleFragment : BaseFragment() {
         viewPager = view.findViewById(R.id.fragment_vehicle_view_pager)
 
         // Initialize the ViewPager Adapter.
-        val viewPagerAdapter = VehicleAdapter(childFragmentManager)
+        val viewPagerAdapter =
+            VehicleAdapter(
+                childFragmentManager
+            )
 
         // Add Instances of Fragments that have to be shown in the ViewPager.
         viewPagerAdapter.addFragment(RocketFragment.create(), "Rockets")

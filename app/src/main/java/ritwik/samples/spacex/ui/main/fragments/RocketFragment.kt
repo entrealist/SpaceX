@@ -19,7 +19,7 @@ import ritwik.samples.spacex.common.BaseFragment
 
 import ritwik.samples.spacex.pojo.rockets.Rocket
 
-import ritwik.samples.spacex.ui.main.fragments.adapters.RocketAdapter
+import ritwik.samples.spacex.component.adapter.RocketAdapter
 
 import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
 
@@ -90,7 +90,10 @@ class RocketFragment : BaseFragment() {
 
     override fun initializeViews(view: View) {
         // Instantiate Adapter and Layout Manager.
-        adapter = RocketAdapter(adapterListener, listener!!.getPicasso())
+        adapter = RocketAdapter(
+            adapterListener,
+            listener!!.getPicasso()
+        )
         layoutManager = LinearLayoutManager(context)
 
         // Instantiate RecyclerView.

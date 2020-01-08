@@ -1,4 +1,4 @@
-package ritwik.samples.spacex.ui.main.fragments.adapters
+package ritwik.samples.spacex.component.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

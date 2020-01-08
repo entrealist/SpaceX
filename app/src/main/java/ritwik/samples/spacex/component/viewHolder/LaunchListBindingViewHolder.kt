@@ -1,4 +1,4 @@
-package ritwik.samples.spacex.ui.main.fragments.adapters
+package ritwik.samples.spacex.component.viewHolder
 
 import android.view.View
 
@@ -13,7 +13,7 @@ import ritwik.samples.spacex.databinding.RecyclerItemLaunchBinding
 class LaunchListBindingViewHolder (
 	override val containerView : View,
 	val binding : RecyclerItemLaunchBinding
-) : LaunchListViewHolder ( containerView ), LifecycleOwner {
+) : LaunchListViewHolder( containerView ), LifecycleOwner {
 	// LifeCycle Registry.
 	private val lifecycleRegistry = LifecycleRegistry ( this )
 

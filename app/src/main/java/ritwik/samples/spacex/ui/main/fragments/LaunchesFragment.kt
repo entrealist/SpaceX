@@ -20,7 +20,7 @@ import ritwik.samples.spacex.R
 import ritwik.samples.spacex.application.database.LAUNCH_TYPE_PAST
 import ritwik.samples.spacex.application.database.LAUNCH_TYPE_UPCOMING
 
-import ritwik.samples.spacex.ui.main.fragments.adapters.LaunchesOptionsAdapter
+import ritwik.samples.spacex.component.adapter.LaunchesOptionsAdapter
 
 /**[Fragment] to showcase all the Upcoming and Past Launches conducted by SpaceX.
  * @author Ritwik Jamuar*/
@@ -77,7 +77,10 @@ class LaunchesFragment : Fragment () {
 		viewPager = view.findViewById ( R.id.fragment_launches_view_pager )
 
 		// Initialize the ViewPager Adapter.
-		val launchesOptionsAdapter = LaunchesOptionsAdapter ( childFragmentManager )
+		val launchesOptionsAdapter =
+			LaunchesOptionsAdapter(
+				childFragmentManager
+			)
 
 		// Add Instances of Fragments that have to be shown in the ViewPager.
 		launchesOptionsAdapter.addFragment ( LaunchesListFragment.newInstance ( LAUNCH_TYPE_UPCOMING ), "Upcoming" )
