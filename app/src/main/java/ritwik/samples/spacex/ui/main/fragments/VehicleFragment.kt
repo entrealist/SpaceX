@@ -75,6 +75,7 @@ class VehicleFragment : BaseFragment() {
 
         // Add Instances of Fragments that have to be shown in the ViewPager.
         viewPagerAdapter.addFragment(RocketFragment.create(), "Rockets")
+        viewPagerAdapter.addFragment(CapsulesFragment.create(), "Capsules")
 
         // Set the ViewPager Adapter to the ViewPager.
         viewPager?.adapter = viewPagerAdapter
