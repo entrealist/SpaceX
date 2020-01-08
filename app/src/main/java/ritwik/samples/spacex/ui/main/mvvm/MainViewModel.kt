@@ -53,6 +53,13 @@ class MainViewModel (
 		repository.getAllRockets ()
 	}
 
+	/**Gets all the Capsules used by SpaceX.
+	 * Notifies the [androidx.lifecycle.Observer] of [MainRepository.allCapsulesLiveData] about
+	 * change in the List of [ritwik.samples.spacex.pojo.capsules.Capsule]*/
+	fun getCapsules() {
+		repository.getAllCapsules()
+	}
+
 	/**On-Click Method for performing actions when a [Launch] Event from [List] of [Launch]es is
 	 * selected:
 	 * @param launch Instance of [Launch].*/
