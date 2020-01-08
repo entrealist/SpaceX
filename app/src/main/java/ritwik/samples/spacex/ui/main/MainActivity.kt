@@ -27,14 +27,12 @@ import ritwik.samples.spacex.application.App
 
 import ritwik.samples.spacex.common.BaseActivity
 
+import ritwik.samples.spacex.pojo.capsules.Capsule
+
 import ritwik.samples.spacex.ui.main.di.DaggerMainComponent
 import ritwik.samples.spacex.ui.main.di.MainComponent
 import ritwik.samples.spacex.ui.main.di.MainModule
-
-import ritwik.samples.spacex.ui.main.fragments.LaunchesFragment
-import ritwik.samples.spacex.ui.main.fragments.LaunchesListFragment
-import ritwik.samples.spacex.ui.main.fragments.RocketFragment
-import ritwik.samples.spacex.ui.main.fragments.VehicleFragment
+import ritwik.samples.spacex.ui.main.fragments.*
 
 import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
 
@@ -46,7 +44,8 @@ class MainActivity
 	LaunchesFragment.Listener,
 	LaunchesListFragment.Listener,
 	VehicleFragment.Listener,
-	RocketFragment.Listener {
+	RocketFragment.Listener,
+	CapsulesFragment.Listener {
 	// ViewModel.
 	@Inject lateinit var viewModel : MainViewModel
 
@@ -161,5 +160,9 @@ class MainActivity
 	override fun getVM () : MainViewModel = viewModel
 
 	override fun getPicasso(): Picasso = App.getInstance(this).getAppComponent().getPicasso()
+
+	override fun navigateToCapsuleDetail(capsule: Capsule) {
+		// TODO: Navigate to CapsuleDetailsFragment.
+	}
 
 }
