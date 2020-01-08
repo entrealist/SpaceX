@@ -10,6 +10,7 @@ import ritwik.samples.spacex.application.database.LAUNCH_TYPE_PAST
 import ritwik.samples.spacex.application.database.LAUNCH_TYPE_UPCOMING
 import ritwik.samples.spacex.application.database.RESTServices
 
+import ritwik.samples.spacex.pojo.capsules.Capsule
 import ritwik.samples.spacex.pojo.launches.Launch
 import ritwik.samples.spacex.pojo.rockets.Rocket
 
@@ -22,6 +23,7 @@ class MainRepository (
 	var upcomingLaunchesLiveData = MutableLiveData < List <Launch> > ()
 	var pastLaunchesLiveData = MutableLiveData < List <Launch> > ()
 	var allRocketsLiveData = MutableLiveData < List < Rocket > > ()
+	var allCapsulesLiveData = MutableLiveData<List<Capsule>>()
 
 	// Jobs
 	val completableJob : Job = Job ()
@@ -29,6 +31,7 @@ class MainRepository (
 	// Lists.
 	private var launches : List <Launch>? = null
 	private var rockets :	List < Rocket >? = null
+	private var capsules: List<Capsule>? = null
 
 	/*------------------------------------- Companion Object -------------------------------------*/
 
@@ -109,4 +112,24 @@ class MainRepository (
 				}
 			}
 	}
+
+	/**Fetches the [List] of [Capsule] from [RESTServices] and notify the
+	 * [androidx.lifecycle.Observer] of [allCapsulesLiveData].*/
+	fun getAllCapsules() {
+		CoroutineScope(Dispatchers.IO + completableJob)
+			.launch {
+				// Get the response.
+				val response: Response<List<Capsule>>? = restServices?.getAllCapsules()
+
+				// Convert the Retrofit Response to list of Capsules.
+				capsules = response?.body()
+
+				// Notify the update of Response in Main Thread.
+				withContext(Dispatchers.Main) {
+					// Notify Live Data about change in the List of Capsules.
+					allCapsulesLiveData.value = capsules
+				}
+			}
+	}
+
 }
