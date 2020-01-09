@@ -2,6 +2,8 @@ package ritwik.samples.spacex.pojo.capsules
 
 import com.squareup.moshi.Json
 
+import ritwik.samples.spacex.convertUTCDateTime
+
 data class Capsule(
     @field: Json(name = "capsule_serial") val serial: String,
     @field: Json(name = "capsule_id") val id: String,
@@ -15,6 +17,10 @@ data class Capsule(
     @field: Json(name = "reuse_count") val reuseCount: Long
 ) {
 
+    /**Provides the status of the Capsule in Capitalized manner.
+     * @return [String] denoting the Status of the [Capsule].*/
+    fun getCapsuleStatus(): String = status.capitalize()
+
     /**Provides the name of the Capsule, which is the combination of Serial Number and Type of Capsule.
      * @return [String] denoting the name of the [Capsule].*/
     fun getCapsuleName(): String = "$serial : $type"
@@ -22,6 +28,16 @@ data class Capsule(
     /**Provides the Count of [Mission].
      * @return [Int] denoting the Size of [Mission].*/
     fun getMissionCount(): String = "${missions?.size ?: 0}"
+
+    /**Provides the Capsule's active time.
+     * @return [String] denoting the [Capsule]'s Active Time.*/
+    fun getActiveSince(): String {
+        return if (launchTime == null) {
+            "NA"
+        } else {
+            convertUTCDateTime(launchTime)
+        }
+    }
 
 }
 
