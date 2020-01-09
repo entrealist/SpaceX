@@ -3,13 +3,11 @@ package ritwik.samples.spacex.ui.main.mvvm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 
+import ritwik.samples.spacex.convertUTCDateTime
+
 import ritwik.samples.spacex.pojo.launches.Launch
 
 import ritwik.samples.spacex.ui.main.MainActivity
-
-import java.text.SimpleDateFormat
-
-import java.util.Locale
 
 /**ViewModel of [MainActivity].
  * @author Ritwik Jamuar.*/
@@ -67,22 +65,9 @@ class MainViewModel (
 		// TODO : Perform some action when a Launch is clicked in the UI.
 	}
 
-	/**Converts an UTC Date Time to Formatted Date Time for display in the UI.
+	/**Gets the Date Time.
 	 * @param utcDate [String] containing UTC Date and Time.
-	 * @return [String] containing formatted Date and Time.
-	 * Refer below Link for more detail on SimpleDateFormat:
-	 * https://www.journaldev.com/17899/java-simpledateformat-java-date-format */
-	fun convertUTCDateTime ( utcDate : String? ) : String {
-		// Define an Input Format of Date and Time.
-		val inputFormat = SimpleDateFormat ( "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH )
+	 * @return [String] containing formatted Date and Time.*/
+	fun getDateTime ( utcDate : String? ) : String = convertUTCDateTime(utcDate)
 
-		// Define an Output Format of Date and Time.
-		val outputFormat = SimpleDateFormat ( "dd MMM yyyy, hh:mm a", Locale.ENGLISH )
-
-		// Parse the UTC Date and Time to get Date.
-		val date = inputFormat.parse ( utcDate )
-
-		// Format the Date to our own Format of Date and Time.
-		return outputFormat.format ( date )
-	}
 }
