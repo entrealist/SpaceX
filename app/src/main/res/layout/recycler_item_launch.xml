@@ -70,7 +70,7 @@
 				<TextView
 					android:id = "@+id/recycler_item_launch_text_view_value_launch_date_and_time"
 					style = "@style/TextViewStyleCustom.ValueLaunchDateAndTime"
-					android:text = "@{ viewModel.convertUTCDateTime ( launch.launchDateUTC ) }"
+					android:text = "@{ viewModel.getDateTime( launch.launchDateUTC ) }"
 					app:layout_constraintBottom_toBottomOf = "parent"
 					app:layout_constraintEnd_toEndOf = "parent"
 					app:layout_constraintHorizontal_bias = "0"
