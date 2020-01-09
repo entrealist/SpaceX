@@ -21,7 +21,7 @@ data class Capsule(
 
     /**Provides the Count of [Mission].
      * @return [Int] denoting the Size of [Mission].*/
-    fun getMissionCount(): Int = missions?.size ?: 0
+    fun getMissionCount(): String = "${missions?.size ?: 0}"
 
 }
 
