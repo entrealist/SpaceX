@@ -17,8 +17,7 @@ import com.google.android.material.tabs.TabLayout
 
 import ritwik.samples.spacex.R
 
-import ritwik.samples.spacex.application.database.LAUNCH_TYPE_PAST
-import ritwik.samples.spacex.application.database.LAUNCH_TYPE_UPCOMING
+import ritwik.samples.spacex.application.database.LaunchType
 
 import ritwik.samples.spacex.component.adapter.LaunchesOptionsAdapter
 
@@ -83,8 +82,8 @@ class LaunchesFragment : Fragment () {
 			)
 
 		// Add Instances of Fragments that have to be shown in the ViewPager.
-		launchesOptionsAdapter.addFragment ( LaunchesListFragment.newInstance ( LAUNCH_TYPE_UPCOMING ), "Upcoming" )
-		launchesOptionsAdapter.addFragment ( LaunchesListFragment.newInstance ( LAUNCH_TYPE_PAST ), "Past" )
+		launchesOptionsAdapter.addFragment ( LaunchesListFragment.newInstance ( LaunchType.UPCOMING ), "Upcoming" )
+		launchesOptionsAdapter.addFragment ( LaunchesListFragment.newInstance ( LaunchType.PAST ), "Past" )
 
 		// Set the ViewPager Adapter to the ViewPager.
 		viewPager?.adapter = launchesOptionsAdapter
