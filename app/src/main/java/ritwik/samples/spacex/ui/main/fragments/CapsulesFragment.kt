@@ -16,6 +16,8 @@ import ritwik.samples.spacex.common.BaseFragment
 
 import ritwik.samples.spacex.component.adapter.CapsuleAdapter
 
+import ritwik.samples.spacex.component.other.NetworkProcessor
+
 import ritwik.samples.spacex.pojo.capsules.Capsule
 
 import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
@@ -49,9 +51,22 @@ class CapsulesFragment : BaseFragment() {
     /*----------------------------------------- Observers ----------------------------------------*/
 
     /**[Observer] of [List] of [Capsule].*/
-    private val capsulesObserver = Observer<List<Capsule>> {
-        // Set the new List of Capsule in the RecyclerView.Adapter.
-        adapter?.replaceList(it)
+    private val allCapsulesObserver = Observer<NetworkProcessor.Resource<List<Capsule>>> { resources ->
+        when (resources.state) {
+            NetworkProcessor.State.LOADING -> {
+                // Show Progress Bar.
+            }
+
+            NetworkProcessor.State.SUCCESS -> {
+                resources.data?.let {
+                    adapter?.replaceList(it)
+                }
+            }
+
+            NetworkProcessor.State.ERROR -> {
+                // Show the Error.
+            }
+        }
     }
 
     /*-------------------------------------- View Listeners --------------------------------------*/
@@ -75,7 +90,7 @@ class CapsulesFragment : BaseFragment() {
     }
 
     override fun attachObservers() {
-        listener?.getVM()?.repository?.allCapsulesLiveData?.observe(this, capsulesObserver)
+
     }
 
     override fun layoutRes(): Int = R.layout.fragment_capsules
@@ -112,7 +127,7 @@ class CapsulesFragment : BaseFragment() {
 
     /**Fetches the [List] of [Capsule].*/
     private fun getCapsules() {
-        listener?.getVM()?.getCapsules()
+        listener?.getVM()?.getCapsules()?.observe(this, allCapsulesObserver)
     }
 
     /*---------------------------------------- Interfaces ----------------------------------------*/

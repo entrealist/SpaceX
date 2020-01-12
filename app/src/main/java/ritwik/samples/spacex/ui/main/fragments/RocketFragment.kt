@@ -20,6 +20,7 @@ import ritwik.samples.spacex.common.BaseFragment
 import ritwik.samples.spacex.pojo.rockets.Rocket
 
 import ritwik.samples.spacex.component.adapter.RocketAdapter
+import ritwik.samples.spacex.component.other.NetworkProcessor
 
 import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
 
@@ -64,8 +65,22 @@ class RocketFragment : BaseFragment() {
     /*----------------------------------------- Observers ----------------------------------------*/
 
     /**[Observer] of [List] of [Rocket].*/
-    private val rocketObserver = Observer<List<Rocket>> {
-        adapter?.replaceList(it)
+    private val rocketObserver = Observer<NetworkProcessor.Resource<List<Rocket>>> { resource ->
+        when(resource.state) {
+            NetworkProcessor.State.LOADING -> {
+
+            }
+
+            NetworkProcessor.State.SUCCESS -> {
+                resource.data?.let {
+                    adapter?.replaceList(it)
+                }
+            }
+
+            NetworkProcessor.State.ERROR -> {
+
+            }
+        }
     }
 
     /*---------------------------------- BaseFragment Callbacks ----------------------------------*/
@@ -79,7 +94,6 @@ class RocketFragment : BaseFragment() {
     }
 
     override fun attachObservers() {
-        listener?.getVM()?.repository?.allRocketsLiveData?.observe(this, rocketObserver)
     }
 
     override fun layoutRes(): Int = R.layout.fragment_rocket
@@ -123,7 +137,7 @@ class RocketFragment : BaseFragment() {
 
     /**Fetches the [List] of [Rocket]s.*/
     private fun getRockets() {
-        listener?.getVM()?.getRockets()
+        listener?.getVM()?.getRockets()?.observe(this, rocketObserver)
     }
 
     /*---------------------------------------- Interfaces ----------------------------------------*/

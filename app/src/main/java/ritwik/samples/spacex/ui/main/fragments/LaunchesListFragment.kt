@@ -19,8 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 import ritwik.samples.spacex.R
 
-import ritwik.samples.spacex.application.database.LAUNCH_TYPE_PAST
-import ritwik.samples.spacex.application.database.LAUNCH_TYPE_UPCOMING
+import ritwik.samples.spacex.application.database.LaunchType
 
 import ritwik.samples.spacex.databinding.FragmentLaunchesListBinding
 
@@ -29,6 +28,8 @@ import ritwik.samples.spacex.pojo.launches.Launch
 import ritwik.samples.spacex.printLog
 
 import ritwik.samples.spacex.component.adapter.LaunchListAdapter
+
+import ritwik.samples.spacex.component.other.NetworkProcessor
 
 import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
 
@@ -49,7 +50,7 @@ class LaunchesListFragment : Fragment () {
 	private lateinit var binding : FragmentLaunchesListBinding
 
 	// Variables.
-	private var launchType : Int = -1
+	private lateinit var launchType : LaunchType
 
 	// Listener.
 	private var listener : Listener? = null
@@ -59,7 +60,7 @@ class LaunchesListFragment : Fragment () {
 	companion object {
 		const val TAG : String = "LaunchesListFragment"
 		@JvmStatic
-		fun newInstance ( type : Int ) =
+		fun newInstance ( type : LaunchType ) =
 			LaunchesListFragment ()
 				.apply {
 					launchType = type
@@ -89,7 +90,6 @@ class LaunchesListFragment : Fragment () {
 	override fun onResume () {
 		super.onResume ()
 		attachObservers ()
-		listener!!.getVM ().getLaunches ( launchType )
 	}
 
 	override fun onAttach ( context : Context ) {
@@ -120,6 +120,7 @@ class LaunchesListFragment : Fragment () {
 
 		initializeRecyclerView ()
 		applyBindingData ()
+		getLaunches()
 	}
 
 	/**Set-Up the [RecyclerView].*/
@@ -136,20 +137,20 @@ class LaunchesListFragment : Fragment () {
 	 * here.*/
 	private fun applyBindingData () {
 		binding.apply {
-			binding.isUpcoming = launchType == LAUNCH_TYPE_UPCOMING
+			this.isUpcoming = launchType == LaunchType.UPCOMING
 		}
 	}
 
 	/**Attaches [Observer]s to this Fragment to receive any changes from Upcoming Launches or
 	 * Past Launches.*/
 	private fun attachObservers () {
-		when ( launchType ) {
-			LAUNCH_TYPE_UPCOMING -> {
-				listener?.getVM ()?.repository?.upcomingLaunchesLiveData?.observe ( this, upcomingLaunchesObserver )
-			}
+	}
 
-			LAUNCH_TYPE_PAST -> {
-				listener?.getVM ()?.repository?.pastLaunchesLiveData?.observe ( this, pastLaunchesObserver )
+	private fun getLaunches() {
+		listener?.let {
+			when (launchType) {
+				LaunchType.UPCOMING -> it.getVM().getLaunches(launchType).observe(this, upcomingLaunchesObserver)
+				LaunchType.PAST -> it.getVM().getLaunches(launchType).observe(this, pastLaunchesObserver)
 			}
 		}
 	}
@@ -157,27 +158,35 @@ class LaunchesListFragment : Fragment () {
 	/*----------------------------------------- Observers ----------------------------------------*/
 
 	/**[Observer] for observing changes in [List] of Upcoming [Launch]es.*/
-	private val upcomingLaunchesObserver = Observer < List <Launch> > {
-		// Notify changes in the Upcoming Launches Fragment.
-		printLog ( TAG, "Upcoming Launches Changed" )
-		/*printLog ( TAG, it?.toString () )*/
+	private val upcomingLaunchesObserver =
+		Observer<NetworkProcessor.Resource<List<Launch>>> { resource ->
+			resource.data?.let { data ->
+				// Notify changes in the Upcoming Launches Fragment.
+				printLog(TAG, "Upcoming Launches Changed")
+				/*printLog ( TAG, it?.toString () )*/
 
-		// Add the List of Upcoming Launches to the Adapter.
-		launchRecyclerAdapter.replaceLaunchesList ( it )
-	}
+				// Add the List of Upcoming Launches to the Adapter.
+				launchRecyclerAdapter.replaceLaunchesList(data)
+			}
+		}
 
 	/**[Observer] for observing changes in [List] of Past [Launch]es.*/
-	private val pastLaunchesObserver = Observer < List <Launch> > {
-		// Notify changes in the Past Launches Fragment.
-		printLog ( TAG, "Past Launches Changed" )
-		/*printLog ( TAG, it?.toString () )*/
+	private val pastLaunchesObserver =
+		Observer<NetworkProcessor.Resource<List<Launch>>> { resource ->
+			resource.data?.let { data ->
+				// Notify changes in the Past Launches Fragment.
+				printLog(TAG, "Past Launches Changed")
+				/*printLog ( TAG, it?.toString () )*/
 
-		// Sort the past launches in Descending Order.
-		Collections.sort ( it, descendingLaunchesComparator )
+				// Sort the past launches in Descending Order.
+				Collections.sort(data, descendingLaunchesComparator)
 
-		// Add the List of Past Launches to the Adapter.
-		launchRecyclerAdapter.replaceLaunchesList ( it )
-	}
+				// Add the List of Past Launches to the Adapter.
+				launchRecyclerAdapter.replaceLaunchesList(data)
+			}
+		}
+
+	/*------------------------------------- List Comparators -------------------------------------*/
 
 	/**[Comparator] for Comparing two [Launch]es and put them in descending order.*/
 	private val descendingLaunchesComparator = Comparator <Launch> {
