@@ -1,5 +1,7 @@
 package ritwik.samples.spacex.ui.main.di
 
+import androidx.lifecycle.ViewModelProviders
+
 import dagger.Module
 import dagger.Provides
 
@@ -38,7 +40,7 @@ class MainModule (
 	@Provides
 	@MainScope
 	fun providesMainViewModel ( factory : MainViewModelFactory ) : MainViewModel {
-		return MainViewModel.create ( activity, factory )
+		return ViewModelProviders.of(activity, factory).get(MainViewModel::class.java)
 	}
 
 	/*--------------------------------- MainViewModel Dependencies -------------------------------*/
