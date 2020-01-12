@@ -1,7 +1,15 @@
 package ritwik.samples.spacex.application.database
 
-const val LAUNCH_TYPE_UPCOMING : Int = 1
-const val LAUNCH_TYPE_PAST : Int = 2
+/**Enumeration for encapsulating different types of Launches.*/
+enum class LaunchType {
+
+    /**Denotes the Upcoming Launches.*/
+    UPCOMING,
+
+    /**Denotes the Past Launches.*/
+    PAST
+
+}
 
 const val ENDPOINT_SLASH = "/"
 const val ENDPOINT_LAUNCHES = "launches"
