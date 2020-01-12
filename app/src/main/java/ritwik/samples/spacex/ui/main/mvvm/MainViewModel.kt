@@ -1,73 +1,75 @@
 package ritwik.samples.spacex.ui.main.mvvm
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.LiveData
+
+import ritwik.samples.spacex.application.database.LaunchType
+
+import ritwik.samples.spacex.common.BaseViewModel
+
+import ritwik.samples.spacex.component.other.NetworkProcessor
 
 import ritwik.samples.spacex.convertUTCDateTime
 
+import ritwik.samples.spacex.pojo.capsules.Capsule
 import ritwik.samples.spacex.pojo.launches.Launch
+import ritwik.samples.spacex.pojo.rockets.Rocket
 
 import ritwik.samples.spacex.ui.main.MainActivity
 
 /**ViewModel of [MainActivity].
  * @author Ritwik Jamuar.*/
-class MainViewModel (
-	val repository : MainRepository
-) : ViewModel () {
-	/*------------------------------------- Companion Object -------------------------------------*/
+class MainViewModel private constructor(
+    repository: MainRepository
+) : BaseViewModel<MainRepository>(repository) {
 
-	companion object {
-		/**Creates/Gets an instance of [MainViewModel].
-		 * @param activity Instance of [MainActivity] : View of the [MainViewModel].
-		 * @param factory Instance of [MainViewModelFactory] : Factory Provider of [MainViewModel].
-		 * @return Instance of [MainViewModel] : ViewModel of [MainActivity].*/
-		fun create ( activity : MainActivity, factory : MainViewModelFactory ) : MainViewModel {
-			return ViewModelProviders.of ( activity, factory ).get ( MainViewModel::class.java )
-		}
-	}
+    /*--------------------------------------- Builder Class --------------------------------------*/
 
-	/*------------------------------------ ViewModel Callbacks -----------------------------------*/
+    /**Builder Pattern of creating [MainViewModel].*/
+    class Builder {
 
-	override fun onCleared () {
-		super.onCleared ()
-		repository.completableJob.cancel ()
-	}
+        private lateinit var repository: MainRepository
 
-	/*-------------------------------------- Public Methods --------------------------------------*/
+        /**Sets the Repository of [MainViewModel].
+         * @param repository Instance of [MainRepository].*/
+        fun setRepository(repository: MainRepository) = apply { this.repository = repository }
 
-	/**Gets the Launches of given type.
-	 * @param type Specify the type of Launches to fetch. It can be either LAUNCH_TYPE_UPCOMING
-	 * or LAUNCH_TYPE_PAST.
-	 * Notifies the Observer that either [MainRepository.upcomingLaunchesLiveData] or
-	 * [MainRepository.pastLaunchesLiveData] is changed.*/
-	fun getLaunches ( type : Int ) {
-		repository.getLaunches ( type )
-	}
+        /**Creates the instance of [MainViewModel].
+         * @return New Instance of [MainViewModel].*/
+        fun build() = MainViewModel(repository)
 
-	/**Gets all the Rockets used by SpaceX.
-	 * Notifies the [androidx.lifecycle.Observer] of [MainRepository.allRocketsLiveData] about
-	 * change in the List of [ritwik.samples.spacex.pojo.rockets.Rocket]*/
-	fun getRockets () {
-		repository.getAllRockets ()
-	}
+    }
 
-	/**Gets all the Capsules used by SpaceX.
-	 * Notifies the [androidx.lifecycle.Observer] of [MainRepository.allCapsulesLiveData] about
-	 * change in the List of [ritwik.samples.spacex.pojo.capsules.Capsule]*/
-	fun getCapsules() {
-		repository.getAllCapsules()
-	}
+    /*-------------------------------------- Public Methods --------------------------------------*/
 
-	/**On-Click Method for performing actions when a [Launch] Event from [List] of [Launch]es is
-	 * selected:
-	 * @param launch Instance of [Launch].*/
-	fun onLaunchClicked ( launch : Launch) {
-		// TODO : Perform some action when a Launch is clicked in the UI.
-	}
+    /**Request the [repository] to fetch the Launches of given [type].
+     * @param type Specify the type of Launches to fetch. It is described in [LaunchType].
+     * @return [LiveData] of [NetworkProcessor.Resource] of type [List] of [Launch].*/
+    fun getLaunches(type: LaunchType): LiveData<NetworkProcessor.Resource<List<Launch>>> =
+        when (type) {
+            LaunchType.UPCOMING -> getRepository().getUpcomingLaunches()
+            LaunchType.PAST -> getRepository().getPastLaunches()
+        }
 
-	/**Gets the Date Time.
-	 * @param utcDate [String] containing UTC Date and Time.
-	 * @return [String] containing formatted Date and Time.*/
-	fun getDateTime ( utcDate : String? ) : String = convertUTCDateTime(utcDate)
+    /**Requests the [repository] to fetch all the Rockets.
+     * @return [LiveData] of [NetworkProcessor.Resource] of type [List] of [Rocket].*/
+    fun getRockets(): LiveData<NetworkProcessor.Resource<List<Rocket>>> =
+        getRepository().getAllRockets()
+
+    /**Requests the [repository] to fetch all the Capsules.
+     * @return [LiveData] of [NetworkProcessor.Resource] of type [List] of [Capsule]*/
+    fun getCapsules(): LiveData<NetworkProcessor.Resource<List<Capsule>>> =
+        getRepository().getAllCapsules()
+
+    /**On-Click Method for performing actions when a [Launch] Event from [List] of [Launch]es is
+     * selected:
+     * @param launch Instance of [Launch].*/
+    fun onLaunchClicked(launch: Launch) {
+        // TODO : Perform some action when a Launch is clicked in the UI.
+    }
+
+    /**Gets the Date Time.
+     * @param utcDate [String] containing UTC Date and Time.
+     * @return [String] containing formatted Date and Time.*/
+    fun getDateTime(utcDate: String?): String = convertUTCDateTime(utcDate)
 
 }
