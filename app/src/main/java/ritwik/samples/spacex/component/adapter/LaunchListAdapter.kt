@@ -1,4 +1,4 @@
-package ritwik.samples.spacex.components.adapters
+package ritwik.samples.spacex.component.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,9 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import ritwik.samples.spacex.databinding.RecyclerItemLaunchBinding
 
 import ritwik.samples.spacex.pojo.launches.Launch
-
-import ritwik.samples.spacex.components.viewHolders.LaunchListBindingViewHolder
-import ritwik.samples.spacex.components.viewHolders.LaunchListViewHolder
+import ritwik.samples.spacex.component.viewHolder.LaunchListBindingViewHolder
+import ritwik.samples.spacex.component.viewHolder.LaunchListViewHolder
 
 import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
 
@@ -18,8 +17,7 @@ import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
  * @author Ritwik Jamuar.*/
 class LaunchListAdapter (
 	private val viewModel : MainViewModel
-) : RecyclerView.Adapter < LaunchListViewHolder > () {
-
+) : RecyclerView.Adapter <LaunchListViewHolder> () {
 	// Lists.
 	private var launchesList : List <Launch> = listOf ()
 
@@ -36,7 +34,11 @@ class LaunchListAdapter (
 		val binding = RecyclerItemLaunchBinding.inflate ( inflater, parent, false )
 
 		// Instantiate the ViewHolder by providing View and Binding.
-		val viewHolder = LaunchListBindingViewHolder ( binding.root, binding )
+		val viewHolder =
+			LaunchListBindingViewHolder(
+				binding.root,
+				binding
+			)
 
 		// Set the Life Cycle Owner of Binding.
 		binding.lifecycleOwner = viewHolder
@@ -54,7 +56,7 @@ class LaunchListAdapter (
 		// If the holder is indeed an instance of BindingViewHolder, then we can apply the
 		// binding directly to the layout.
 		// Thus, check whether the holder is an instance of BindingViewHolder.
-		if ( holder is LaunchListBindingViewHolder ) {
+		if ( holder is LaunchListBindingViewHolder) {
 			holder.apply {
 				binding.viewModel = viewModel
 				binding.launch = launch
@@ -62,16 +64,16 @@ class LaunchListAdapter (
 		}
 	}
 
-	override fun onViewAttachedToWindow ( holder : LaunchListViewHolder ) {
+	override fun onViewAttachedToWindow ( holder : LaunchListViewHolder) {
 		super.onViewAttachedToWindow ( holder )
-		if ( holder is LaunchListBindingViewHolder ) {
+		if ( holder is LaunchListBindingViewHolder) {
 			holder.markAttach ()
 		}
 	}
 
-	override fun onViewDetachedFromWindow ( holder : LaunchListViewHolder ) {
+	override fun onViewDetachedFromWindow ( holder : LaunchListViewHolder) {
 		super.onViewDetachedFromWindow ( holder )
-		if ( holder is LaunchListBindingViewHolder ) {
+		if ( holder is LaunchListBindingViewHolder) {
 			holder.markDetach ()
 		}
 	}

@@ -4,6 +4,8 @@ import android.content.Intent
 
 import android.os.Handler
 
+import androidx.databinding.ViewDataBinding
+
 import ritwik.samples.spacex.R
 
 import ritwik.samples.spacex.common.BaseActivity
@@ -32,12 +34,16 @@ class LauncherActivity : BaseActivity () {
 
 	override fun inject () {}
 
+	override fun layoutRes(): Int = R.layout.activity_launcher
+
+	override fun isDataBinding(): Boolean = false
+
+	override fun bindView(binding: ViewDataBinding) = Unit
+
 	override fun initialize () {
 		handler = Handler ()
 		handler?.postDelayed ( mRunnable, mDELAY )
 	}
-
-	override fun getLayoutRes () : Int { return R.layout.activity_launcher }
 
 	override fun cleanUp () {
 		handler = null

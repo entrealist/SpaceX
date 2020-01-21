@@ -8,13 +8,15 @@ import androidx.lifecycle.ViewModelProvider
 class MainViewModelFactory (
 	private val repository : MainRepository
 ) : ViewModelProvider.NewInstanceFactory () {
+
 	/*--------------------- ViewModelProvider.NewInstanceFactory () Callbacks --------------------*/
 
 	@Suppress ( "UNCHECKED_CAST" )
-	override fun < T : ViewModel? > create ( modelClass : Class < T > ) : T {
-		// Provide the instance of ViewModel from here.,
-		return MainViewModel (
-			repository = this.repository
-		) as T
-	}
+	override fun < T : ViewModel? > create ( modelClass : Class < T > ) : T =
+		MainViewModel
+			.Builder()
+			.setRepository(repository)
+			.build()
+				as T
+
 }

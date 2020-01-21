@@ -5,9 +5,11 @@ import android.content.Context
 import android.os.Bundle
 
 import android.view.LayoutInflater
-
 import android.view.View
 import android.view.ViewGroup
+
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 
 import androidx.viewpager.widget.ViewPager
 
@@ -15,17 +17,13 @@ import com.google.android.material.tabs.TabLayout
 
 import ritwik.samples.spacex.R
 
-import ritwik.samples.spacex.application.database.LAUNCH_TYPE_PAST
-import ritwik.samples.spacex.application.database.LAUNCH_TYPE_UPCOMING
+import ritwik.samples.spacex.application.database.LaunchType
 
-import ritwik.samples.spacex.common.BaseFragment
+import ritwik.samples.spacex.component.adapter.LaunchesOptionsAdapter
 
-import ritwik.samples.spacex.components.adapters.ViewPagerFragmentsAdapter
-
-/**[androidx.fragment.app.Fragment] to showcase all the Upcoming and Past Launches conducted by SpaceX.
+/**[Fragment] to showcase all the Upcoming and Past Launches conducted by SpaceX.
  * @author Ritwik Jamuar*/
-class LaunchesFragment : BaseFragment () {
-
+class LaunchesFragment : Fragment () {
 	// Views.
 	private var tabLayout : TabLayout? = null
 	private var viewPager : ViewPager? = null
@@ -36,36 +34,28 @@ class LaunchesFragment : BaseFragment () {
 	/*------------------------------------- Companion Object -------------------------------------*/
 
 	companion object {
-
 		@JvmStatic
-		fun create () = LaunchesFragment ()
-
+		fun newInstance () =
+			LaunchesFragment ()
+				.apply {
+					arguments = Bundle ()
+				}
 	}
 
-	/*---------------------------------- BaseFragment Callbacks ----------------------------------*/
+	/*------------------------------------ Fragment Callbacks ------------------------------------*/
 
-	override fun initializeViews ( view : View ) {
-		// Initialize Views
-		tabLayout = view.findViewById ( R.id.fragment_launches_tab_layout )
-		viewPager = view.findViewById ( R.id.fragment_launches_view_pager )
-
-		// Initialize the ViewPager Adapter.
-		val viewPagerFragmentsAdapter = ViewPagerFragmentsAdapter ( childFragmentManager )
-
-		// Add Instances of Fragments that have to be shown in the ViewPager.
-		viewPagerFragmentsAdapter.addFragment ( LaunchesListFragment.newInstance ( LAUNCH_TYPE_UPCOMING ), "Upcoming" )
-		viewPagerFragmentsAdapter.addFragment ( LaunchesListFragment.newInstance ( LAUNCH_TYPE_PAST ), "Past" )
-
-		// Set the ViewPager Adapter to the ViewPager.
-		viewPager?.adapter = viewPagerFragmentsAdapter
-
-		// Setup the Tabs with ViewPager.
-		tabLayout?.setupWithViewPager ( viewPager )
+	override fun onCreateView (
+		inflater : LayoutInflater,
+		container : ViewGroup?,
+		savedInstanceState : Bundle?
+	) : View? {
+		val view : View = inflater.inflate ( R.layout.fragment_launches, container, false )
+		initializeViews ( view )
+		return view
 	}
 
-	override fun getLayoutRes () : Int = R.layout.fragment_launches
-
-	override fun setListener ( context : Context ) {
+	override fun onAttach ( context : Context ) {
+		super.onAttach ( context )
 		if ( context is Listener ) {
 			listener = context
 		} else {
@@ -73,24 +63,39 @@ class LaunchesFragment : BaseFragment () {
 		}
 	}
 
-	override fun cleanUp () {
+	override fun onDetach () {
+		super.onDetach ()
 		listener = null
-		tabLayout = null
-		viewPager = null
 	}
 
-	override fun tag () : String = LaunchesFragment::class.java.simpleName
+	/*------------------------------------- Private Methods --------------------------------------*/
 
-	override fun isDataBinding () : Boolean = false
+	private fun initializeViews ( view : View ) {
+		// Initialize Views
+		tabLayout = view.findViewById ( R.id.fragment_launches_tab_layout )
+		viewPager = view.findViewById ( R.id.fragment_launches_view_pager )
 
-	override fun applyBinding (
-		inflater : LayoutInflater,
-		container : ViewGroup?,
-		savedInstanceState : Bundle? )
-		: View? = null
+		// Initialize the ViewPager Adapter.
+		val launchesOptionsAdapter =
+			LaunchesOptionsAdapter(
+				childFragmentManager
+			)
+
+		// Add Instances of Fragments that have to be shown in the ViewPager.
+		launchesOptionsAdapter.addFragment ( LaunchesListFragment.newInstance ( LaunchType.UPCOMING ), "Upcoming" )
+		launchesOptionsAdapter.addFragment ( LaunchesListFragment.newInstance ( LaunchType.PAST ), "Past" )
+
+		// Set the ViewPager Adapter to the ViewPager.
+		viewPager?.adapter = launchesOptionsAdapter
+
+		// Setup the Tabs with ViewPager
+		tabLayout?.setupWithViewPager ( viewPager )
+	}
 
 	/*---------------------------------------- Interfaces ----------------------------------------*/
 
-	interface Listener : MainFragmentListener
-
+	// TODO : Add Implementation to get the Fragment Manager from Activity.
+	interface Listener {
+		fun getFMFromActivity () : FragmentManager
+	}
 }

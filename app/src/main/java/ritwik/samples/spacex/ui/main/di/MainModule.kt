@@ -39,8 +39,9 @@ class MainModule (
 
 	@Provides
 	@MainScope
-	fun providesMainViewModel ( factory : MainViewModelFactory ) : MainViewModel =
-		ViewModelProviders.of ( activity, factory ).get ( MainViewModel::class.java )
+	fun providesMainViewModel ( factory : MainViewModelFactory ) : MainViewModel {
+		return ViewModelProviders.of(activity, factory).get(MainViewModel::class.java)
+	}
 
 	/*--------------------------------- MainViewModel Dependencies -------------------------------*/
 
@@ -48,7 +49,9 @@ class MainModule (
 	@MainScope
 	fun providesMainViewModelFactory (
 		repository : MainRepository
-	) : MainViewModelFactory = MainViewModelFactory ( repository = repository )
+	) : MainViewModelFactory {
+		return MainViewModelFactory ( repository = repository )
+	}
 
 	/*----------------------------- MainViewModelFactory Dependencies ----------------------------*/
 
@@ -56,16 +59,15 @@ class MainModule (
 	@MainScope
 	fun providesMainRepository (
 		restServices : RESTServices
-	) : MainRepository = MainRepository.create ( restServices )
+	) : MainRepository {
+		return MainRepository.create ( restServices )
+	}
 
 	/*-------------------------------- MainRepository Dependencies -------------------------------*/
 
 	@Provides
 	@MainScope
-	fun providesRESTServices () : RESTServices =
-		App
-			.getInstance ( activity )
-			.getAppComponent ()
-			.getRESTServices ()
-
+	fun providesRESTServices () : RESTServices {
+		return App.getInstance ( activity ).getAppComponent ().getRESTServices ()
+	}
 }

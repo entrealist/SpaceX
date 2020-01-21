@@ -1,38 +1,31 @@
-<resources >
-	<string name = "app_name" >SpaceX</string >
+<resources>
+	<string name = "app_name">SpaceX</string>
 
 	<!-- Image View Content Description -->
-	<string name = "imcd_rocket" >Space X Rocket</string >
-	<string name = "imcd_space_x_logo" >Space X Logo</string >
-	<string name = "imcd_rocket_image" >Rocket</string >
-	<string name = "imcd_more_info" >More Info</string >
+	<string name = "imcd_rocket">Space X Rocket</string>
+	<string name = "imcd_space_x_logo">Space X Logo</string>
 
 	<!-- Menu Items -->
-	<string name = "menu_vehicle" >Vehicle</string >
-	<string name = "menu_launches" >Launches</string >
-	<string name = "menu_core" >Cores</string >
-	<string name = "menu_company" >The Company</string >
-	<string name = "menu_history" >History</string >
-	<string name = "menu_about" >About</string >
-	<string name = "menu_other" >Other</string >
+	<string name = "menu_vehicle">Vehicle</string>
+	<string name = "menu_launches">Launches</string>
+	<string name = "menu_core">Cores</string>
+	<string name = "menu_company">The Company</string>
+	<string name = "menu_history">History</string>
+	<string name = "menu_about">About</string>
+	<string name = "menu_other">Other</string>
 
 	<!-- Navigation Drawer Header -->
-	<string name = "navigation_drawer_header_app_name" >Space X-plorer</string >
-	<string name = "navigation_drawer_header_contributor" >By Ritwik Jamuar</string >
+	<string name = "navigation_drawer_header_app_name">Space X-plorer</string>
+	<string name = "navigation_drawer_header_contributor">By Ritwik Jamuar</string>
 
 	<!-- Recycler View Item -->
-	<string name = "recycler_item_launch_text_block" >Block</string >
-	<string name = "recycler_item_rocket_text_specs" >Rocket Specs</string >
-	<string name = "recycler_item_capsule_text_status" >Status</string >
-	<string name = "recycler_item_capsule_text_active_since" >Active Since</string >
-	<string name = "recycler_item_capsule_text_missions" >Missions</string >
-	<string name = "recycler_item_capsule_text_specs" >Capsule Specs</string >
-
-	<!-- Navigation View Label -->
-	<string name = "view_label_launches">Launches</string>
-	<string name = "view_label_vehicles">Vehicles</string>
+	<string name = "recycler_item_launch_text_block">Block</string>
+	<string name = "recycler_item_rocket_specifications">Rocket Specification</string>
+	<string name = "recycler_item_capsule_status">Status</string>
+	<string name = "recycler_item_capsule_active_since">Active Since</string>
+	<string name = "recycler_item_capsule_missions">Missions</string>
 
 	<!-- Fragment -->
-	<string name = "fragment_launches_list_text_next_launch_in" >Next Launch in</string >
+	<string name = "fragment_launches_list_text_next_launch_in">Next Launch in</string>
 
-</resources >
+</resources>

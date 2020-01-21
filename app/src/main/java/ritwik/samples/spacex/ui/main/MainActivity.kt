@@ -6,11 +6,11 @@ import androidx.appcompat.widget.Toolbar
 
 import androidx.core.view.GravityCompat
 
+import androidx.databinding.ViewDataBinding
+
 import androidx.drawerlayout.widget.DrawerLayout
 
 import androidx.fragment.app.FragmentManager
-
-import androidx.lifecycle.Observer
 
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -19,27 +19,33 @@ import androidx.navigation.ui.NavigationUI
 
 import com.google.android.material.navigation.NavigationView
 
+import com.squareup.picasso.Picasso
+
 import ritwik.samples.spacex.R
 
+import ritwik.samples.spacex.application.App
+
 import ritwik.samples.spacex.common.BaseActivity
+
+import ritwik.samples.spacex.pojo.capsules.Capsule
 
 import ritwik.samples.spacex.ui.main.di.DaggerMainComponent
 import ritwik.samples.spacex.ui.main.di.MainComponent
 import ritwik.samples.spacex.ui.main.di.MainModule
-
 import ritwik.samples.spacex.ui.main.fragments.*
 
 import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
 
 import javax.inject.Inject
 
+
 class MainActivity
 	: BaseActivity (),
 	LaunchesFragment.Listener,
 	LaunchesListFragment.Listener,
 	VehicleFragment.Listener,
-	RocketListFragment.Listener,
-	CapsuleListFragment.Listener {
+	RocketFragment.Listener,
+	CapsulesFragment.Listener {
 	// ViewModel.
 	@Inject lateinit var viewModel : MainViewModel
 
@@ -49,20 +55,6 @@ class MainActivity
 	private var navigationView : NavigationView? = null
 	private var navigationController : NavController? = null
 
-	/*----------------------------------------- Observers ----------------------------------------*/
-
-	/**[Observer] for observing change in Internet Connectivity.*/
-	private val noInternetObserver = Observer < Boolean > {
-		// TODO : Show some UI that states no Internet Connectivity.
-	}
-
-	/**[Observer] for observing the error value.*/
-	private val errorObserver = Observer < String > {
-		// TODO : Show some UI that shows error from RESTful API.
-	}
-
-	/*------------------------------ NavigationItemSelectedListener ------------------------------*/
-
 	/**[NavigationView.OnNavigationItemSelectedListener] for listening the user selection of
 	 * option in Navigation Drawer.*/
 	private val navigationItemSelectedListener = NavigationView.OnNavigationItemSelectedListener {
@@ -71,15 +63,7 @@ class MainActivity
 		// TODO : Need to find a better implementation of Fragment Navigation.
 		when ( it.itemId ) {
 			R.id.menu_item_launches -> {
-				navigationController?.currentDestination?.let { destination ->
-					when ( destination.label ) {
-						resources.getString ( R.string.view_label_vehicles ) -> {
-							navigationController?.navigate ( R.id.action_vehicleFragment_to_launchesFragment )
-						}
-
-						else -> { /* Do nothing. */ }
-					}
-				}
+				navigationController?.popBackStack ( R.id.launchesFragment, true )
 			}
 
 			R.id.menu_item_vehicle -> {
@@ -88,20 +72,6 @@ class MainActivity
 		}
 		true
 	}
-
-	/*-------------------------- Navigation Destination Changed Listener -------------------------*/
-
-	/**[NavController.OnDestinationChangedListener] to detect the change in [Navigation]'s
-	 * destination.*/
-	private val navigationDestinationChangeListener =
-		NavController.OnDestinationChangedListener {
-			_, destination, _ ->
-			when ( destination.label ) {
-				resources.getString ( R.string.view_label_launches ) -> toggleDrawerLock (true )
-				resources.getString ( R.string.view_label_vehicles ) -> toggleDrawerLock ( true )
-				else -> toggleDrawerLock (false )
-			}
-		}
 
 	/*---------------------------------- BaseActivity Callbacks ----------------------------------*/
 
@@ -113,15 +83,17 @@ class MainActivity
 		component.injectActivity ( this )
 	}
 
-	override fun initialize () {
+	override fun layoutRes(): Int = R.layout.activity_main
+
+	override fun isDataBinding(): Boolean = false
+
+	override fun bindView(binding: ViewDataBinding) {}
+
+	override fun initialize() {
 		initializeViews ()
-		attachObservers ()
 	}
 
-	override fun getLayoutRes () : Int = R.layout.activity_main
-
-	override fun cleanUp () {
-		// TODO : Add code for de-reference.
+	override fun cleanUp() {
 	}
 
 	/*----------------------------------- Activity Callbacks -------------------------------------*/
@@ -172,7 +144,6 @@ class MainActivity
 		navigationView = findViewById ( R.id.activity_main_navigation_view )
 
 		navigationController = Navigation.findNavController ( this, R.id.activity_main_fragment )
-		navigationController?.addOnDestinationChangedListener ( navigationDestinationChangeListener )
 
 		NavigationUI.setupActionBarWithNavController ( this, navigationController!!, drawerLayout!! )
 		NavigationUI.setupWithNavController ( navigationView!!, navigationController!! )
@@ -182,30 +153,16 @@ class MainActivity
 		navigationView?.setNavigationItemSelectedListener ( navigationItemSelectedListener )
 	}
 
-	/**Attaches [Observer]s to this [android.app.Activity].*/
-	private fun attachObservers () {
-		viewModel.noInternetLiveData.observe ( this, noInternetObserver )
-		viewModel.errorLiveData.observe ( this, errorObserver )
-	}
-
-	/**Toggles the Lock Mode of [DrawerLayout] used in this [android.app.Activity].
-	 * @param enabled [Boolean] to decide the lock of [DrawerLayout].*/
-	private fun toggleDrawerLock ( enabled : Boolean ) {
-		// Decide the Lock Mode.
-		val lockMode = if ( enabled ) {
-			DrawerLayout.LOCK_MODE_UNLOCKED
-		} else {
-			DrawerLayout.LOCK_MODE_LOCKED_CLOSED
-		}
-
-		// Set the Lock Mode.
-		drawerLayout?.setDrawerLockMode ( lockMode )
-	}
-
-	/*------------------------------- MainFragmentListener Callbacks -----------------------------*/
+	/*---------------------------- LaunchesFragment.Listener Callbacks ---------------------------*/
 
 	override fun getFMFromActivity () : FragmentManager = supportFragmentManager
 
 	override fun getVM () : MainViewModel = viewModel
+
+	override fun getPicasso(): Picasso = App.getInstance(this).getAppComponent().getPicasso()
+
+	override fun navigateToCapsuleDetail(capsule: Capsule) {
+		// TODO: Navigate to CapsuleDetailsFragment.
+	}
 
 }

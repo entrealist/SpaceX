@@ -2,41 +2,57 @@ package ritwik.samples.spacex.common
 
 import android.os.Bundle
 
+import androidx.annotation.Nullable
+
 import androidx.appcompat.app.AppCompatActivity
 
-/**Base [android.app.Activity] for abstracting common methods and automating their calls.
- * @author Ritwik Jamuar.*/
-abstract class BaseActivity : AppCompatActivity () {
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 
-	/*------------------------------------ Activity Callbacks ------------------------------------*/
+/**Base [android.app.Activity] to abstract common instantiation and clean-up procedures.
+ * @author Ritwik Jamuar*/
+abstract class BaseActivity : AppCompatActivity() {
 
-	override fun onCreate ( savedInstanceState : Bundle? ) {
-		super.onCreate ( savedInstanceState )
-		setContentView ( getLayoutRes () )
-		inject ()
-		initialize ()
-	}
+    /*----------------------------------- Activity Callbacks -------------------------------------*/
 
-	override fun onDestroy () {
-		super.onDestroy ()
-		cleanUp ()
-	}
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        inject()
+        if (isDataBinding()) {
+            bindView(DataBindingUtil.setContentView(this, layoutRes()))
+        } else {
+            setContentView(layoutRes())
+        }
+        initialize()
+    }
 
-	/*------------------------------------- Abstract Methods -------------------------------------*/
+    override fun onDestroy() {
+        super.onDestroy()
+        cleanUp()
+    }
 
-	/**Tells the implementing [android.app.Activity] to execute Dependency Injection.*/
-	abstract fun inject ()
+    /*------------------------------------- Abstract Methods -------------------------------------*/
 
-	/**Tells the implementing [android.app.Activity] to initialize its components.*/
-	abstract fun initialize ()
+    /**Tells the implementing [android.app.Activity] to provide it's Layout Resource ID.
+     * @return [Int] denoting the Layout Resource ID.*/
+    abstract fun layoutRes(): Int
 
-	/**Fetches Resource ID of extending [android.app.Activity].
-	 * Extending [android.app.Activity] should provide the Layout Resource ID.
-	 * @return [Int] containing Layout Resource ID.*/
-	abstract fun getLayoutRes () : Int
+    /**Tells the implementing [android.app.Activity] to inject it's [dagger.Component].*/
+    abstract fun inject()
 
-	/**Tells the implementing [android.app.Activity] to perform objects nullification for Garbage
-	 * Collection.*/
-	abstract fun cleanUp ()
+    /**Determines from implementing [android.app.Activity] whether it is using Data Binding or not.
+     * @return [Boolean] value as true, when implementing [android.app.Activity] is using
+     * DataBinding, otherwise false.*/
+    abstract fun isDataBinding(): Boolean
+
+    /**Binds the Data Binding adapter that'll be used by the implementing [android.app.Activity].
+     * @param binding Data Binding Adapter to be used for any value updates.*/
+    abstract fun bindView(@Nullable binding: ViewDataBinding)
+
+    /**Tells the implementing [android.app.Activity] to initialize it's component.*/
+    abstract fun initialize()
+
+    /**Tells the implementing [android.app.Activity] to clean-up it's resources.*/
+    abstract fun cleanUp()
 
 }

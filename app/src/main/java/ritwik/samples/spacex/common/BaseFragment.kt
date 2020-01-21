@@ -8,80 +8,101 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+
 import androidx.fragment.app.Fragment
 
-/**Base [Fragment] for abstracting common methods and automating their calls.
+/**Base [Fragment] to abstract common instantiation and clan-up procedures.
  * @author Ritwik Jamuar.*/
-abstract class BaseFragment : Fragment () {
+abstract class BaseFragment : Fragment() {
 
-	/*------------------------------------ Fragment Callbacks ------------------------------------*/
+    /*------------------------------------ Fragment Callbacks ------------------------------------*/
 
-	override fun onCreateView (
-		inflater : LayoutInflater,
-		container : ViewGroup?,
-		savedInstanceState : Bundle?
-	) : View? {
-		return if ( isDataBinding () ) {
-			applyBinding ( inflater, container, savedInstanceState )
-		} else {
-			inflater.inflate (getLayoutRes (), container, false )
-		}
-	}
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        context?.let {
+            setListener(it)
+        }
+    }
 
-	override fun onViewCreated (view : View, savedInstanceState : Bundle? ) {
-		super.onViewCreated ( view, savedInstanceState )
-		initializeViews ( view )
-	}
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        attachObservers()
+    }
 
-	override fun onAttach ( context : Context) {
-		super.onAttach ( context )
-		setListener ( context )
-	}
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return if (isDataBinding()) {
+            val binding: ViewDataBinding = DataBindingUtil.inflate(
+                inflater,
+                layoutRes(),
+                container,
+                false
+            )
+            provideDataBinding(binding = binding)
+            binding.root
+        } else {
+            inflater.inflate(layoutRes(), container, false)
+        }
+    }
 
-	override fun onDetach () {
-		super.onDetach ()
-		cleanUp ()
-	}
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (isDataBinding()) {
+            initializeViews()
+        } else {
+            initializeViews(view)
+        }
+    }
 
-	/*------------------------------------- Abstract Methods -------------------------------------*/
+    override fun onDestroyView() {
+        super.onDestroyView()
+        cleanUp()
+    }
 
-	/**Fetches Resource ID of Layout of child [Fragment].
-	 * Extending [Fragment] should provide the Layout Resource ID.
-	 * @return [Int] containing Layout Resource ID.*/
-	abstract fun getLayoutRes () : Int
+    override fun onDetach() {
+        super.onDetach()
+        removeListener()
+    }
 
-	/**Instantiate the Views of extending [Fragment].
-	 * @param view Reference of [View] of [Fragment].*/
-	abstract fun initializeViews ( view : View)
+    /*------------------------------------- Abstract Methods -------------------------------------*/
 
-	/**Instantiate the interface which is implemented by the container [android.app.Activity].
-	 * @param context [Context] of [android.app.Activity].*/
-	abstract fun setListener ( context : Context)
+    /**Tells the implementing [Fragment] to set the interface listener if it wishes.
+     * @param context [Context] from where this [Fragment] has been started.*/
+    abstract fun setListener(context: Context)
 
-	/**Cleans up all the variable reference used in the extending Fragment.*/
-	abstract fun cleanUp ()
+    /**Tells the implementing [Fragment] to attach [androidx.lifecycle.Observer]s to
+     * any [androidx.lifecycle.LiveData].*/
+    abstract fun attachObservers()
 
-	/**Fetches Tag from extending [Fragment].
-	 * For extending [Fragment]s, return Simple Name of the [Fragment] class.
-	 * @return [String] denoting the Tag of the [Fragment].*/
-	abstract fun tag () : String
+    /**Tells the implementing [Fragment] to provide it's Layout Resource ID.
+     * @return [Int] denoting the Layout's Resource ID of [Fragment].*/
+    abstract fun layoutRes(): Int
 
-	/**Tells that the implementing [Fragment] is using Data Binding Library.
-	 * To implementing Fragments, Return true only when the implementing [Fragment] is using Data
-	 * Binding Library or not, else, always return false.
-	 * @return [Boolean] that denotes whether Data Binding is used for the implementing
-	 * [Fragment] or not.*/
-	abstract fun isDataBinding () : Boolean
+    /**Determines from the implementing [Fragment] whether it is employing DataBinding or not.
+     * @return true, if the implementing [Fragment] uses DataBinding, else false.*/
+    abstract fun isDataBinding(): Boolean
 
-	/**Tells the implementing [Fragment] to implement their Data Bindings and then return the [View]
-	 * from the Data Binding.
-	 * If Data Binding is not used, then simply return null in conjunction with returning false
-	 * to [isDataBinding].
-	 * @return [View] from Data Binding, if the implementing Fragment used Data Binding, else null.*/
-	abstract fun applyBinding (
-		inflater : LayoutInflater,
-		container : ViewGroup?,
-		savedInstanceState : Bundle?
-	) : View?
+    /**Provides the binding to implementing [Fragment].
+     * @param binding [ViewDataBinding] that can be cast to View specific Binding Class.*/
+    abstract fun provideDataBinding(binding: ViewDataBinding)
+
+    /**Tells the implementing [Fragment] to initializes it's Child [View]s.
+     * @param view [View] of the Root, which contains all other child [View]s.*/
+    abstract fun initializeViews(view: View)
+
+    /**Tells the implementing [Fragment] to initializes it's Child [View]s.*/
+    abstract fun initializeViews()
+
+    /**Tells the implementing [Fragment] to clean-up it's resources for preventing
+     * a potential Memory Leak.*/
+    abstract fun cleanUp()
+
+    /**Tells the implementing [Fragment] to remove it's listener to the [Context].*/
+    abstract fun removeListener()
 
 }

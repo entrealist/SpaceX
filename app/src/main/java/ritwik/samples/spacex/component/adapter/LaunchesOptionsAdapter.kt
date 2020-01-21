@@ -1,14 +1,11 @@
-package ritwik.samples.spacex.components.adapters
+package ritwik.samples.spacex.component.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 
-/**[FragmentStatePagerAdapter] to be used as an Adapter of ViewPager.
- * @author Ritwik Jamuar.*/
-class ViewPagerFragmentsAdapter ( supportFragmentManager : FragmentManager )
+class LaunchesOptionsAdapter ( supportFragmentManager : FragmentManager )
 	: FragmentStatePagerAdapter ( supportFragmentManager ) {
-
 	// Variables.
 	private val fragmentList = ArrayList < Fragment > ()
 	private val fragmentTitleList = ArrayList < String > ()
@@ -29,12 +26,8 @@ class ViewPagerFragmentsAdapter ( supportFragmentManager : FragmentManager )
 
 	/*-------------------------------------- Public Methods --------------------------------------*/
 
-	/**Adds a Fragment in the adapter.
-	 * @param fragment [Fragment] to be added.
-	 * @param title Title of the [Fragment].*/
 	fun addFragment ( fragment : Fragment, title : String ) {
 		fragmentList.add ( fragment )
 		fragmentTitleList.add ( title )
 	}
-
 }
