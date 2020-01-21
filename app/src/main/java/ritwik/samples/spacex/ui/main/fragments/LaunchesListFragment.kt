@@ -115,8 +115,7 @@ class LaunchesListFragment : Fragment () {
 		launchRecycler = view.findViewById ( R.id.fragment_launches_list_recycler_view_launches )
 
 		// Initialize Adapters.
-		launchRecyclerAdapter =
-            LaunchListAdapter(listener!!.getVM())
+		launchRecyclerAdapter = LaunchListAdapter(listener!!.getVM())
 
 		initializeRecyclerView ()
 		applyBindingData ()
@@ -166,7 +165,7 @@ class LaunchesListFragment : Fragment () {
 				/*printLog ( TAG, it?.toString () )*/
 
 				// Add the List of Upcoming Launches to the Adapter.
-				launchRecyclerAdapter.replaceLaunchesList(data)
+				launchRecyclerAdapter.replaceList(data)
 			}
 		}
 
@@ -182,7 +181,7 @@ class LaunchesListFragment : Fragment () {
 				Collections.sort(data, descendingLaunchesComparator)
 
 				// Add the List of Past Launches to the Adapter.
-				launchRecyclerAdapter.replaceLaunchesList(data)
+				launchRecyclerAdapter.replaceList(data)
 			}
 		}
 
