@@ -4,9 +4,9 @@ import android.content.Context
 
 import android.os.Bundle
 
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+
+import androidx.databinding.ViewDataBinding
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -19,11 +19,13 @@ import ritwik.samples.spacex.R
 
 import ritwik.samples.spacex.application.database.LaunchType
 
+import ritwik.samples.spacex.common.BaseFragment
+
 import ritwik.samples.spacex.component.adapter.LaunchesOptionsAdapter
 
 /**[Fragment] to showcase all the Upcoming and Past Launches conducted by SpaceX.
  * @author Ritwik Jamuar*/
-class LaunchesFragment : Fragment () {
+class LaunchesFragment : BaseFragment () {
 	// Views.
 	private var tabLayout : TabLayout? = null
 	private var viewPager : ViewPager? = null
@@ -42,20 +44,9 @@ class LaunchesFragment : Fragment () {
 				}
 	}
 
-	/*------------------------------------ Fragment Callbacks ------------------------------------*/
+	/*---------------------------------- BaseFragment Callbacks ----------------------------------*/
 
-	override fun onCreateView (
-		inflater : LayoutInflater,
-		container : ViewGroup?,
-		savedInstanceState : Bundle?
-	) : View? {
-		val view : View = inflater.inflate ( R.layout.fragment_launches, container, false )
-		initializeViews ( view )
-		return view
-	}
-
-	override fun onAttach ( context : Context ) {
-		super.onAttach ( context )
+	override fun setListener(context: Context) {
 		if ( context is Listener ) {
 			listener = context
 		} else {
@@ -63,34 +54,48 @@ class LaunchesFragment : Fragment () {
 		}
 	}
 
-	override fun onDetach () {
-		super.onDetach ()
+	override fun attachObservers() = Unit
+
+	override fun layoutRes(): Int = R.layout.fragment_launches
+
+	override fun isDataBinding(): Boolean = false
+
+	override fun provideDataBinding(binding: ViewDataBinding) = Unit
+
+	override fun initializeViews (view : View) {
+		// Initialize Views
+		tabLayout = view.findViewById ( R.id.fragment_launches_tab_layout )
+		viewPager = view.findViewById ( R.id.fragment_launches_view_pager )
+
+		// Set the ViewPager Adapter to the ViewPager.
+		viewPager?.adapter = provideViewPagerAdapter()
+
+		// Setup the Tabs with ViewPager
+		tabLayout?.setupWithViewPager ( viewPager )
+	}
+
+	override fun initializeViews() = Unit
+
+	override fun cleanUp() {
+		viewPager?.adapter = null
+		viewPager = null
+
+		tabLayout = null
+	}
+
+	override fun removeListener() {
 		listener = null
 	}
 
 	/*------------------------------------- Private Methods --------------------------------------*/
 
-	private fun initializeViews ( view : View ) {
-		// Initialize Views
-		tabLayout = view.findViewById ( R.id.fragment_launches_tab_layout )
-		viewPager = view.findViewById ( R.id.fragment_launches_view_pager )
-
-		// Initialize the ViewPager Adapter.
-		val launchesOptionsAdapter =
-			LaunchesOptionsAdapter(
-				childFragmentManager
-			)
-
-		// Add Instances of Fragments that have to be shown in the ViewPager.
-		launchesOptionsAdapter.addFragment ( LaunchesListFragment.newInstance ( LaunchType.UPCOMING ), "Upcoming" )
-		launchesOptionsAdapter.addFragment ( LaunchesListFragment.newInstance ( LaunchType.PAST ), "Past" )
-
-		// Set the ViewPager Adapter to the ViewPager.
-		viewPager?.adapter = launchesOptionsAdapter
-
-		// Setup the Tabs with ViewPager
-		tabLayout?.setupWithViewPager ( viewPager )
-	}
+	private fun provideViewPagerAdapter () =
+		LaunchesOptionsAdapter(childFragmentManager)
+			.apply {
+				// Add Instances of Fragments that have to be shown in the ViewPager.
+				this.addFragment (LaunchesListFragment.newInstance (LaunchType.UPCOMING), "Upcoming")
+				this.addFragment (LaunchesListFragment.newInstance (LaunchType.PAST), "Past")
+			}
 
 	/*---------------------------------------- Interfaces ----------------------------------------*/
 
