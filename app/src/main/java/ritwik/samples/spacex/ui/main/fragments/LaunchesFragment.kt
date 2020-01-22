@@ -27,8 +27,8 @@ import ritwik.samples.spacex.component.adapter.LaunchesOptionsAdapter
  * @author Ritwik Jamuar*/
 class LaunchesFragment : BaseFragment () {
 	// Views.
-	private var tabLayout : TabLayout? = null
-	private var viewPager : ViewPager? = null
+	private lateinit var tabLayout : TabLayout
+	private lateinit var viewPager : ViewPager
 
 	// Listeners.
 	private var listener : Listener? = null
@@ -68,20 +68,15 @@ class LaunchesFragment : BaseFragment () {
 		viewPager = view.findViewById ( R.id.fragment_launches_view_pager )
 
 		// Set the ViewPager Adapter to the ViewPager.
-		viewPager?.adapter = provideViewPagerAdapter()
+		viewPager.adapter = provideViewPagerAdapter()
 
 		// Setup the Tabs with ViewPager
-		tabLayout?.setupWithViewPager ( viewPager )
+		tabLayout.setupWithViewPager (viewPager)
 	}
 
 	override fun initializeViews() = Unit
 
-	override fun cleanUp() {
-		viewPager?.adapter = null
-		viewPager = null
-
-		tabLayout = null
-	}
+	override fun cleanUp() = Unit
 
 	override fun removeListener() {
 		listener = null
