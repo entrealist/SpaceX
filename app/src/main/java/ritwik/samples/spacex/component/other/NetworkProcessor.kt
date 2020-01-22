@@ -3,6 +3,10 @@ package ritwik.samples.spacex.component.other
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,21 +24,29 @@ abstract class NetworkProcessor<
 
     /**[retrofit2.Retrofit]'s [Callback] that intercepts the network request.*/
     private val networkCallback = object : Callback<TypeREST> {
-        override fun onResponse(call: Call<TypeREST>, response: Response<TypeREST>) =
-            data.postValue(
-                when (response.code()) {
-                    200 -> {
-                        val responseData = response.body()
-                        if (responseData == null) {
-                            Resource<TypeResource>(State.ERROR, null, "Data does not exist")
-                        } else {
-                            Resource(State.SUCCESS, convertData(responseData), null)
-                        }
+        override fun onResponse(call: Call<TypeREST>, response: Response<TypeREST>) {
+            when (response.code()) {
+                200 -> {
+                    val responseData = response.body()
+                    if (responseData == null) {
+                        data.postValue(
+                            Resource(State.ERROR, null, "Data does not exist")
+                        )
+                    } else {
+                        CoroutineScope(Dispatchers.IO)
+                            .launch {
+                                data.postValue(
+                                    Resource(State.SUCCESS, convertData(responseData), null)
+                                )
+                            }
                     }
-
-                    else -> Resource<TypeResource>(State.ERROR, null, "Something went wrong")
                 }
-            )
+
+                else -> data.postValue(
+                    Resource(State.ERROR, null, "Something went wrong")
+                )
+            }
+        }
 
         override fun onFailure(call: Call<TypeREST>, t: Throwable) =
             data.postValue(
