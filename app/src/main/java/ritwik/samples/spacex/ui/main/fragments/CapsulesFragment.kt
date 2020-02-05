@@ -118,7 +118,7 @@ class CapsulesFragment : BaseFragment() {
 
     /**Fetches the [List] of [Capsule].*/
     private fun getCapsules() {
-        listener?.getVM()?.getCapsules()?.observe(this, allCapsulesResponseObserver)
+        listener?.getVM()?.getCapsules()?.observe(viewLifecycleOwner, allCapsulesResponseObserver)
     }
 
     /*---------------------------------------- Interfaces ----------------------------------------*/
