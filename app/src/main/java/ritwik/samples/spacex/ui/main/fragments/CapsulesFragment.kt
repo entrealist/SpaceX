@@ -20,8 +20,6 @@ import ritwik.samples.spacex.component.other.NetworkProcessor
 
 import ritwik.samples.spacex.pojo.capsules.Capsule
 
-import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
-
 import java.lang.RuntimeException
 
 /**[BaseFragment] that shows the list of [Capsule]s.
@@ -124,11 +122,7 @@ class CapsulesFragment : BaseFragment() {
     /*---------------------------------------- Interfaces ----------------------------------------*/
 
     /**Interface Listener for any [android.app.Activity] that uses this [androidx.fragment.app.Fragment].*/
-    interface Listener {
-
-        /**Provides the [androidx.lifecycle.ViewModel] of the attaching [android.app.Activity].
-         * @return [androidx.lifecycle.ViewModel] of [ritwik.samples.spacex.ui.main.MainActivity]*/
-        fun getVM() : MainViewModel
+    interface Listener : MainFragmentListener {
 
         /**Tells the implementing [android.app.Activity] to navigate to details of [Capsule].
          * @param capsule Instance of [Capsule] whose details has to be shown.*/

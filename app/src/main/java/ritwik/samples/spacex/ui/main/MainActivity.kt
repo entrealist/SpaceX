@@ -32,6 +32,7 @@ import ritwik.samples.spacex.pojo.capsules.Capsule
 import ritwik.samples.spacex.ui.main.di.DaggerMainComponent
 import ritwik.samples.spacex.ui.main.di.MainComponent
 import ritwik.samples.spacex.ui.main.di.MainModule
+
 import ritwik.samples.spacex.ui.main.fragments.*
 
 import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
@@ -41,12 +42,8 @@ import javax.inject.Inject
 
 class MainActivity
 	: BaseActivity (),
-	LaunchesFragment.Listener,
-	LaunchesListFragment.Listener,
-	VehicleFragment.Listener,
-	RocketFragment.Listener,
-	CapsulesFragment.Listener,
-	CoreFragment.Listener {
+	MainFragmentListener,
+	CapsulesFragment.Listener {
 	// ViewModel.
 	@Inject lateinit var viewModel : MainViewModel
 
@@ -158,13 +155,15 @@ class MainActivity
 		navigationView?.setNavigationItemSelectedListener ( navigationItemSelectedListener )
 	}
 
-	/*---------------------------- LaunchesFragment.Listener Callbacks ---------------------------*/
+	/*---------------------------- MainFragmentListener Callbacks ---------------------------*/
 
 	override fun getFMFromActivity () : FragmentManager = supportFragmentManager
 
 	override fun getVM () : MainViewModel = viewModel
 
 	override fun getPicasso(): Picasso = App.getInstance(this).getAppComponent().getPicasso()
+
+	/*-------------------------------- CapsulesFragment Callbacks --------------------------------*/
 
 	override fun navigateToCapsuleDetail(capsule: Capsule) {
 		// TODO: Navigate to CapsuleDetailsFragment.

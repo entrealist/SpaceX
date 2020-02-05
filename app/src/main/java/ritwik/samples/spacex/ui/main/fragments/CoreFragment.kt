@@ -20,8 +20,6 @@ import ritwik.samples.spacex.component.other.NetworkProcessor
 
 import ritwik.samples.spacex.model.Core
 
-import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
-
 /**[androidx.fragment.app.Fragment] to showcase all the Cores used by SpaceX..
  * @author Ritwik Jamuar.*/
 class CoreFragment : BaseFragment() {
@@ -33,7 +31,7 @@ class CoreFragment : BaseFragment() {
     private var adapter: CoreAdapter? = null
 
     // Listeners.
-    private var listener: Listener? = null
+    private var listener: MainFragmentListener? = null
 
     /*----------------------------------------- Observers ----------------------------------------*/
 
@@ -50,7 +48,7 @@ class CoreFragment : BaseFragment() {
     /*---------------------------------- BaseFragment Callbacks ----------------------------------*/
 
     override fun setListener(context: Context) {
-        if (context is Listener) {
+        if (context is MainFragmentListener) {
             listener = context
         } else {
             throw RuntimeException("$context must implement Listener")
@@ -96,17 +94,6 @@ class CoreFragment : BaseFragment() {
     /**Fetches the [List] of [Core].*/
     private fun getCores() {
         listener?.getVM()?.getCores()?.observe(viewLifecycleOwner, allCoresResponseObserver)
-    }
-
-    /*---------------------------------------- Interfaces ----------------------------------------*/
-
-    /**Interface Listener for any [android.app.Activity] that uses this [androidx.fragment.app.Fragment].*/
-    interface Listener {
-
-        /**Provides the [androidx.lifecycle.ViewModel] of the attaching [android.app.Activity].
-         * @return [androidx.lifecycle.ViewModel] of [ritwik.samples.spacex.ui.main.MainActivity]*/
-        fun getVM() : MainViewModel
-
     }
 
 }

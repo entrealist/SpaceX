@@ -8,8 +8,6 @@ import android.view.View
 
 import androidx.databinding.ViewDataBinding
 
-import androidx.fragment.app.FragmentManager
-
 import androidx.viewpager.widget.ViewPager
 
 import com.google.android.material.tabs.TabLayout
@@ -29,7 +27,7 @@ class VehicleFragment : BaseFragment() {
     private var viewPager: ViewPager? = null
 
     // Listeners.
-    private var listener: Listener? = null
+    private var listener: MainFragmentListener? = null
 
     /*------------------------------------- Companion Object -------------------------------------*/
 
@@ -47,7 +45,7 @@ class VehicleFragment : BaseFragment() {
     /*------------------------------------ Fragment Callbacks ------------------------------------*/
 
     override fun setListener(context: Context) {
-        if (context is Listener) {
+        if (context is MainFragmentListener) {
             listener = context
         } else {
             throw RuntimeException("$context must implement Listener")
@@ -94,17 +92,6 @@ class VehicleFragment : BaseFragment() {
 
     override fun removeListener() {
         listener = null
-    }
-
-    /*---------------------------------------- Interfaces ----------------------------------------*/
-
-    /**Interface Listener for any [android.app.Activity] that uses this [androidx.fragment.app.Fragment].*/
-    interface Listener {
-
-        /**Gets the [FragmentManager] from [android.app.Activity].
-         * @return Instance of [FragmentManager] from the parent [android.app.Activity].*/
-        fun getFMFromActivity(): FragmentManager
-
     }
 
 }

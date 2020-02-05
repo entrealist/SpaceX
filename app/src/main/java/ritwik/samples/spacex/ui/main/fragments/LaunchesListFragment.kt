@@ -28,8 +28,6 @@ import ritwik.samples.spacex.component.adapter.LaunchListAdapter
 
 import ritwik.samples.spacex.component.other.NetworkProcessor
 
-import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
-
 /**[Fragment] to show the list of upcomingLaunches of SpaceX.
  * @author Ritwik Jamuar.*/
 class LaunchesListFragment : BaseFragment () {
@@ -44,7 +42,7 @@ class LaunchesListFragment : BaseFragment () {
 	private lateinit var launchType : LaunchType
 
 	// Listener.
-	private var listener : Listener? = null
+	private var listener : MainFragmentListener? = null
 
 	/*------------------------------------- Companion Object -------------------------------------*/
 
@@ -85,7 +83,7 @@ class LaunchesListFragment : BaseFragment () {
 	/*---------------------------------- BaseFragment Callbacks ----------------------------------*/
 
 	override fun setListener(context: Context) {
-		if ( context is Listener ) {
+		if ( context is MainFragmentListener ) {
 			listener = context
 		} else {
 			throw RuntimeException ( "$context must implement Listener" )
@@ -148,14 +146,4 @@ class LaunchesListFragment : BaseFragment () {
 		)
 	}
 
-	/*---------------------------------------- Interfaces ----------------------------------------*/
-
-	/**Interface for providing callback to [ritwik.samples.spacex.ui.main.MainActivity].*/
-	interface Listener {
-
-		/**Fetches the [MainViewModel] from [ritwik.samples.spacex.ui.main.MainActivity].
-		 * @return Instance of [MainViewModel].*/
-		fun getVM () : MainViewModel
-
-	}
 }

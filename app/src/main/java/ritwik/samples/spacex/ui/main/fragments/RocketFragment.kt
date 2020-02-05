@@ -11,8 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-import com.squareup.picasso.Picasso
-
 import ritwik.samples.spacex.R
 
 import ritwik.samples.spacex.common.BaseFragment
@@ -20,9 +18,8 @@ import ritwik.samples.spacex.common.BaseFragment
 import ritwik.samples.spacex.pojo.rockets.Rocket
 
 import ritwik.samples.spacex.component.adapter.RocketAdapter
-import ritwik.samples.spacex.component.other.NetworkProcessor
 
-import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
+import ritwik.samples.spacex.component.other.NetworkProcessor
 
 import java.lang.RuntimeException
 
@@ -40,7 +37,7 @@ class RocketFragment : BaseFragment() {
     private var layoutManager: LinearLayoutManager? = null
 
     // Listener.
-    private var listener: Listener? = null
+    private var listener: MainFragmentListener? = null
 
     /*------------------------------------- Companion Object -------------------------------------*/
 
@@ -77,7 +74,7 @@ class RocketFragment : BaseFragment() {
     /*---------------------------------- BaseFragment Callbacks ----------------------------------*/
 
     override fun setListener(context: Context) {
-        if (context is Listener) {
+        if (context is MainFragmentListener) {
             listener = context
         } else {
             throw RuntimeException("$context must implement Listener")
@@ -130,21 +127,6 @@ class RocketFragment : BaseFragment() {
     /**Fetches the [List] of [Rocket]s.*/
     private fun getRockets() {
         listener?.getVM()?.getRockets()?.observe(viewLifecycleOwner, allRocketsResponseObserver)
-    }
-
-    /*---------------------------------------- Interfaces ----------------------------------------*/
-
-    /**Interface Listener for any [android.app.Activity] that uses this [androidx.fragment.app.Fragment].*/
-    interface Listener {
-
-        /**Provides the [androidx.lifecycle.ViewModel] of the attaching [android.app.Activity].
-         * @return [androidx.lifecycle.ViewModel] of [ritwik.samples.spacex.ui.main.MainActivity]*/
-        fun getVM(): MainViewModel
-
-        /**Provides [Picasso] from attaching [android.app.Activity].
-         * @return Instance of [Picasso].*/
-        fun getPicasso(): Picasso
-
     }
 
 }

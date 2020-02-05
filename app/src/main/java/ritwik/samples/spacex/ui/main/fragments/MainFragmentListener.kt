@@ -1,6 +1,7 @@
 package ritwik.samples.spacex.ui.main.fragments
 
 import androidx.fragment.app.FragmentManager
+import com.squareup.picasso.Picasso
 
 import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
 
@@ -16,5 +17,9 @@ interface MainFragmentListener {
 	/**Tells the implementing [android.app.Activity] to provide it's [FragmentManager].
 	 * @return Reference of [FragmentManager].*/
 	fun getFMFromActivity () : FragmentManager
+
+	/**Provides [Picasso] from attaching [android.app.Activity].
+	 * @return Instance of [Picasso].*/
+	fun getPicasso(): Picasso
 
 }

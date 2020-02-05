@@ -9,7 +9,6 @@ import android.view.View
 import androidx.databinding.ViewDataBinding
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 
 import androidx.viewpager.widget.ViewPager
 
@@ -31,7 +30,7 @@ class LaunchesFragment : BaseFragment () {
 	private lateinit var viewPager : ViewPager
 
 	// Listeners.
-	private var listener : Listener? = null
+	private var listener : MainFragmentListener? = null
 
 	/*------------------------------------- Companion Object -------------------------------------*/
 
@@ -47,7 +46,7 @@ class LaunchesFragment : BaseFragment () {
 	/*---------------------------------- BaseFragment Callbacks ----------------------------------*/
 
 	override fun setListener(context: Context) {
-		if ( context is Listener ) {
+		if ( context is MainFragmentListener ) {
 			listener = context
 		} else {
 			throw RuntimeException ( "$context must implement Listener" )
@@ -92,10 +91,4 @@ class LaunchesFragment : BaseFragment () {
 				this.addFragment (LaunchesListFragment.newInstance (LaunchType.PAST), "Past")
 			}
 
-	/*---------------------------------------- Interfaces ----------------------------------------*/
-
-	// TODO : Add Implementation to get the Fragment Manager from Activity.
-	interface Listener {
-		fun getFMFromActivity () : FragmentManager
-	}
 }
