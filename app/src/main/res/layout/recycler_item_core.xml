@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="core"
+            type="ritwik.samples.spacex.model.Core" />
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardCornerRadius="5dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/recycler_item_core_guideline_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.02" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/recycler_item_core_guideline_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.98" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/recycler_item_core_guideline_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.02" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/recycler_item_core_guideline_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.98" />
+
+            <TextView
+                android:id="@+id/recycler_item_core_text_view_value_launch_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{core.launch}"
+                android:textColor="@color/colorWhite"
+                app:layout_constraintBottom_toBottomOf="@+id/recycler_item_core_text_view_placeholder_block"
+                app:layout_constraintEnd_toStartOf="@+id/recycler_item_core_text_view_placeholder_block"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="@id/recycler_item_core_guideline_left"
+                app:layout_constraintTop_toTopOf="@+id/recycler_item_core_text_view_placeholder_block"
+                tools:text="25 Mar '06 - 04:00" />
+
+            <TextView
+                android:id="@+id/recycler_item_core_text_view_placeholder_block"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recycler_item_launch_text_block"
+                android:textColor="@color/colorWhite"
+                app:layout_constraintBottom_toTopOf="@+id/recycler_item_core_text_view_value_block"
+                app:layout_constraintEnd_toEndOf="@+id/recycler_item_core_guideline_right"
+                app:layout_constraintStart_toEndOf="@+id/recycler_item_core_text_view_value_launch_time"
+                app:layout_constraintTop_toTopOf="@+id/recycler_item_core_guideline_top"
+                app:layout_constraintVertical_chainStyle="spread_inside" />
+
+            <TextView
+                android:id="@+id/recycler_item_core_text_view_value_serial_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{core.serialNumber}"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/recycler_item_core_text_view_value_block"
+                app:layout_constraintEnd_toStartOf="@+id/recycler_item_core_text_view_value_block"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="@+id/recycler_item_core_guideline_left"
+                app:layout_constraintTop_toTopOf="@+id/recycler_item_core_text_view_value_block"
+                tools:text="Merlin1A" />
+
+            <TextView
+                android:id="@+id/recycler_item_core_text_view_value_block"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@{core.block}"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/recycler_item_core_text_view_value_description"
+                app:layout_constraintEnd_toEndOf="@+id/recycler_item_core_guideline_right"
+                app:layout_constraintStart_toEndOf="@+id/recycler_item_core_text_view_value_serial_number"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_item_core_text_view_placeholder_block"
+                tools:text="TBD" />
+
+            <TextView
+                android:id="@+id/recycler_item_core_text_view_value_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@{core.description}"
+                android:textColor="@color/colorWhite"
+                android:textDirection="firstStrong"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/recycler_item_core_text_view_value_missions"
+                app:layout_constraintEnd_toEndOf="@+id/recycler_item_core_guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/recycler_item_core_guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_item_core_text_view_value_block"
+                tools:text="Successful first-stage burn and transition to second stage, maximal altitude 289 km. Harmonic oscillation at T+5 minutes Premature engine shutdown at T+7 min 30 s. Failed to reach orbit." />
+
+            <TextView
+                android:id="@+id/recycler_item_core_text_view_placeholder_missions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recycler_item_core_missions"
+                android:textColor="@color/colorWhite"
+                app:layout_constraintBottom_toBottomOf="@+id/recycler_item_core_text_view_value_missions"
+                app:layout_constraintEnd_toStartOf="@+id/recycler_item_core_text_view_value_missions"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="@+id/recycler_item_core_guideline_left"
+                app:layout_constraintTop_toTopOf="@+id/recycler_item_core_text_view_value_missions" />
+
+            <TextView
+                android:id="@+id/recycler_item_core_text_view_value_missions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{core.missionsText}"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/recycler_item_core_text_view_value_rtls"
+                app:layout_constraintEnd_toEndOf="@+id/recycler_item_core_guideline_right"
+                app:layout_constraintStart_toEndOf="@+id/recycler_item_core_text_view_placeholder_missions"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_item_core_text_view_value_description"
+                tools:text="DemoSat" />
+
+            <TextView
+                android:id="@+id/recycler_item_core_text_view_placeholder_rtls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recycler_item_core_rtls_landings"
+                android:textColor="@color/colorWhite"
+                app:layout_constraintBottom_toBottomOf="@+id/recycler_item_core_text_view_value_rtls"
+                app:layout_constraintEnd_toStartOf="@+id/recycler_item_core_text_view_value_rtls"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="@+id/recycler_item_core_guideline_left"
+                app:layout_constraintTop_toTopOf="@+id/recycler_item_core_text_view_value_rtls" />
+
+            <TextView
+                android:id="@+id/recycler_item_core_text_view_value_rtls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="@{core.rTLSLandings}"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/recycler_item_core_text_view_value_asds"
+                app:layout_constraintEnd_toEndOf="@+id/recycler_item_core_guideline_right"
+                app:layout_constraintStart_toEndOf="@+id/recycler_item_core_text_view_placeholder_rtls"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_item_core_text_view_value_missions"
+                tools:text="0/0" />
+
+            <TextView
+                android:id="@+id/recycler_item_core_text_view_placeholder_asds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recycler_item_core_asds_landings"
+                android:textColor="@color/colorWhite"
+                app:layout_constraintBottom_toBottomOf="@+id/recycler_item_core_text_view_value_asds"
+                app:layout_constraintEnd_toStartOf="@+id/recycler_item_core_text_view_value_asds"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="@+id/recycler_item_core_guideline_left"
+                app:layout_constraintTop_toTopOf="@+id/recycler_item_core_text_view_value_asds" />
+
+            <TextView
+                android:id="@+id/recycler_item_core_text_view_value_asds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{core.aSDSLandings}"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/recycler_item_core_guideline_bottom"
+                app:layout_constraintEnd_toEndOf="@+id/recycler_item_core_guideline_right"
+                app:layout_constraintStart_toEndOf="@+id/recycler_item_core_text_view_placeholder_asds"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_item_core_text_view_value_rtls"
+                tools:text="0/0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>
