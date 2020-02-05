@@ -19,6 +19,10 @@ import ritwik.samples.spacex.pojo.rockets.Rocket
 
 import ritwik.samples.spacex.ui.main.MainActivity
 
+import java.util.*
+
+import kotlin.Comparator
+
 /**ViewModel of [MainActivity].
  * @author Ritwik Jamuar.*/
 class MainViewModel private constructor(
@@ -26,6 +30,8 @@ class MainViewModel private constructor(
 ) : BaseViewModel<MainRepository>(repository) {
 
     // LiveData.
+    private val allUpComingLaunchesLiveData: MutableLiveData<List<Launch>> = MutableLiveData()
+    private val allPastLaunchesLiveData: MutableLiveData<List<Launch>> = MutableLiveData()
     private val allRocketsLiveData: MutableLiveData<List<Rocket>> = MutableLiveData()
     private val allCapsulesLiveData: MutableLiveData<List<Capsule>> = MutableLiveData()
     private val allCoresLiveData: MutableLiveData<List<Core>> = MutableLiveData()
@@ -49,6 +55,14 @@ class MainViewModel private constructor(
 
     /*-------------------------------------- Public Methods --------------------------------------*/
 
+    /**Provides the [LiveData] of [List] of UpComing [Launch]s to it's observers.
+     * @return [LiveData] of [List] of [Launch].*/
+    fun getAllUpComingLaunchesLiveData() : LiveData<List<Launch>> = allUpComingLaunchesLiveData
+
+    /**Provides the [LiveData] of [List] of [Launch]s to it's observers.
+     * @return [LiveData] of [List] of [Launch].*/
+    fun getAllPastLaunchesLiveData() : LiveData<List<Launch>> = allPastLaunchesLiveData
+
     /**Request the [repository] to fetch the Launches of given [type].
      * @param type Specify the type of Launches to fetch. It is described in [LaunchType].
      * @return [LiveData] of [NetworkProcessor.Resource] of type [List] of [Launch].*/
@@ -57,6 +71,39 @@ class MainViewModel private constructor(
             LaunchType.UPCOMING -> getRepository().getUpcomingLaunches()
             LaunchType.PAST -> getRepository().getPastLaunches()
         }
+
+    /**Process the Response received by fetching all the Launches differentiated by [launchType].
+     * @param resources [NetworkProcessor.Resource] of type [List] of [Rocket].
+     * @param launchType Specify the type of Launches to process. It is described in [LaunchType].*/
+    fun onLaunchesResponse(resources: NetworkProcessor.Resource<List<Launch>>, launchType: LaunchType) {
+        when(resources.state) {
+            NetworkProcessor.State.LOADING -> {
+                // Show Progress Bar.
+            }
+
+            NetworkProcessor.State.SUCCESS -> {
+                resources.data?.let { launches ->
+                    when(launchType) {
+                        LaunchType.UPCOMING -> {
+                            allUpComingLaunchesLiveData.postValue(launches)
+                        }
+
+                        LaunchType.PAST -> {
+                            // Sort the past launches in Descending Order.
+                            Collections.sort(launches, descendingLaunchesComparator)
+
+                            // Add the List of Past Launches to the Adapter.
+                            allPastLaunchesLiveData.postValue(launches)
+                        }
+                    }
+                }
+            }
+
+            NetworkProcessor.State.ERROR -> {
+
+            }
+        }
+    }
 
     /**Provides the [LiveData] of [List] of [Capsule]s to it's observers.
      * @return [LiveData] of [List] of [Capsule].*/
@@ -67,7 +114,7 @@ class MainViewModel private constructor(
     fun getRockets(): LiveData<NetworkProcessor.Resource<List<Rocket>>> =
         getRepository().getAllRockets()
 
-    /**Process the Response received by fetching all the Cores.
+    /**Process the Response received by fetching all the Rockets.
      * @param resources [NetworkProcessor.Resource] of type [List] of [Rocket].*/
     fun onRocketsResponse(resources: NetworkProcessor.Resource<List<Rocket>>) {
         when (resources.state) {
@@ -96,7 +143,7 @@ class MainViewModel private constructor(
     fun getCapsules(): LiveData<NetworkProcessor.Resource<List<Capsule>>> =
         getRepository().getAllCapsules()
 
-    /**Process the Response received by fetching all the Cores.
+    /**Process the Response received by fetching all the Capsules.
      * @param resources [NetworkProcessor.Resource] of type [List] of [Capsule].*/
     fun onCapsulesResponse(resources: NetworkProcessor.Resource<List<Capsule>>) {
         when (resources.state) {
@@ -156,5 +203,18 @@ class MainViewModel private constructor(
      * @param utcDate [String] containing UTC Date and Time.
      * @return [String] containing formatted Date and Time.*/
     fun getDateTime(utcDate: String?): String = convertUTCDateTime(utcDate)
+
+    /*------------------------------------- List Comparators -------------------------------------*/
+
+    /**[Comparator] for Comparing two [Launch]es and put them in descending order.*/
+    private val descendingLaunchesComparator = Comparator <Launch> {
+            launch1 : Launch, launch2 : Launch ->
+        when {
+            launch1.flightNumber!! == launch2.flightNumber!! -> 0
+            launch1.flightNumber > launch2.flightNumber -> -1
+            launch1.flightNumber < launch2.flightNumber -> 1
+            else -> 0
+        }
+    }
 
 }
