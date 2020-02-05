@@ -69,6 +69,7 @@ class RocketFragment : BaseFragment() {
         listener?.getVM()?.onRocketsResponse(resource)
     }
 
+    /**[Observer] that observes changes in [List] of [Rocket].*/
     private val allRocketsObserver = Observer<List<Rocket>> { rockets ->
         adapter?.replaceList(rockets)
     }
