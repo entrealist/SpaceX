@@ -7,7 +7,7 @@ data class ResponseCore(
     @field: Json(name = "block") val block: Int?,
     @field: Json(name = "status") val status: String,
     @field: Json(name = "original_launch") val launchTimeUTC: String,
-    @field: Json(name = "original_launch_unix") val launchTimeUNIX: Long,
+    @field: Json(name = "original_launch_unix") val launchTimeUNIX: Long?,
     @field: Json(name = "missions") val missions: List<ResponseMission>,
     @field: Json(name = "reuse_count") val reuseCount: Int,
     @field: Json(name = "rtls_attempts") val attemptsRTLS: Int,

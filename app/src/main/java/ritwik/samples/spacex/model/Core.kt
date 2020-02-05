@@ -9,7 +9,7 @@ import java.lang.StringBuilder
 data class Core(
     val serial: String,
     val block: Int?,
-    val launchDateTime: String,
+    val launchDateTime: String?,
     val missions: List<String>,
     val attemptsRTLS: Int,
     val landingsRTLS: Int,
