@@ -26,6 +26,7 @@ class MainViewModel private constructor(
 ) : BaseViewModel<MainRepository>(repository) {
 
     // LiveData.
+    private val allCapsulesLiveData: MutableLiveData<List<Capsule>> = MutableLiveData()
     private val allCoresLiveData: MutableLiveData<List<Core>> = MutableLiveData()
 
     /*--------------------------------------- Builder Class --------------------------------------*/
@@ -61,10 +62,34 @@ class MainViewModel private constructor(
     fun getRockets(): LiveData<NetworkProcessor.Resource<List<Rocket>>> =
         getRepository().getAllRockets()
 
+    /**Provides the [LiveData] of [List] of [Capsule]s to it's observers.
+     * @return [LiveData] of [List] of [Capsule].*/
+    fun getAllCapsulesLiveData() = allCapsulesLiveData
+
     /**Requests the [repository] to fetch all the Capsules.
      * @return [LiveData] of [NetworkProcessor.Resource] of type [List] of [Capsule]*/
     fun getCapsules(): LiveData<NetworkProcessor.Resource<List<Capsule>>> =
         getRepository().getAllCapsules()
+
+    /**Process the Response received by fetching all the Cores.
+     * @param resources [NetworkProcessor.Resource] of type [List] of [Core].*/
+    fun onCapsulesResponse(resources: NetworkProcessor.Resource<List<Capsule>>) {
+        when (resources.state) {
+            NetworkProcessor.State.LOADING -> {
+                // Show Progress Bar.
+            }
+
+            NetworkProcessor.State.SUCCESS -> {
+                resources.data?.let { capsules ->
+                    allCapsulesLiveData.postValue(capsules)
+                }
+            }
+
+            NetworkProcessor.State.ERROR -> {
+                // Show the Error.
+            }
+        }
+    }
 
     /**Provides the [LiveData] of [List] of [Core]s to it's observers.
      * @return [LiveData] of [List] of [Core].*/

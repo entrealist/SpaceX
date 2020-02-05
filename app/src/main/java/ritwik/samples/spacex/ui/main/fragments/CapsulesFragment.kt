@@ -51,22 +51,13 @@ class CapsulesFragment : BaseFragment() {
     /*----------------------------------------- Observers ----------------------------------------*/
 
     /**[Observer] of [List] of [Capsule].*/
-    private val allCapsulesObserver = Observer<NetworkProcessor.Resource<List<Capsule>>> { resources ->
-        when (resources.state) {
-            NetworkProcessor.State.LOADING -> {
-                // Show Progress Bar.
-            }
+    private val allCapsulesResponseObserver = Observer<NetworkProcessor.Resource<List<Capsule>>> { resources ->
+        listener?.getVM()?.onCapsulesResponse(resources)
+    }
 
-            NetworkProcessor.State.SUCCESS -> {
-                resources.data?.let {
-                    adapter?.replaceList(it)
-                }
-            }
-
-            NetworkProcessor.State.ERROR -> {
-                // Show the Error.
-            }
-        }
+    /**[Observer] that observes changes in [List] of [Capsule].*/
+    private val allCapsulesObserver = Observer<List<Capsule>> { capsules ->
+        adapter?.replaceList(capsules)
     }
 
     /*-------------------------------------- View Listeners --------------------------------------*/
@@ -90,7 +81,7 @@ class CapsulesFragment : BaseFragment() {
     }
 
     override fun attachObservers() {
-
+        listener?.getVM()?.getAllCapsulesLiveData()?.observe(viewLifecycleOwner, allCapsulesObserver)
     }
 
     override fun layoutRes(): Int = R.layout.fragment_capsules
@@ -127,7 +118,7 @@ class CapsulesFragment : BaseFragment() {
 
     /**Fetches the [List] of [Capsule].*/
     private fun getCapsules() {
-        listener?.getVM()?.getCapsules()?.observe(this, allCapsulesObserver)
+        listener?.getVM()?.getCapsules()?.observe(this, allCapsulesResponseObserver)
     }
 
     /*---------------------------------------- Interfaces ----------------------------------------*/
