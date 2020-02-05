@@ -26,6 +26,7 @@ class MainViewModel private constructor(
 ) : BaseViewModel<MainRepository>(repository) {
 
     // LiveData.
+    private val allRocketsLiveData: MutableLiveData<List<Rocket>> = MutableLiveData()
     private val allCapsulesLiveData: MutableLiveData<List<Capsule>> = MutableLiveData()
     private val allCoresLiveData: MutableLiveData<List<Core>> = MutableLiveData()
 
@@ -57,10 +58,34 @@ class MainViewModel private constructor(
             LaunchType.PAST -> getRepository().getPastLaunches()
         }
 
+    /**Provides the [LiveData] of [List] of [Capsule]s to it's observers.
+     * @return [LiveData] of [List] of [Capsule].*/
+    fun getAllRocketsLiveData() = allRocketsLiveData
+
     /**Requests the [repository] to fetch all the Rockets.
      * @return [LiveData] of [NetworkProcessor.Resource] of type [List] of [Rocket].*/
     fun getRockets(): LiveData<NetworkProcessor.Resource<List<Rocket>>> =
         getRepository().getAllRockets()
+
+    /**Process the Response received by fetching all the Cores.
+     * @param resources [NetworkProcessor.Resource] of type [List] of [Rocket].*/
+    fun onRocketsResponse(resources: NetworkProcessor.Resource<List<Rocket>>) {
+        when (resources.state) {
+            NetworkProcessor.State.LOADING -> {
+                // Show Progress Bar.
+            }
+
+            NetworkProcessor.State.SUCCESS -> {
+                resources.data?.let { capsules ->
+                    allRocketsLiveData.postValue(capsules)
+                }
+            }
+
+            NetworkProcessor.State.ERROR -> {
+                // Show the Error.
+            }
+        }
+    }
 
     /**Provides the [LiveData] of [List] of [Capsule]s to it's observers.
      * @return [LiveData] of [List] of [Capsule].*/
@@ -72,7 +97,7 @@ class MainViewModel private constructor(
         getRepository().getAllCapsules()
 
     /**Process the Response received by fetching all the Cores.
-     * @param resources [NetworkProcessor.Resource] of type [List] of [Core].*/
+     * @param resources [NetworkProcessor.Resource] of type [List] of [Capsule].*/
     fun onCapsulesResponse(resources: NetworkProcessor.Resource<List<Capsule>>) {
         when (resources.state) {
             NetworkProcessor.State.LOADING -> {

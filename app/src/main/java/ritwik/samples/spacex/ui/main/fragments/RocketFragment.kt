@@ -65,22 +65,12 @@ class RocketFragment : BaseFragment() {
     /*----------------------------------------- Observers ----------------------------------------*/
 
     /**[Observer] of [List] of [Rocket].*/
-    private val rocketObserver = Observer<NetworkProcessor.Resource<List<Rocket>>> { resource ->
-        when(resource.state) {
-            NetworkProcessor.State.LOADING -> {
+    private val allRocketsResponseObserver = Observer<NetworkProcessor.Resource<List<Rocket>>> { resource ->
+        listener?.getVM()?.onRocketsResponse(resource)
+    }
 
-            }
-
-            NetworkProcessor.State.SUCCESS -> {
-                resource.data?.let {
-                    adapter?.replaceList(it)
-                }
-            }
-
-            NetworkProcessor.State.ERROR -> {
-
-            }
-        }
+    private val allRocketsObserver = Observer<List<Rocket>> { rockets ->
+        adapter?.replaceList(rockets)
     }
 
     /*---------------------------------- BaseFragment Callbacks ----------------------------------*/
@@ -94,6 +84,7 @@ class RocketFragment : BaseFragment() {
     }
 
     override fun attachObservers() {
+        listener?.getVM()?.getAllRocketsLiveData()?.observe(viewLifecycleOwner, allRocketsObserver)
     }
 
     override fun layoutRes(): Int = R.layout.fragment_rocket
@@ -137,7 +128,7 @@ class RocketFragment : BaseFragment() {
 
     /**Fetches the [List] of [Rocket]s.*/
     private fun getRockets() {
-        listener?.getVM()?.getRockets()?.observe(this, rocketObserver)
+        listener?.getVM()?.getRockets()?.observe(viewLifecycleOwner, allRocketsResponseObserver)
     }
 
     /*---------------------------------------- Interfaces ----------------------------------------*/
