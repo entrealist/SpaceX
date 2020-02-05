@@ -1,6 +1,7 @@
 package ritwik.samples.spacex.ui.main.mvvm
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 
 import ritwik.samples.spacex.application.database.LaunchType
 
@@ -9,6 +10,8 @@ import ritwik.samples.spacex.common.BaseViewModel
 import ritwik.samples.spacex.component.other.NetworkProcessor
 
 import ritwik.samples.spacex.convertUTCDateTime
+
+import ritwik.samples.spacex.model.Core
 
 import ritwik.samples.spacex.pojo.capsules.Capsule
 import ritwik.samples.spacex.pojo.launches.Launch
@@ -21,6 +24,9 @@ import ritwik.samples.spacex.ui.main.MainActivity
 class MainViewModel private constructor(
     repository: MainRepository
 ) : BaseViewModel<MainRepository>(repository) {
+
+    // LiveData.
+    private val allCoresLiveData: MutableLiveData<List<Core>> = MutableLiveData()
 
     /*--------------------------------------- Builder Class --------------------------------------*/
 
@@ -59,6 +65,35 @@ class MainViewModel private constructor(
      * @return [LiveData] of [NetworkProcessor.Resource] of type [List] of [Capsule]*/
     fun getCapsules(): LiveData<NetworkProcessor.Resource<List<Capsule>>> =
         getRepository().getAllCapsules()
+
+    /**Provides the [LiveData] of [List] of [Core]s to it's observers.
+     * @return [LiveData] of [List] of [Core].*/
+    fun getAllCoresLiveData() : LiveData<List<Core>> = allCoresLiveData
+
+    /**Requests the [repository] to fetch all the Cores.
+     * @return [LiveData] of [NetworkProcessor.Resource] of type [List] of [Core].*/
+    fun getCores(): LiveData<NetworkProcessor.Resource<List<Core>>> =
+        getRepository().getAllCores()
+
+    /**Process the Response received by fetching all the Cores.
+     * @param resource [NetworkProcessor.Resource] of type [List] of [Core].*/
+    fun onCoresResponse(resource: NetworkProcessor.Resource<List<Core>>) {
+        when (resource.state) {
+            NetworkProcessor.State.LOADING -> {
+                // Show Progress Bar.
+            }
+
+            NetworkProcessor.State.SUCCESS -> {
+                resource.data?.let { cores ->
+                    allCoresLiveData.postValue(cores)
+                }
+            }
+
+            NetworkProcessor.State.ERROR -> {
+                // Show the Error.
+            }
+        }
+    }
 
     /**On-Click Method for performing actions when a [Launch] Event from [List] of [Launch]es is
      * selected:
