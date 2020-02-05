@@ -28,7 +28,6 @@ abstract class BaseFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        attachObservers()
     }
 
     override fun onCreateView(
@@ -52,6 +51,7 @@ abstract class BaseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        attachObservers()
         if (isDataBinding()) {
             initializeViews()
         } else {

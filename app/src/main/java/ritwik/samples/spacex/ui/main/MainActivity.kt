@@ -45,7 +45,8 @@ class MainActivity
 	LaunchesListFragment.Listener,
 	VehicleFragment.Listener,
 	RocketFragment.Listener,
-	CapsulesFragment.Listener {
+	CapsulesFragment.Listener,
+	CoreFragment.Listener {
 	// ViewModel.
 	@Inject lateinit var viewModel : MainViewModel
 
@@ -68,6 +69,10 @@ class MainActivity
 
 			R.id.menu_item_vehicle -> {
 				navigationController?.navigate ( R.id.action_launchesFragment_to_vehicleFragment )
+			}
+
+			R.id.menu_item_core -> {
+				navigationController?.navigate(R.id.action_launchesFragment_to_coreFragment)
 			}
 		}
 		true

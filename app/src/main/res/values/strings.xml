@@ -24,6 +24,9 @@
 	<string name = "recycler_item_capsule_status">Status</string>
 	<string name = "recycler_item_capsule_active_since">Active Since</string>
 	<string name = "recycler_item_capsule_missions">Missions</string>
+	<string name = "recycler_item_core_missions">Missions</string>
+	<string name = "recycler_item_core_rtls_landings">RTLS landings</string>
+	<string name = "recycler_item_core_asds_landings">ASDS landings</string>
 
 	<!-- Fragment -->
 	<string name = "fragment_launches_list_text_next_launch_in">Next Launch in</string>

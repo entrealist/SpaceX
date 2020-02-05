@@ -8,7 +8,10 @@ import ritwik.samples.spacex.common.BaseRepository
 
 import ritwik.samples.spacex.component.other.NetworkProcessor
 
+import ritwik.samples.spacex.model.Core
+
 import ritwik.samples.spacex.pojo.capsules.Capsule
+import ritwik.samples.spacex.pojo.cores.ResponseCore
 import ritwik.samples.spacex.pojo.launches.Launch
 import ritwik.samples.spacex.pojo.rockets.Rocket
 
@@ -57,6 +60,40 @@ class MainRepository private constructor(
     fun getAllCapsules() = object : NetworkProcessor<List<Capsule>, List<Capsule>>() {
         override fun createCall(): Call<List<Capsule>> = getRESTServices().getAllCapsules()
         override fun convertData(initialData: List<Capsule>): List<Capsule> = initialData
+    }.getData()
+
+    /**Tells the [restServices] to fetch all the Cores.
+     * @return [androidx.lifecycle.LiveData] of [NetworkProcessor.Resource] of type [List] of [Core].*/
+    fun getAllCores() = object : NetworkProcessor<List<Core>, List<ResponseCore>>() {
+        override fun createCall(): Call<List<ResponseCore>> = getRESTServices().getAllCores()
+
+        override fun convertData(initialData: List<ResponseCore>): List<Core> {
+            val finalList = ArrayList<Core>()
+
+            for (item in initialData) {
+                val missions = ArrayList<String>()
+
+                for (m in item.missions) {
+                    missions.add(m.name)
+                }
+
+                finalList.add(
+                    Core(
+                        item.serial,
+                        item.block,
+                        item.launchTimeUTC,
+                        missions,
+                        item.attemptsRTLS,
+                        item.landingsRTLS,
+                        item.attemptsASDS,
+                        item.landingsASDS,
+                        item.details?:"NA"
+                    )
+                )
+            }
+
+            return finalList
+        }
     }.getData()
 
 }
