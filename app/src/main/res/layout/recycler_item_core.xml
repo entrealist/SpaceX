@@ -138,6 +138,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{core.missionsText}"
+                android:textAlignment="textEnd"
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/recycler_item_core_text_view_value_rtls"
