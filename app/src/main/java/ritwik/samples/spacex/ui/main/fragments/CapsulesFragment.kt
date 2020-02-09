@@ -18,7 +18,7 @@ import ritwik.samples.spacex.component.adapter.CapsuleAdapter
 
 import ritwik.samples.spacex.component.other.NetworkProcessor
 
-import ritwik.samples.spacex.pojo.capsules.Capsule
+import ritwik.samples.spacex.model.Capsule
 
 import java.lang.RuntimeException
 

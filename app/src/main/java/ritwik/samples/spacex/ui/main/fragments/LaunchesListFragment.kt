@@ -22,7 +22,7 @@ import ritwik.samples.spacex.common.BaseFragment
 
 import ritwik.samples.spacex.databinding.FragmentLaunchesListBinding
 
-import ritwik.samples.spacex.pojo.launches.Launch
+import ritwik.samples.spacex.model.Launch
 
 import ritwik.samples.spacex.component.adapter.LaunchListAdapter
 

@@ -15,7 +15,7 @@ import ritwik.samples.spacex.R
 
 import ritwik.samples.spacex.common.BaseFragment
 
-import ritwik.samples.spacex.pojo.rockets.Rocket
+import ritwik.samples.spacex.model.Rocket
 
 import ritwik.samples.spacex.component.adapter.RocketAdapter
 

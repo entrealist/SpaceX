@@ -8,7 +8,7 @@ import ritwik.samples.spacex.databinding.RecyclerItemLaunchBinding
 
 import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
 
-import ritwik.samples.spacex.pojo.launches.Launch
+import ritwik.samples.spacex.model.Launch
 
 /**[androidx.recyclerview.widget.RecyclerView.ViewHolder] for rendering [Launch].
  * @param containerView [View] of this [androidx.recyclerview.widget.RecyclerView.ViewHolder].

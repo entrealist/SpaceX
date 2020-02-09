@@ -6,7 +6,7 @@ import ritwik.samples.spacex.common.BaseViewHolder
 
 import ritwik.samples.spacex.databinding.RecyclerItemCapsuleBinding
 
-import ritwik.samples.spacex.pojo.capsules.Capsule
+import ritwik.samples.spacex.model.Capsule
 
 /**[androidx.recyclerview.widget.RecyclerView.ViewHolder] for rendering [Capsule]s.
  * @param containerView [View] of this [androidx.recyclerview.widget.RecyclerView.ViewHolder].

@@ -9,7 +9,7 @@ import ritwik.samples.spacex.component.viewHolder.CapsuleViewHolder
 
 import ritwik.samples.spacex.databinding.RecyclerItemCapsuleBinding
 
-import ritwik.samples.spacex.pojo.capsules.Capsule
+import ritwik.samples.spacex.model.Capsule
 
 /**[androidx.recyclerview.widget.RecyclerView.Adapter] for handling the [List] of [Capsule].
  * @param listener Interface Object that receives the callback.

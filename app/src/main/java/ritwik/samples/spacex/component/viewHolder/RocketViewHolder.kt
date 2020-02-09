@@ -10,7 +10,7 @@ import ritwik.samples.spacex.common.BaseViewHolder
 
 import ritwik.samples.spacex.databinding.RecyclerItemRocketBinding
 
-import ritwik.samples.spacex.pojo.rockets.Rocket
+import ritwik.samples.spacex.model.Rocket
 
 /**[androidx.recyclerview.widget.RecyclerView.ViewHolder] for rendering [Rocket].
  * @param containerView [View] of this [androidx.recyclerview.widget.RecyclerView.ViewHolder].

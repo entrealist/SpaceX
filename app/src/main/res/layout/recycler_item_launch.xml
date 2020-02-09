@@ -7,7 +7,7 @@
 
 		<variable
 			name = "launch"
-			type = "ritwik.samples.spacex.pojo.launches.Launch" />
+			type = "ritwik.samples.spacex.model.Launch" />
 
 		<variable
 			name = "viewModel"

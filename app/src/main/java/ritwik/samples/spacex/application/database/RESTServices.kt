@@ -5,10 +5,10 @@ import retrofit2.Response
 
 import retrofit2.http.GET
 
-import ritwik.samples.spacex.pojo.capsules.Capsule
-import ritwik.samples.spacex.pojo.launches.Launch
-import ritwik.samples.spacex.pojo.rockets.Rocket
-import ritwik.samples.spacex.pojo.cores.ResponseCore
+import ritwik.samples.spacex.pojo.ResponseCapsule
+import ritwik.samples.spacex.pojo.ResponseCore
+import ritwik.samples.spacex.pojo.ResponseLaunch
+import ritwik.samples.spacex.pojo.ResponseRocket
 
 /**[retrofit2.Retrofit] Interface that serves as End Point
  * for communicating with the RESTful Services.
@@ -16,25 +16,27 @@ import ritwik.samples.spacex.pojo.cores.ResponseCore
 interface RESTServices {
 
     /**Gets the List of Upcoming Launches of SpaceX.
-     * @return [Response] of type: [List] of [Launch].*/
+     * @return [Response] of type: [List] of [ResponseLaunch].*/
     @GET(ENDPOINT_LAUNCHES + ENDPOINT_SLASH + ENDPOINT_LAUNCHES_TYPE_UPCOMING)
-    fun getUpcomingLaunches(): Call<List<Launch>>
+    fun getUpcomingLaunches(): Call<List<ResponseLaunch>>
 
     /**Gets the List of Past Launches of SpaceX.
-     * @return [Response] of type: [List] of [Launch].*/
+     * @return [Response] of type: [List] of [ResponseLaunch].*/
     @GET(ENDPOINT_LAUNCHES + ENDPOINT_SLASH + ENDPOINT_LAUNCHES_TYPE_PAST)
-    fun getPastLaunches(): Call<List<Launch>>
+    fun getPastLaunches(): Call<List<ResponseLaunch>>
 
     /**Gets the List of all the Rockets owned by SpaceX.
-     * @return [Response] of type: [List] of [Rocket].*/
+     * @return [Response] of type: [List] of [ResponseRocket].*/
     @GET(ENDPOINT_ROCKETS)
-    fun getAllRockets(): Call<List<Rocket>>
+    fun getAllRockets(): Call<List<ResponseRocket>>
 
     /**Gets the List of all the Capsules owned by SpaceX.
-     * @return [Response] of type: [List] of [Capsule].*/
+     * @return [Response] of type: [List] of [ResponseCapsule].*/
     @GET(ENDPOINT_CAPSULES)
-    fun getAllCapsules(): Call<List<Capsule>>
+    fun getAllCapsules(): Call<List<ResponseCapsule>>
 
+    /**Gets the List of all the Cores owned by SpaceX.
+     * @return [Response] of type: [List] of [ResponseCore].*/
     @GET(ENDPOINT_CORES)
     fun getAllCores(): Call<List<ResponseCore>>
 

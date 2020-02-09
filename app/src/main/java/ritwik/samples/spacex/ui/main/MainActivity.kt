@@ -27,7 +27,7 @@ import ritwik.samples.spacex.application.App
 
 import ritwik.samples.spacex.common.BaseActivity
 
-import ritwik.samples.spacex.pojo.capsules.Capsule
+import ritwik.samples.spacex.model.Capsule
 
 import ritwik.samples.spacex.ui.main.di.DaggerMainComponent
 import ritwik.samples.spacex.ui.main.di.MainComponent

@@ -8,7 +8,7 @@
 
         <variable
             name="capsule"
-            type="ritwik.samples.spacex.pojo.capsules.Capsule" />
+            type="ritwik.samples.spacex.model.Capsule" />
 
     </data>
 

@@ -12,10 +12,9 @@ import ritwik.samples.spacex.component.other.NetworkProcessor
 import ritwik.samples.spacex.convertUTCDateTime
 
 import ritwik.samples.spacex.model.Core
-
-import ritwik.samples.spacex.pojo.capsules.Capsule
-import ritwik.samples.spacex.pojo.launches.Launch
-import ritwik.samples.spacex.pojo.rockets.Rocket
+import ritwik.samples.spacex.model.Capsule
+import ritwik.samples.spacex.model.Launch
+import ritwik.samples.spacex.model.Rocket
 
 import ritwik.samples.spacex.ui.main.MainActivity
 

@@ -11,7 +11,7 @@ import ritwik.samples.spacex.component.viewHolder.LaunchViewHolder
 
 import ritwik.samples.spacex.databinding.RecyclerItemLaunchBinding
 
-import ritwik.samples.spacex.pojo.launches.Launch
+import ritwik.samples.spacex.model.Launch
 
 import ritwik.samples.spacex.ui.main.mvvm.MainViewModel
 

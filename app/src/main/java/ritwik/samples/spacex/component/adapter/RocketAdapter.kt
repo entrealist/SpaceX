@@ -9,7 +9,8 @@ import ritwik.samples.spacex.common.BaseSingleVHAdapter
 
 import ritwik.samples.spacex.databinding.RecyclerItemRocketBinding
 
-import ritwik.samples.spacex.pojo.rockets.Rocket
+import ritwik.samples.spacex.model.Rocket
+
 import ritwik.samples.spacex.component.viewHolder.RocketViewHolder
 
 /**[androidx.recyclerview.widget.RecyclerView.Adapter] for handling the [List] of [Rocket]
