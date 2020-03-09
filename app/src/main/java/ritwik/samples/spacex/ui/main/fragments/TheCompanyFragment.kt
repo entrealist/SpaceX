@@ -1,27 +1,55 @@
 package ritwik.samples.spacex.ui.main.fragments
 
-import android.os.Bundle
+import android.content.Context
 
-import androidx.fragment.app.Fragment
-
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+
+import androidx.databinding.ViewDataBinding
 
 import ritwik.samples.spacex.R
 
+import ritwik.samples.spacex.common.BaseFragment
+
 /**
- * [Fragment] that shows information about the company 'SpaceX'.
+ * [BaseFragment] that shows information about the company 'SpaceX'.
  * @author Ritwik Jamuar.
  */
-class TheCompanyFragment : Fragment() {
+class TheCompanyFragment : BaseFragment() {
 
-	override fun onCreateView(
-		inflater : LayoutInflater, container : ViewGroup?,
-		savedInstanceState : Bundle?
-	) : View? {
-		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.fragment_the_company, container, false)
+	override fun setListener(context : Context) {
+		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	}
+
+	override fun attachObservers() {
+		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	}
+
+	override fun layoutRes() : Int {
+		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	}
+
+	override fun isDataBinding() : Boolean {
+		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	}
+
+	override fun provideDataBinding(binding : ViewDataBinding) {
+		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	}
+
+	override fun initializeViews(view : View) {
+		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	}
+
+	override fun initializeViews() {
+		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	}
+
+	override fun cleanUp() {
+		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	}
+
+	override fun removeListener() {
+		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}
 
 }
