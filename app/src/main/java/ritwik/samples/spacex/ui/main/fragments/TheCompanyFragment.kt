@@ -24,9 +24,7 @@ class TheCompanyFragment : BaseFragment() {
 		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}
 
-	override fun layoutRes() : Int {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-	}
+	override fun layoutRes() : Int = R.layout.fragment_the_company
 
 	override fun isDataBinding() : Boolean {
 		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
