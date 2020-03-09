@@ -30,5 +30,16 @@
 
 	<!-- Fragment -->
 	<string name = "fragment_launches_list_text_next_launch_in">Next Launch in</string>
+	<string name = "fragment_the_company_text_leads" >Leads</string >
+	<string name = "fragment_the_company_text_ceo" >CEO</string >
+	<string name = "fragment_the_company_text_cto" >CTO</string >
+	<string name = "fragment_the_company_text_coo" >COO</string >
+	<string name = "fragment_the_company_text_cto_propulsion" >CTO (Propulsion)</string >
+	<string name = "fragment_the_company_text_statistics" >Statistics</string >
+	<string name = "fragment_the_company_text_value" >Value</string >
+	<string name = "fragment_the_company_text_test_sites" >Test Sites</string >
+	<string name = "fragment_the_company_text_launch_sites" >Launch Sites</string >
+	<string name = "fragment_the_company_text_employees" >Employees</string >
+	<string name = "fragment_the_company_text_vehicles" >Vehicles</string >
 
 </resources>
