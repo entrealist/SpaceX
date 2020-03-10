@@ -23,13 +23,23 @@
 			app:popUpToInclusive = "true" />
 
 		<action
-			android:id="@+id/action_launchesFragment_to_coreFragment"
-			app:destination="@id/coreFragment"
+			android:id = "@+id/action_launchesFragment_to_coreFragment"
+			app:destination = "@id/coreFragment"
 			app:enterAnim = "@anim/nav_default_enter_anim"
 			app:exitAnim = "@anim/nav_default_exit_anim"
 			app:popEnterAnim = "@anim/nav_default_pop_exit_anim"
 			app:popExitAnim = "@anim/nav_default_pop_enter_anim"
 			app:popUpTo = "@+id/vehicleFragment"
+			app:popUpToInclusive = "true" />
+
+		<action
+			android:id = "@+id/action_launchesFragment_to_theCompanyFragment"
+			app:destination = "@id/theCompanyFragment"
+			app:enterAnim = "@anim/nav_default_enter_anim"
+			app:exitAnim = "@anim/nav_default_exit_anim"
+			app:popEnterAnim = "@anim/nav_default_pop_enter_anim"
+			app:popExitAnim = "@anim/nav_default_pop_exit_anim"
+			app:popUpTo = "@+id/theCompanyFragment"
 			app:popUpToInclusive = "true" />
 
 	</fragment>
@@ -53,14 +63,32 @@
 	</fragment>
 
 	<fragment
-		android:id="@+id/coreFragment"
-		android:name="ritwik.samples.spacex.ui.main.fragments.CoreFragment"
-		android:label="Cores"
-		tools:layout="@layout/fragment_core" >
+		android:id = "@+id/coreFragment"
+		android:name = "ritwik.samples.spacex.ui.main.fragments.CoreFragment"
+		android:label = "Cores"
+		tools:layout = "@layout/fragment_core" >
 
 		<action
-			android:id="@+id/action_coreFragment_to_launchesFragment"
-			app:destination="@id/launchesFragment"
+			android:id = "@+id/action_coreFragment_to_launchesFragment"
+			app:destination = "@id/launchesFragment"
+			app:enterAnim = "@anim/nav_default_enter_anim"
+			app:exitAnim = "@anim/nav_default_exit_anim"
+			app:popEnterAnim = "@anim/nav_default_pop_exit_anim"
+			app:popExitAnim = "@anim/nav_default_pop_enter_anim"
+			app:popUpTo = "@+id/launchesFragment"
+			app:popUpToInclusive = "true" />
+
+	</fragment>
+
+	<fragment
+		android:id = "@+id/theCompanyFragment"
+		android:name = "ritwik.samples.spacex.ui.main.fragments.TheCompanyFragment"
+		android:label = "About SpaceX"
+		tools:layout = "@layout/fragment_the_company" >
+
+		<action
+			android:id = "@+id/action_theCompanyFragment_to_launchesFragment"
+			app:destination = "@id/launchesFragment"
 			app:enterAnim = "@anim/nav_default_enter_anim"
 			app:exitAnim = "@anim/nav_default_exit_anim"
 			app:popEnterAnim = "@anim/nav_default_pop_exit_anim"

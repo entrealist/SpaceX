@@ -71,6 +71,10 @@ class MainActivity
 			R.id.menu_item_core -> {
 				navigationController?.navigate(R.id.action_launchesFragment_to_coreFragment)
 			}
+
+			R.id.menu_item_company -> {
+				navigationController?.navigate(R.id.action_launchesFragment_to_theCompanyFragment)
+			}
 		}
 		true
 	}
