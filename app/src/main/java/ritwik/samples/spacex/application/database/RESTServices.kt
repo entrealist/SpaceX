@@ -5,10 +5,7 @@ import retrofit2.Response
 
 import retrofit2.http.GET
 
-import ritwik.samples.spacex.pojo.ResponseCapsule
-import ritwik.samples.spacex.pojo.ResponseCore
-import ritwik.samples.spacex.pojo.ResponseLaunch
-import ritwik.samples.spacex.pojo.ResponseRocket
+import ritwik.samples.spacex.pojo.*
 
 /**[retrofit2.Retrofit] Interface that serves as End Point
  * for communicating with the RESTful Services.
@@ -39,5 +36,12 @@ interface RESTServices {
      * @return [Response] of type: [List] of [ResponseCore].*/
     @GET(ENDPOINT_CORES)
     fun getAllCores(): Call<List<ResponseCore>>
+
+	/**
+	 * Gets the information about the Company.
+	 * @return [Response] of type: [ResponseCompany].
+	 */
+	@GET(ENDPOINT_INFO)
+	fun getInfo() : Call<ResponseCompany>
 
 }

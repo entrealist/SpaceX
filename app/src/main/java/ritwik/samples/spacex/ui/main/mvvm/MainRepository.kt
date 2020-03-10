@@ -8,15 +8,8 @@ import ritwik.samples.spacex.common.BaseRepository
 
 import ritwik.samples.spacex.component.other.NetworkProcessor
 
-import ritwik.samples.spacex.model.Core
-import ritwik.samples.spacex.model.Launch
-import ritwik.samples.spacex.model.Capsule
-import ritwik.samples.spacex.model.Rocket
-
-import ritwik.samples.spacex.pojo.ResponseCapsule
-import ritwik.samples.spacex.pojo.ResponseCore
-import ritwik.samples.spacex.pojo.ResponseLaunch
-import ritwik.samples.spacex.pojo.ResponseRocket
+import ritwik.samples.spacex.model.*
+import ritwik.samples.spacex.pojo.*
 
 /**Repository of [MainViewModel].
  * @author Ritwik Jamuar.*/
@@ -114,5 +107,14 @@ class MainRepository private constructor(
             return finalList
         }
     }.getData()
+
+	/**
+	 * Tells the [restServices] to fetch information about the company.
+	 * @return [androidx.lifecycle.LiveData] of [NetworkProcessor.Resource] of type [Company].
+	 */
+	fun getAboutTheCompany() = object : NetworkProcessor<Company, ResponseCompany>() {
+		override fun createCall() : Call<ResponseCompany> = getRESTServices().getInfo()
+		override fun convertData(initialData : ResponseCompany) : Company = initialData.convertToModelData()
+	}.getData()
 
 }

@@ -10,11 +10,7 @@ import ritwik.samples.spacex.common.BaseViewModel
 import ritwik.samples.spacex.component.other.NetworkProcessor
 
 import ritwik.samples.spacex.convertUTCDateTime
-
-import ritwik.samples.spacex.model.Core
-import ritwik.samples.spacex.model.Capsule
-import ritwik.samples.spacex.model.Launch
-import ritwik.samples.spacex.model.Rocket
+import ritwik.samples.spacex.model.*
 
 import ritwik.samples.spacex.ui.main.MainActivity
 
@@ -34,6 +30,7 @@ class MainViewModel private constructor(
     private val allRocketsLiveData: MutableLiveData<List<Rocket>> = MutableLiveData()
     private val allCapsulesLiveData: MutableLiveData<List<Capsule>> = MutableLiveData()
     private val allCoresLiveData: MutableLiveData<List<Core>> = MutableLiveData()
+    private val aboutTheCompanyLiveData: MutableLiveData<Company> = MutableLiveData()
 
     /*--------------------------------------- Builder Class --------------------------------------*/
 
@@ -182,6 +179,37 @@ class MainViewModel private constructor(
             NetworkProcessor.State.SUCCESS -> {
                 resource.data?.let { cores ->
                     allCoresLiveData.postValue(cores)
+                }
+            }
+
+            NetworkProcessor.State.ERROR -> {
+                // Show the Error.
+            }
+        }
+    }
+
+    /**Provides the [LiveData] of [Company] to it's observers.
+     * @return [LiveData] of [Company].*/
+    fun getAboutTheCompanyLiveData() : LiveData<Company> = aboutTheCompanyLiveData
+
+    /**
+     * Requests the [repository] to fetch information about the company.
+     * @return [LiveData] of [NetworkProcessor.Resource] of type [Company].
+     */
+    fun getAboutTheCompany() : LiveData<NetworkProcessor.Resource<Company>> =
+        getRepository().getAboutTheCompany()
+
+    /**Process the Response received by fetching about the Company.
+     * @param resource [NetworkProcessor.Resource] of type [Company].*/
+    fun onAboutTheCompanyResponse(resource: NetworkProcessor.Resource<Company>) {
+        when (resource.state) {
+            NetworkProcessor.State.LOADING -> {
+                // Show Progress Bar.
+            }
+
+            NetworkProcessor.State.SUCCESS -> {
+                resource.data?.let { company ->
+                    aboutTheCompanyLiveData.postValue(company)
                 }
             }
 
