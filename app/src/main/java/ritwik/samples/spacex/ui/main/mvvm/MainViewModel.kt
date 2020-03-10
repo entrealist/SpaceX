@@ -199,6 +199,26 @@ class MainViewModel private constructor(
     fun getAboutTheCompany() : LiveData<NetworkProcessor.Resource<Company>> =
         getRepository().getAboutTheCompany()
 
+    /**Process the Response received by fetching about the Company.
+     * @param resource [NetworkProcessor.Resource] of type [Company].*/
+    fun onAboutTheCompanyResponse(resource: NetworkProcessor.Resource<Company>) {
+        when (resource.state) {
+            NetworkProcessor.State.LOADING -> {
+                // Show Progress Bar.
+            }
+
+            NetworkProcessor.State.SUCCESS -> {
+                resource.data?.let { company ->
+                    aboutTheCompanyLiveData.postValue(company)
+                }
+            }
+
+            NetworkProcessor.State.ERROR -> {
+                // Show the Error.
+            }
+        }
+    }
+
     /**On-Click Method for performing actions when a [Launch] Event from [List] of [Launch]es is
      * selected:
      * @param launch Instance of [Launch].*/
