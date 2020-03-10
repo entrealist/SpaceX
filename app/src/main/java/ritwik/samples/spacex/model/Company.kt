@@ -32,7 +32,7 @@ data class Company(
 
 	fun getCOO() : String = this.coo
 
-	fun getValuation() : String = this.valuation.toString()
+	fun getValuation() : String = "$$valuation"
 
 	fun getTestSites() : String = this.testSitesCount.toString()
 
