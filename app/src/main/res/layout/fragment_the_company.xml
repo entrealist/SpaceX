@@ -83,7 +83,7 @@
 				android:id = "@+id/fragment_the_company_text_view_headquarter"
 				android:layout_width = "wrap_content"
 				android:layout_height = "wrap_content"
-				android:text="@{company.headQuarter}"
+				android:text="@{company.headQuarter.headQuarterAddress}"
 				android:textColor = "@android:color/black"
 				android:textSize = "14sp"
 				app:layout_constraintBottom_toTopOf = "@+id/fragment_the_company_text_view_summary"
