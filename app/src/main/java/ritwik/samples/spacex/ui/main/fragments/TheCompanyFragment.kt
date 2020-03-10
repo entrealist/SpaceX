@@ -6,9 +6,19 @@ import android.view.View
 
 import androidx.databinding.ViewDataBinding
 
+import androidx.lifecycle.Observer
+
 import ritwik.samples.spacex.R
 
 import ritwik.samples.spacex.common.BaseFragment
+
+import ritwik.samples.spacex.component.other.NetworkProcessor
+
+import ritwik.samples.spacex.databinding.FragmentTheCompanyBinding
+
+import ritwik.samples.spacex.model.Company
+
+import java.lang.RuntimeException
 
 /**
  * [BaseFragment] that shows information about the company 'SpaceX'.
@@ -16,38 +26,71 @@ import ritwik.samples.spacex.common.BaseFragment
  */
 class TheCompanyFragment : BaseFragment() {
 
+	// DataBinding.
+	private lateinit var binding : FragmentTheCompanyBinding
+
+	// Listeners.
+	private var listener : MainFragmentListener? = null
+
+	/*------------------------------------- Companion Object -------------------------------------*/
+
+	companion object {
+
+		/**Creates an instance of [TheCompanyFragment].
+		 * @return New Instance of [TheCompanyFragment].*/
+		@JvmStatic
+		fun create(): TheCompanyFragment = TheCompanyFragment()
+
+	}
+
+	/*----------------------------------------- Observers ----------------------------------------*/
+
+	private val aboutTheCompanyObserver = Observer<NetworkProcessor.Resource<Company>> { resource ->
+		listener?.getVM()?.onAboutTheCompanyResponse(resource)
+	}
+
+	private val companyObserver = Observer<Company> { company ->
+		binding.company = company
+	}
+
+	/*---------------------------------- BaseFragment Callbacks ----------------------------------*/
+
 	override fun setListener(context : Context) {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		if (context is MainFragmentListener) {
+			listener = context
+		} else {
+			throw RuntimeException("$context must implement Listener")
+		}
 	}
 
 	override fun attachObservers() {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		listener?.getVM()?.getAboutTheCompanyLiveData()?.observe(viewLifecycleOwner, companyObserver)
 	}
 
 	override fun layoutRes() : Int = R.layout.fragment_the_company
 
-	override fun isDataBinding() : Boolean {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-	}
+	override fun isDataBinding() : Boolean = true
 
 	override fun provideDataBinding(binding : ViewDataBinding) {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		this.binding = binding as FragmentTheCompanyBinding
 	}
 
-	override fun initializeViews(view : View) {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-	}
+	override fun initializeViews(view : View) = Unit
 
 	override fun initializeViews() {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		getAboutTheCompany()
 	}
 
-	override fun cleanUp() {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-	}
+	override fun cleanUp() = Unit
 
 	override fun removeListener() {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		listener = null
+	}
+
+	/*-------------------------------------- Private Methods -------------------------------------*/
+
+	private fun getAboutTheCompany() {
+		listener?.getVM()?.getAboutTheCompany()?.observe(viewLifecycleOwner, aboutTheCompanyObserver)
 	}
 
 }
