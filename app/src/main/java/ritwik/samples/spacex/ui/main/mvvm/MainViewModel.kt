@@ -30,6 +30,7 @@ class MainViewModel private constructor(
     private val allRocketsLiveData: MutableLiveData<List<Rocket>> = MutableLiveData()
     private val allCapsulesLiveData: MutableLiveData<List<Capsule>> = MutableLiveData()
     private val allCoresLiveData: MutableLiveData<List<Core>> = MutableLiveData()
+    private val aboutTheCompanyLiveData: MutableLiveData<Company> = MutableLiveData()
 
     /*--------------------------------------- Builder Class --------------------------------------*/
 
@@ -186,6 +187,10 @@ class MainViewModel private constructor(
             }
         }
     }
+
+    /**Provides the [LiveData] of [Company] to it's observers.
+     * @return [LiveData] of [Company].*/
+    fun getAboutTheCompanyLiveData() : LiveData<Company> = aboutTheCompanyLiveData
 
     /**
      * Requests the [repository] to fetch information about the company.
