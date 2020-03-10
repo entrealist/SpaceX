@@ -10,11 +10,7 @@ import ritwik.samples.spacex.common.BaseViewModel
 import ritwik.samples.spacex.component.other.NetworkProcessor
 
 import ritwik.samples.spacex.convertUTCDateTime
-
-import ritwik.samples.spacex.model.Core
-import ritwik.samples.spacex.model.Capsule
-import ritwik.samples.spacex.model.Launch
-import ritwik.samples.spacex.model.Rocket
+import ritwik.samples.spacex.model.*
 
 import ritwik.samples.spacex.ui.main.MainActivity
 
@@ -190,6 +186,13 @@ class MainViewModel private constructor(
             }
         }
     }
+
+    /**
+     * Requests the [repository] to fetch information about the company.
+     * @return [LiveData] of [NetworkProcessor.Resource] of type [Company].
+     */
+    fun getAboutTheCompany() : LiveData<NetworkProcessor.Resource<Company>> =
+        getRepository().getAboutTheCompany()
 
     /**On-Click Method for performing actions when a [Launch] Event from [List] of [Launch]es is
      * selected:
