@@ -10,10 +10,13 @@ import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 
 import ritwik.samples.spacex.di.activity.LauncherModule
+import ritwik.samples.spacex.di.activity.MainModule
 
 import ritwik.samples.spacex.mvvm.viewModel.LauncherViewModel
+import ritwik.samples.spacex.mvvm.viewModel.MainViewModel
 
 import ritwik.samples.spacex.ui.activity.LauncherActivity
+import ritwik.samples.spacex.ui.activity.MainActivity
 
 import sample.ritwik.common.mvvm.viewModel.ViewModelKey
 
@@ -36,6 +39,14 @@ abstract class ComponentBinder {
     @ContributesAndroidInjector(modules = [LauncherModule::class])
     abstract fun contributesLauncherActivity(): LauncherActivity
 
+    /**
+     * Provides the instance of [MainActivity].
+     *
+     * @return Instance of [MainActivity].
+     */
+    @ContributesAndroidInjector(modules = [MainModule::class])
+    abstract fun contributesMainActivity(): MainActivity
+
     /*-------------------------------- ViewModel Binding Methods ---------------------------------*/
 
     /**
@@ -47,6 +58,17 @@ abstract class ComponentBinder {
     @Binds
     @IntoMap
     @ViewModelKey(LauncherViewModel::class)
-    abstract fun providesMainViewModel(viewModel: LauncherViewModel): ViewModel
+    abstract fun providesLauncherViewModel(viewModel: LauncherViewModel): ViewModel
+
+    /**
+     * Provides the [ViewModel] from [MainViewModel].
+     *
+     * @param viewModel Instance of [MainViewModel].
+     * @return Instance of [ViewModel].
+     */
+    @Binds
+    @IntoMap
+    @ViewModelKey(MainViewModel::class)
+    abstract fun providesMainViewModel(viewModel: MainViewModel): ViewModel
 
 }
