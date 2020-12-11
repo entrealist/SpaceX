@@ -4,7 +4,7 @@ import android.os.Bundle
 
 import ritwik.samples.spacex.R
 
-import ritwik.samples.spacex.databinding.FragmentLaunchContainerBinding
+import ritwik.samples.spacex.databinding.FragmentVehicleContainerBinding
 
 import ritwik.samples.spacex.mvvm.model.MainModel
 
@@ -13,16 +13,16 @@ import ritwik.samples.spacex.mvvm.viewModel.MainViewModel
 import sample.ritwik.common.ui.fragment.BaseFragment
 
 /**
- * [BaseFragment] to show different kinds of Launches.
+ * [BaseFragment] to show different kinds of SpaceX Vehicles.
  *
  * @author Ritwik Jamuar
  */
-class LaunchContainerFragment :
-    BaseFragment<FragmentLaunchContainerBinding, MainModel, MainViewModel>() {
+class VehicleContainerFragment :
+    BaseFragment<FragmentVehicleContainerBinding, MainModel, MainViewModel>() {
 
     /*---------------------------------- BaseFragment Callbacks ----------------------------------*/
 
-    override fun layoutRes(): Int = R.layout.fragment_launch_container
+    override fun layoutRes(): Int = R.layout.fragment_vehicle_container
 
     override fun extractArguments(arguments: Bundle) = Unit
 
