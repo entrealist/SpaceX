@@ -1,5 +1,7 @@
 package ritwik.samples.spacex.ui.activity
 
+import android.content.Intent
+
 import android.view.View
 
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +17,8 @@ import ritwik.samples.spacex.databinding.ActivityLauncherBinding
 import ritwik.samples.spacex.mvvm.model.LauncherModel
 
 import ritwik.samples.spacex.mvvm.viewModel.LauncherViewModel
+
+import ritwik.samples.spacex.utility.constant.NAVIGATE_TO_MAIN
 
 import sample.ritwik.common.data.ui.ErrorData
 
@@ -79,13 +83,24 @@ class LauncherActivity : BaseActivity<LauncherModel, LauncherViewModel, Activity
 
     override fun extractArguments() = Unit
 
-    override fun initialize() = Unit
+    override fun initialize() = viewModel.onStarted()
 
     override fun attachObservers() = Unit
 
     override fun onUIDataChanged(uiData: LauncherModel) = Unit
 
-    override fun onAction(uiData: LauncherModel) = Unit
+    override fun onAction(uiData: LauncherModel) = when(uiData.action) {
+
+        NAVIGATE_TO_MAIN -> {
+            with(Intent(this, MainActivity::class.java)) {
+                startActivity(this)
+                finish()
+            }
+        }
+
+        else -> Unit
+
+    }
 
     override fun cleanUp() = Unit
 
