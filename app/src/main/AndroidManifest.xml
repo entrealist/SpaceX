@@ -16,7 +16,7 @@
 		android:theme = "@style/AppTheme.Launcher"
 		tools:ignore = "GoogleAppIndexingWarning">
 
-		<!--                                               Activities                                                -->
+		<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Activities ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
 		<activity
 			android:name = ".ui.launcher.LauncherActivity">
