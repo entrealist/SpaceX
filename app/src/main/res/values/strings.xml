@@ -21,4 +21,8 @@
     <string name="launch_type_upcoming">Upcoming</string>
     <string name="launch_type_completed">Completed</string>
 
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ItemUpcomingLaunchBinding Texts ~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+    <string name="placeholder_block">Block</string>
+
 </resources>

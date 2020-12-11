@@ -8,4 +8,6 @@
 	<color name = "colorWhite">#FFF</color>
 	<color name = "colorBlack">#000</color>
 
+	<color name="item_upcoming_launch_card_background_color">#E6FFF2</color>
+
 </resources>
