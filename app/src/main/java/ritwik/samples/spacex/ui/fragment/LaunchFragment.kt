@@ -12,7 +12,11 @@ import ritwik.samples.spacex.mvvm.model.MainModel
 
 import ritwik.samples.spacex.mvvm.viewModel.MainViewModel
 
+import ritwik.samples.spacex.ui.adapter.CompletedLaunchAdapter
+import ritwik.samples.spacex.ui.adapter.UpcomingLaunchAdapter
+
 import ritwik.samples.spacex.utility.constant.LAUNCH_TYPE
+import ritwik.samples.spacex.utility.constant.POPULATE_LAUNCHES
 
 import sample.ritwik.common.ui.fragment.BaseFragment
 
@@ -36,7 +40,7 @@ class LaunchFragment : BaseFragment<FragmentLaunchBinding, MainModel, MainViewMo
 
     override fun extractArguments(arguments: Bundle) = with(arguments) {
         if (containsKey(LAUNCH_TYPE)) {
-            launchType = when(getInt(LAUNCH_TYPE)) {
+            launchType = when (getInt(LAUNCH_TYPE)) {
                 0 -> LaunchType.UPCOMING
                 1 -> LaunchType.COMPLETED
                 else -> LaunchType.UPCOMING
@@ -44,7 +48,10 @@ class LaunchFragment : BaseFragment<FragmentLaunchBinding, MainModel, MainViewMo
         }
     }
 
-    override fun initializeViews() = Unit
+    override fun initializeViews() {
+        setUpView()
+        requestData()
+    }
 
     override fun showLoading() = Unit
 
@@ -52,8 +59,59 @@ class LaunchFragment : BaseFragment<FragmentLaunchBinding, MainModel, MainViewMo
 
     override fun onUIDataChanged(uiData: MainModel) = Unit
 
-    override fun onAction(uiData: MainModel) = Unit
+    override fun onAction(uiData: MainModel) = when (uiData.action) {
 
-    override fun cleanUp() = Unit
+        POPULATE_LAUNCHES -> binding?.let { dataBinding ->
+            with(dataBinding) {
+                when (launchType) {
+
+                    LaunchType.UPCOMING -> {
+                        isLaunchesEmpty = !uiData.isUpcomingLaunchesPopulated()
+                        (listLaunches.adapter as? UpcomingLaunchAdapter)?.replaceList(
+                            uiData.upcomingLaunches
+                        ) ?: Unit
+                    }
+
+                    LaunchType.COMPLETED -> {
+                        isLaunchesEmpty = !uiData.isCompletedLaunchesPopulated()
+                        (listLaunches.adapter as? CompletedLaunchAdapter)?.replaceList(
+                            uiData.completedLaunches
+                        ) ?: Unit
+                    }
+
+                }
+            }
+        } ?: Unit
+
+        else -> Unit
+
+    }
+
+    override fun cleanUp() = binding?.let { dataBinding ->
+        dataBinding.listLaunches.adapter = null
+    } ?: Unit
+
+    /*------------------------------------- Private Methods --------------------------------------*/
+
+    /**
+     * Sets-up the views under [binding].
+     */
+    private fun setUpView() = binding?.let { dataBinding ->
+        viewModel?.let { vm ->
+            with(dataBinding) {
+                isLaunchTypeUpcoming = launchType == LaunchType.UPCOMING
+                isLaunchesEmpty = false
+                listLaunches.adapter = when (launchType) {
+                    LaunchType.UPCOMING -> UpcomingLaunchAdapter(vm.upcomingLaunchListener)
+                    LaunchType.COMPLETED -> CompletedLaunchAdapter(vm.completedLaunchListener)
+                }
+            }
+        }
+    } ?: Unit
+
+    /**
+     * Requests the data through [viewModel].
+     */
+    private fun requestData() = viewModel?.fetchLaunches(launchType) ?: Unit
 
 }

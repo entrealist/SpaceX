@@ -1,19 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.fragment.LaunchFragment">
 
-    <FrameLayout
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="isLaunchesEmpty"
+            type="Boolean" />
+
+        <variable
+            name="isLaunchTypeUpcoming"
+            type="Boolean" />
+
+        <variable
+            name="timerValue"
+            type="String" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- TODO: Update blank fragment layout -->
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            android:id="@+id/value_text_latest_mission_remaining_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@{timerValue}"
+            android:textColor="@color/color_text"
+            android:textSize="20sp"
+            android:visibility="@{isLaunchesEmpty ? View.GONE : isLaunchTypeUpcoming ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/list_launches"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="00 : 00 : 00 : 11" />
 
-    </FrameLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_launches"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="@{isLaunchesEmpty ? View.GONE : View.VISIBLE}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/value_text_latest_mission_remaining_time"
+            tools:itemCount="8"
+            tools:listitem="@layout/item_upcoming_launch" />
+
+        <TextView
+            android:id="@+id/placeholder_text_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:padding="20dp"
+            android:text="@string/empty_launches_message"
+            android:textColor="@color/color_text"
+            android:textSize="16sp"
+            android:visibility="@{isLaunchesEmpty ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
