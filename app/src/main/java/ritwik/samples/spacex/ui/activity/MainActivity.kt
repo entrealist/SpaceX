@@ -1,4 +1,4 @@
-package ritwik.samples.spacex.ui.main
+package ritwik.samples.spacex.ui.activity
 
 import android.os.Bundle
 

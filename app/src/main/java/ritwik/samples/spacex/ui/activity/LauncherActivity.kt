@@ -1,4 +1,4 @@
-package ritwik.samples.spacex.ui.launcher
+package ritwik.samples.spacex.ui.activity
 
 import android.content.Intent
 
@@ -8,8 +8,6 @@ import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 
 import ritwik.samples.spacex.R
-
-import ritwik.samples.spacex.ui.main.MainActivity
 
 class LauncherActivity : AppCompatActivity () {
 	// Other Components
