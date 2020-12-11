@@ -13,6 +13,7 @@
     </data>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/root_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -75,8 +76,8 @@
                 android:text="@{launch.missionName}"
                 android:textColor="@color/color_text"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@id/placeholder_text_block"
                 app:layout_constraintBottom_toTopOf="@id/value_text_mission_date_time"
+                app:layout_constraintEnd_toStartOf="@id/placeholder_text_block"
                 app:layout_constraintStart_toStartOf="@id/guideline_left"
                 app:layout_constraintTop_toBottomOf="@id/value_text_mission_number"
                 tools:text="SPF-12" />
