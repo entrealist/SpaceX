@@ -3,46 +3,65 @@ package ritwik.samples.spacex.application
 import android.app.Activity
 import android.app.Application
 
-import ritwik.samples.spacex.application.di.AppComponent
-import ritwik.samples.spacex.application.di.DaggerAppComponent
+import androidx.appcompat.app.AppCompatDelegate
 
-import ritwik.samples.spacex.application.di.modules.ContextModule
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasActivityInjector
 
-class App : Application () {
-	// Components.
-	private lateinit var appComponent : AppComponent
+import ritwik.samples.spacex.di.application.DaggerAppComponent
 
-	/*------------------------------------- Companion Object -------------------------------------*/
+import javax.inject.Inject
 
-	companion object {
-		lateinit var instance: App private set
+/**
+ * Represents [Application] Class of this Application.
+ *
+ * @author Ritwik Jamuar
+ */
+class App : Application (), HasActivityInjector {
 
-		fun getInstance ( activity : Activity ) : App {
-			return activity.application as App
-		}
+	/*---------------------------------------- Components ----------------------------------------*/
+
+	/**
+	 * Android Injector for [Activity].
+	 */
+	@Inject
+	lateinit var activityInjector: DispatchingAndroidInjector<Activity>
+
+	/*------------------------------------ Initializer Block -------------------------------------*/
+
+	init {
+
+		// Enable Vector Resources Globally.
+		AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+
 	}
 
-	/*----------------------------------- Application Callbacks ----------------------------------*/
+	/*---------------------------------- Application Callbacks -----------------------------------*/
 
-	override fun onCreate () {
-		super.onCreate ()
-		instance = this
-		initializeAppComponent ()
+	override fun onCreate() {
+		super.onCreate()
+		initialize()
 	}
 
-	/*-------------------------------------- Private Methods -------------------------------------*/
+	/*------------------------------ HasActivityInjector Callbacks -------------------------------*/
 
-	private fun initializeAppComponent () {
-		appComponent = DaggerAppComponent
-			.builder ()
-			.contextModule ( ContextModule ( this ) )
-			.build ()
+	override fun activityInjector(): AndroidInjector<Activity> = activityInjector
+
+	/*------------------------------------- Private Methods --------------------------------------*/
+
+	/**
+	 * Takes care of initialization of this [Application].
+	 */
+	private fun initialize() {
+		initializeComponents()
 	}
 
-	/*-------------------------------------- Public Methods --------------------------------------*/
-
-	fun getAppComponent () : AppComponent {
-		return appComponent
+	/**
+	 * Initializes the component of the [App].
+	 */
+	private fun initializeComponents() {
+		DaggerAppComponent.builder().application(this).build().inject(this)
 	}
 
 }
