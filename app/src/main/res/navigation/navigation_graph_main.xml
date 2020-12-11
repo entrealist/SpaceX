@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph_main"
+    app:startDestination="@id/fragment_launch_container">
+
+    <fragment
+        android:id="@+id/fragment_launch_container"
+        android:name="ritwik.samples.spacex.ui.fragment.LaunchContainerFragment"
+        android:label="fragment_launch_container"
+        tools:layout="@layout/fragment_launch_container" />
+
+    <fragment
+        android:id="@+id/fragment_vehicle_container"
+        android:name="ritwik.samples.spacex.ui.fragment.VehicleContainerFragment"
+        android:label="fragment_vehicle_container"
+        tools:layout="@layout/fragment_vehicle_container" />
+
+    <fragment
+        android:id="@+id/fragment_cores"
+        android:name="ritwik.samples.spacex.ui.fragment.CoresFragment"
+        android:label="fragment_cores"
+        tools:layout="@layout/fragment_cores" />
+
+</navigation>
