@@ -2,6 +2,9 @@
 
     <string name="app_name">SpaceX</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Image View Content Description ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
     <string name="imcd_rocket">Space X Rocket</string>
@@ -13,7 +16,9 @@
     <string name="menu_item_vehicles">Vehicles</string>
     <string name="menu_item_cores">Cores</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ LaunchContainerFragment Texts ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+    <string name="launch_type_upcoming">Upcoming</string>
+    <string name="launch_type_completed">Completed</string>
 
 </resources>
