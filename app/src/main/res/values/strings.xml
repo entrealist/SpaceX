@@ -20,6 +20,7 @@
 
     <string name="launch_type_upcoming">Upcoming</string>
     <string name="launch_type_completed">Completed</string>
+    <string name="empty_launches_message">It seems there is no Launches at this moment.\nPlease try again later.</string>
 
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ItemUpcomingLaunchBinding Texts ~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
