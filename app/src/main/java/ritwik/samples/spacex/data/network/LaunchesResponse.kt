@@ -25,7 +25,7 @@ data class LaunchResponse(
     @field: Json(name = "static_fire_date_utc") val utcStaticFireDate: String?,
     @field: Json(name = "static_fire_date_unix") val unixStaticFireDate: Long?,
     @field: Json(name = "timeline") val timeline: LaunchTimeline?,
-    @field: Json(name = "crew") val crew: String?
+    @field: Json(name = "crew") val crew: List<String>?
 )
 
 data class LaunchRocket(
@@ -48,8 +48,8 @@ data class LaunchRocketFirstStageCores(
     @field: Json(name = "gridfins") val gridFins: Boolean?,
     @field: Json(name = "legs") val legs: Boolean?,
     @field: Json(name = "reused") val reused: Boolean?,
-    @field: Json(name = "land_success") val landSuccess: String?,
-    @field: Json(name = "landing_intent") val landingIntent: String?,
+    @field: Json(name = "land_success") val landSuccess: Boolean?,
+    @field: Json(name = "landing_intent") val landingIntent: Boolean?,
     @field: Json(name = "landing_type") val landingType: String?,
     @field: Json(name = "landing_vehicle") val landingVehicle: String?
 )
@@ -99,7 +99,7 @@ data class LaunchRocketSecondStagePayloadOrbitParameters(
 data class LaunchRocketFairings(
     @field: Json(name = "reused") val reused: Boolean?,
     @field: Json(name = "recovery_attempt") val recoveryAttempt: Boolean?,
-    @field: Json(name = "recovered") val recovered: Boolean,
+    @field: Json(name = "recovered") val recovered: Boolean?,
     @field: Json(name = "ship") val ship: String?
 )
 

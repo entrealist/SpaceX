@@ -4,6 +4,8 @@ import com.squareup.moshi.Moshi
 
 import ritwik.samples.spacex.components.network.RESTInterface
 
+import ritwik.samples.spacex.data.network.LaunchResponse
+
 import sample.ritwik.common.component.persistence.DataStorePreference
 
 import sample.ritwik.common.mvvm.repository.BaseRepository
@@ -28,4 +30,20 @@ class MainRepository @Inject constructor(
     override val dataStorePreference: DataStorePreference,
     override val moshi: Moshi,
     override val resourceUtils: ResourceUtils
-) : BaseRepository()
+) : BaseRepository() {
+
+    /**
+     * Fetches the Upcoming Launches using [restInterface].
+     *
+     * @return [List] of [LaunchResponse] denoting the Upcoming Launches.
+     */
+    suspend fun getUpcomingLaunches(): List<LaunchResponse> = restInterface.getUpcomingLaunches()
+
+    /**
+     * Fetches the Completed Launches using [restInterface].
+     *
+     * @return [List] of [LaunchResponse] denoting the Completed Launches.
+     */
+    suspend fun getCompletedLaunches(): List<LaunchResponse> = restInterface.getPastLaunches()
+
+}

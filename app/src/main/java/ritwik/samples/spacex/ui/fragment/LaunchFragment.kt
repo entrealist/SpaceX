@@ -2,6 +2,8 @@ package ritwik.samples.spacex.ui.fragment
 
 import android.os.Bundle
 
+import android.view.View
+
 import ritwik.samples.spacex.R
 
 import ritwik.samples.spacex.data.ui.LaunchType
@@ -53,9 +55,15 @@ class LaunchFragment : BaseFragment<FragmentLaunchBinding, MainModel, MainViewMo
         requestData()
     }
 
-    override fun showLoading() = Unit
+    override fun showLoading() = binding?.placeholderShimmerContainer?.let { shimmer ->
+        shimmer.visibility = View.VISIBLE
+        shimmer.startShimmerAnimation()
+    } ?: Unit
 
-    override fun hideLoading() = Unit
+    override fun hideLoading() = binding?.placeholderShimmerContainer?.let { shimmer ->
+        shimmer.stopShimmerAnimation()
+        shimmer.visibility = View.GONE
+    } ?: Unit
 
     override fun onUIDataChanged(uiData: MainModel) = Unit
 
