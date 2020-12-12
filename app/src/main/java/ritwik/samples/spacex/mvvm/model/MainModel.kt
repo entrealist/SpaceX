@@ -68,7 +68,7 @@ class MainModel @Inject constructor() : BaseModel() {
                             flightNumber ?: 0,
                             name ?: "",
                             convertUTCDateTime(utcDate ?: ""),
-                            0,
+                            0, // TODO : Figure out how to get the Block Number, since it is no longer available.
                             links?.webCast ?: ""
                         )
                     )
