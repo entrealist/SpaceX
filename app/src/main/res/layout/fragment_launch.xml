@@ -72,6 +72,50 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <io.supercharge.shimmerlayout.ShimmerLayout
+            android:id="@+id/placeholder_shimmer_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:shimmer_animation_duration="500">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginBottom="20dp"
+                    android:contentDescription="@string/imcd_shimmer_view"
+                    android:src="@drawable/shimmer_rounded_rectangle_grey"
+                    android:visibility="@{isLaunchTypeUpcoming ? View.VISIBLE : View.GONE}" />
+
+                <include layout="@layout/shimmer_item_launch" />
+
+                <include layout="@layout/shimmer_item_launch" />
+
+                <include layout="@layout/shimmer_item_launch" />
+
+                <include layout="@layout/shimmer_item_launch" />
+
+                <include layout="@layout/shimmer_item_launch" />
+
+                <include layout="@layout/shimmer_item_launch" />
+
+                <include layout="@layout/shimmer_item_launch" />
+
+                <include layout="@layout/shimmer_item_launch" />
+
+                <include layout="@layout/shimmer_item_launch" />
+
+            </LinearLayout>
+
+        </io.supercharge.shimmerlayout.ShimmerLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
