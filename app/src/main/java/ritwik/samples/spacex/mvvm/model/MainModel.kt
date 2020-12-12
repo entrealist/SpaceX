@@ -66,10 +66,10 @@ class MainModel @Inject constructor() : BaseModel() {
                     add(
                         Launch(
                             flightNumber ?: 0,
-                            missionName ?: "",
-                            convertUTCDateTime(utcLaunchDateTime ?: ""),
-                            rocket?.secondStage?.block ?: 0,
-                            launchLinks?.videoLink ?: ""
+                            name ?: "",
+                            convertUTCDateTime(utcDate ?: ""),
+                            0,
+                            links?.webCast ?: ""
                         )
                     )
                 }
