@@ -94,7 +94,7 @@ class AppModule {
     @AppScope
     @Provides
     @Named(BASE_URL)
-    fun providesBaseURL(): String = "https://api.spacexdata.com/v3/"
+    fun providesBaseURL(): String = "https://api.spacexdata.com/v4/"
 
     /**
      * Provides the [String] as the File Name of Data Store.
