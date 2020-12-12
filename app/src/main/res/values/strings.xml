@@ -5,10 +5,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Image View Content Description ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Content Descriptions ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
     <string name="imcd_rocket">Space X Rocket</string>
     <string name="imcd_space_x_logo">Space X Logo</string>
+    <string name="imcd_shimmer_view">Loading</string>
 
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu Item Names ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
