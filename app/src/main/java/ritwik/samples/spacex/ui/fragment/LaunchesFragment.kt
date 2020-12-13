@@ -9,7 +9,7 @@ import ritwik.samples.spacex.R
 
 import ritwik.samples.spacex.data.ui.LaunchType
 
-import ritwik.samples.spacex.databinding.FragmentLaunchBinding
+import ritwik.samples.spacex.databinding.FragmentLaunchesBinding
 
 import ritwik.samples.spacex.mvvm.model.MainModel
 
@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit
  *
  * @author Ritwik Jamuar
  */
-class LaunchFragment : BaseFragment<FragmentLaunchBinding, MainModel, MainViewModel>() {
+class LaunchesFragment : BaseFragment<FragmentLaunchesBinding, MainModel, MainViewModel>() {
 
     /*------------------------------------- Member Variables -------------------------------------*/
 
@@ -46,7 +46,7 @@ class LaunchFragment : BaseFragment<FragmentLaunchBinding, MainModel, MainViewMo
 
     /*---------------------------------- BaseFragment Callbacks ----------------------------------*/
 
-    override fun layoutRes(): Int = R.layout.fragment_launch
+    override fun layoutRes(): Int = R.layout.fragment_launches
 
     override fun extractArguments(arguments: Bundle) = with(arguments) {
         if (containsKey(LAUNCH_TYPE)) {
