@@ -95,8 +95,17 @@ class MainModel @Inject constructor() : BaseModel() {
         // Define an Input Format of Date and Time.
         val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH)
 
+        // Set the Time Zone of Input Format as the UTC Time Zone.
+        inputFormat.timeZone = TimeZone.getTimeZone(TimeZone.getAvailableIDs()[588])
+
         // Define an Output Format of Date and Time.
         val outputFormat = SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.ENGLISH)
+
+        // Set the Time Zone of the device.
+        // This can potentially be the source of bug
+        // since the implementation of the method 'getDefault' is Device Manufacturer specific,
+        // and we have no control over it.
+        outputFormat.timeZone = TimeZone.getDefault()
 
         // Parse the UTC Date and Time to get Date.
         val date = inputFormat.parse(utcDate)
