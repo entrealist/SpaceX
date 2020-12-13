@@ -10,6 +10,8 @@
     <string name="imcd_rocket">Space X Rocket</string>
     <string name="imcd_space_x_logo">Space X Logo</string>
     <string name="imcd_shimmer_view">Loading</string>
+    <string name="imcd_rocket_image">Rocket Image</string>
+    <string name="imcd_arrow">Arrow</string>
 
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu Item Names ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
@@ -31,5 +33,9 @@
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ItemUpcomingLaunchBinding Texts ~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
     <string name="placeholder_block">Block</string>
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ItemRocketBinding Texts ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+    <string name="button_rocket_specs">Rocket Specs</string>
 
 </resources>
