@@ -13,4 +13,6 @@
 	<color name="shimmer_card_background">#EEEEEE</color>
 	<color name="shimmer_item_background">#CCCCCC</color>
 
+	<color name="color_ripple_background">#66000000</color>
+
 </resources>
