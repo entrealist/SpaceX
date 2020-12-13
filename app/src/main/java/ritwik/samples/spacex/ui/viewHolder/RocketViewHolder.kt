@@ -60,7 +60,7 @@ class RocketViewHolder(
      *
      * @param rocketItem Instance of [Rocket] to be assigned into the [binding].
      */
-    fun setLaunchItem(rocketItem: Rocket) = with(binding) {
+    fun setRocketItem(rocketItem: Rocket) = with(binding) {
         rocket = rocketItem
         picasso.load(rocketItem.images[0]).into(valueImageRocket)
     }
