@@ -24,6 +24,14 @@ import sample.ritwik.common.ui.fragment.BaseFragment
 class LaunchContainerFragment :
     BaseFragment<FragmentLaunchContainerBinding, MainModel, MainViewModel>() {
 
+    /*---------------------------------------- Components ----------------------------------------*/
+
+    /**
+     * Reference of [TabLayoutMediator] to mediate between
+     * [com.google.android.material.tabs.TabLayout] and [androidx.viewpager2.widget.ViewPager2].
+     */
+    private var tabLayoutMediator: TabLayoutMediator? = null
+
     /*---------------------------------- BaseFragment Callbacks ----------------------------------*/
 
     override fun layoutRes(): Int = R.layout.fragment_launch_container
@@ -53,6 +61,8 @@ class LaunchContainerFragment :
      * Sets-up the [androidx.viewpager2.widget.ViewPager2] enclosed under [binding].
      */
     private fun setUpViewPager() = binding?.fragmentLaunchesViewPager?.let { viewPager ->
+        tabLayoutMediator?.detach()
+        tabLayoutMediator = null
         viewPager.adapter = LaunchesAdapter(this)
     } ?: Unit
 
@@ -64,13 +74,15 @@ class LaunchContainerFragment :
 
             // Set the TabLayoutMediator to set the Tab Text according to the
             // position of the Fragment currently rendered by the ViewPager.
-            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tabLayoutMediator = TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                 tab.text = when(position) {
                     0 -> getString(R.string.launch_type_upcoming)
                     1 -> getString(R.string.launch_type_completed)
                     else -> ""
                 }
-            }.attach()
+            }
+
+            tabLayoutMediator?.attach()
 
         }
     } ?: Unit
