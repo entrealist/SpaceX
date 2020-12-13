@@ -193,7 +193,7 @@ class LaunchFragment : BaseFragment<FragmentLaunchBinding, MainModel, MainViewMo
         val second = TimeUnit.MILLISECONDS.toSeconds(uptime)
 
         // Return the Formatted Time as String.
-        return "$day : $hour : $hour : $second"
+        return "$day : $hour : $minute : $second"
 
     }
 
