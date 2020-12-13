@@ -23,6 +23,11 @@
     <string name="launch_type_completed">Completed</string>
     <string name="empty_launches_message">It seems there is no Launches at this moment.\nPlease try again later.</string>
 
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~ VehicleContainerFragment Texts ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+    <string name="vehicle_type_rocket">Rockets</string>
+    <string name="vehicle_type_capsule">Capsules</string>
+
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ItemUpcomingLaunchBinding Texts ~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
     <string name="placeholder_block">Block</string>
