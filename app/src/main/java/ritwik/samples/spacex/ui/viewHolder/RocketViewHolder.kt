@@ -30,7 +30,8 @@ class RocketViewHolder(
      * [View.OnClickListener] to intercept click on the item.
      */
     private val rootClickListener = View.OnClickListener {
-        binding.isExpanded = !binding.isExpanded
+        val currentValue = binding.isExpanded ?: false
+        binding.isExpanded = !currentValue
     }
 
     /**
