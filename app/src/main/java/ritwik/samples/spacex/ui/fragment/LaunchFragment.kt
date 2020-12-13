@@ -75,6 +75,7 @@ class LaunchFragment : BaseFragment<FragmentLaunchBinding, MainModel, MainViewMo
 
                     LaunchType.UPCOMING -> {
                         isLaunchesEmpty = !uiData.isUpcomingLaunchesPopulated()
+                        listLaunches.setItemViewCacheSize(uiData.upcomingLaunches.size)
                         (listLaunches.adapter as? UpcomingLaunchAdapter)?.replaceList(
                             uiData.upcomingLaunches
                         ) ?: Unit
@@ -82,6 +83,7 @@ class LaunchFragment : BaseFragment<FragmentLaunchBinding, MainModel, MainViewMo
 
                     LaunchType.COMPLETED -> {
                         isLaunchesEmpty = !uiData.isCompletedLaunchesPopulated()
+                        listLaunches.setItemViewCacheSize(uiData.completedLaunches.size)
                         (listLaunches.adapter as? CompletedLaunchAdapter)?.replaceList(
                             uiData.completedLaunches
                         ) ?: Unit
