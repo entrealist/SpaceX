@@ -9,6 +9,7 @@ import ritwik.samples.spacex.databinding.FragmentRocketsBinding
 import ritwik.samples.spacex.mvvm.model.MainModel
 
 import ritwik.samples.spacex.mvvm.viewModel.MainViewModel
+import ritwik.samples.spacex.ui.adapter.RocketsAdapter
 
 import sample.ritwik.common.ui.fragment.BaseFragment
 
@@ -35,6 +36,26 @@ class RocketsFragment : BaseFragment<FragmentRocketsBinding, MainModel, MainView
 
     override fun onAction(uiData: MainModel) = Unit
 
-    override fun cleanUp() = Unit
+    override fun cleanUp() = binding?.let { dataBinding ->
+        dataBinding.listRocket.adapter = null
+    } ?: Unit
+
+    /*------------------------------------- Private Methods --------------------------------------*/
+
+    /**
+     * Sets-up the views under [binding].
+     */
+    private fun setUpView() = binding?.let { dataBinding ->
+        viewModel?.let { vm ->
+            imageLoader?.let { picasso ->
+                with(dataBinding) {
+                    listRocket.adapter = RocketsAdapter(
+                        picasso,
+                        vm.rocketListener
+                    )
+                }
+            } ?: Unit
+        } ?: Unit
+    } ?: Unit
 
 }

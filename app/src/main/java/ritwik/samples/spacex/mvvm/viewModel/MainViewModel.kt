@@ -92,6 +92,13 @@ class MainViewModel @Inject constructor(
     }
 
     /**
+     * Lambda Expression to notify about selection of a Rocket.
+     */
+    val rocketListener: (Int) -> Unit = { position ->
+        // TODO: Use the position in model.rockets to handle the click on Rocket.
+    }
+
+    /**
      * Lambda Expression as the REST API Call Body for fetching the Upcoming Launches.
      */
     private val upcomingLaunchesAPICall: suspend () -> List<LaunchResponse> = {
