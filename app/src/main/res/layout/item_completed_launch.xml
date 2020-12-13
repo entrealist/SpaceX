@@ -20,12 +20,12 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="5dp"
-        app:cardBackgroundColor="@color/item_upcoming_launch_card_background_color"
         app:cardUseCompatPadding="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_launch_item_background">
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_left"
