@@ -22,7 +22,29 @@ data class Core(
     val launches: List<String>,
     val serial: String,
     val status: String
-)
+) {
+
+    /*-------------------------------------- Public Methods --------------------------------------*/
+
+    /**
+     * Provides the name of the [Core] as the value of [serial].
+     *
+     * @return Value of [serial].
+     */
+    fun getCoreName(): String = serial
+
+    /**
+     * Provides the value of [block] in [String] format.
+     *
+     * @return If the value of [block] is 0, TBD is returned, else the value of [block].
+     */
+    fun getBlockText(): String = if (block == 0) {
+        "TBD"
+    } else {
+        block.toString()
+    }
+
+}
 
 /**
  * Data Class encapsulating the details of the Landing of the [Core].
@@ -34,4 +56,29 @@ data class Core(
 data class CoreLanding(
     val attempts: Int,
     val success: Int
-)
+) {
+
+    /*-------------------------------------- Public Methods --------------------------------------*/
+
+    /**
+     * Provides the number of successful Landings out of total Attempts.
+     *
+     * @return [String] denoting the number.
+     */
+    fun getLandingRatio(): String = "$success / $attempts"
+
+    /**
+     * Provides the String value of no. of attempts.
+     *
+     * @return [String] value of [attempts].
+     */
+    fun getAttemptText(): String = "$attempts"
+
+    /**
+     * Provides the String value of no. of successful landings.
+     *
+     * @return [String] value of [success].
+     */
+    fun getSuccessText(): String = "$success"
+
+}
