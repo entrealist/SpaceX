@@ -17,3 +17,9 @@ const val POPULATE_LAUNCHES = 1002
  * [ritwik.samples.spacex.data.ui.Rocket] in [ritwik.samples.spacex.ui.fragment.RocketsFragment].
  */
 const val POPULATE_ROCKETS = 1003
+
+/**
+ * Constant [Int] denoting the action to populate the [List] of
+ * [ritwik.samples.spacex.data.ui.Capsule] in [ritwik.samples.spacex.ui.fragment.CapsulesFragment].
+ */
+const val POPULATE_CAPSULES = 1004

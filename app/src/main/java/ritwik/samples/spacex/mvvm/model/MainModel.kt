@@ -1,5 +1,6 @@
 package ritwik.samples.spacex.mvvm.model
 
+import ritwik.samples.spacex.data.network.CapsuleResponse
 import ritwik.samples.spacex.data.network.LaunchResponse
 import ritwik.samples.spacex.data.network.RocketResponse
 
@@ -39,6 +40,11 @@ class MainModel @Inject constructor() : BaseModel() {
      */
     lateinit var rockets: List<Rocket>
 
+    /**
+     * [List] of [Capsule] denoting the collection of Capsules.
+     */
+    lateinit var capsules: List<Capsule>
+
     /*-------------------------------------- Public Methods --------------------------------------*/
 
     /**
@@ -68,6 +74,14 @@ class MainModel @Inject constructor() : BaseModel() {
     fun isRocketsPopulated(): Boolean = this::rockets.isInitialized && rockets.isNotEmpty()
 
     /**
+     * Checks whether [capsules] is populated or not,
+     * by checking whether it is initialized as well as it is not empty.
+     *
+     * @return true, if [capsules] is initialized and is not empty, else false.
+     */
+    fun isCapsulesPopulated(): Boolean = this::capsules.isInitialized && capsules.isNotEmpty()
+
+    /**
      * Extracts the [List] of [Launch] from the given [responseLaunches].
      *
      * @param responseLaunches [List] of [LaunchResponse] denoting the Launch List from REST API.
@@ -94,7 +108,7 @@ class MainModel @Inject constructor() : BaseModel() {
      * Extracts the [List] of [Rocket] from the given [responseRockets].
      *
      * @param responseRockets [List] of [RocketResponse] denoting all the Rockets from REST API.
-     * @return Converted [List] of [Launch] using [responseRockets].
+     * @return Converted [List] of [Rocket] using [responseRockets].
      */
     fun extractRocketsFromResponse(responseRockets: List<RocketResponse>) =
         ArrayList<Rocket>().apply {
@@ -181,6 +195,35 @@ class MainModel @Inject constructor() : BaseModel() {
                             country ?: "",
                             company ?: "",
                             images ?: ArrayList()
+                        )
+                    )
+                }
+            }
+        }
+
+    /**
+     * Extracts the [List] of [Capsule] from the given [responseCapsules].
+     *
+     * @param responseCapsules [List] of [CapsuleResponse] denoting all the Capsules from REST API.
+     * @return Converted [List] of [Capsule] using [responseCapsules].
+     */
+    fun extractCapsulesFromResponse(responseCapsules: List<CapsuleResponse>) =
+        ArrayList<Capsule>().apply {
+            for (responseCapsule in responseCapsules) {
+                with(responseCapsule) {
+                    add(
+                        Capsule(
+                            id ?: "",
+                            serial ?: "",
+                            type ?: "",
+                            status ?: "",
+                            lastUpdate ?: "",
+                            reuseCount ?: 0,
+                            CapsuleLanding(
+                                waterLandingCount ?: 0,
+                                landLandingCount ?: 0
+                            ),
+                            launches ?: ArrayList()
                         )
                     )
                 }

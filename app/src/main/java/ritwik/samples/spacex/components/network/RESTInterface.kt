@@ -2,9 +2,11 @@ package ritwik.samples.spacex.components.network
 
 import retrofit2.http.GET
 
+import ritwik.samples.spacex.data.network.CapsuleResponse
 import ritwik.samples.spacex.data.network.LaunchResponse
 import ritwik.samples.spacex.data.network.RocketResponse
 
+import ritwik.samples.spacex.utility.constant.API_CALL_CAPSULES
 import ritwik.samples.spacex.utility.constant.API_CALL_PAST_LAUNCHES
 import ritwik.samples.spacex.utility.constant.API_CALL_ROCKETS
 import ritwik.samples.spacex.utility.constant.API_CALL_UPCOMING_LAUNCHES
@@ -39,5 +41,13 @@ interface RESTInterface {
      */
     @GET(API_CALL_ROCKETS)
     suspend fun getAllRockets(): List<RocketResponse>
+
+    /**
+     * Fetches all the Capsules.
+     *
+     * @return [List] of [CapsuleResponse] denoting the Capsules.
+     */
+    @GET(API_CALL_CAPSULES)
+    suspend fun getAllCapsules(): List<CapsuleResponse>
 
 }

@@ -14,3 +14,8 @@ const val API_CALL_PAST_LAUNCHES = "launches/past"
  * Constant [String] denoting the API Call End-Point for REST API to fetch all the Rockets.
  */
 const val API_CALL_ROCKETS = "rockets"
+
+/**
+ * Constant [String] denoting the API Call End-Point for REST API to fetch all the Capsules.
+ */
+const val API_CALL_CAPSULES = "capsules"

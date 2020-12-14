@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.collect
 
 import ritwik.samples.spacex.R
 
+import ritwik.samples.spacex.data.network.CapsuleResponse
 import ritwik.samples.spacex.data.network.ErrorResponse
 import ritwik.samples.spacex.data.network.LaunchResponse
 import ritwik.samples.spacex.data.network.RocketResponse
@@ -15,6 +16,7 @@ import ritwik.samples.spacex.mvvm.model.MainModel
 
 import ritwik.samples.spacex.mvvm.repository.MainRepository
 
+import ritwik.samples.spacex.utility.constant.POPULATE_CAPSULES
 import ritwik.samples.spacex.utility.constant.POPULATE_LAUNCHES
 import ritwik.samples.spacex.utility.constant.POPULATE_ROCKETS
 
@@ -94,6 +96,23 @@ class MainViewModel @Inject constructor(
         notifyActionOnUI(POPULATE_ROCKETS)
     }
 
+    /**
+     * Fetches all the capsules from making REST API Call.
+     */
+    fun fetchCapsules() = if (!model.isCapsulesPopulated()) {
+        showProgress()
+        launchNetworkDataLoad(
+            allCapsulesAPICall,
+            handleAllCapsulesSuccess,
+            handleAllCapsulesError,
+            processAllCapsulesResponse,
+            ErrorResponse::class.java,
+            handleAllCapsulesErrorCode
+        )
+    } else {
+        notifyActionOnUI(POPULATE_CAPSULES)
+    }
+
     /*------------------------------------ Lambda Expressions ------------------------------------*/
 
     /**
@@ -139,6 +158,13 @@ class MainViewModel @Inject constructor(
     }
 
     /**
+     * Lambda Expression as the REST API Call Body for fetching all the Capsules.
+     */
+    private val allCapsulesAPICall: suspend () -> List<CapsuleResponse> = {
+        repository.getAllCapsules()
+    }
+
+    /**
      * Lambda Expression to handle the Success of REST API to fetch the Launches.
      */
     private val handleLaunchesSuccess: () -> Unit = {
@@ -155,6 +181,14 @@ class MainViewModel @Inject constructor(
     }
 
     /**
+     * Lambda Expression to handle the Success of REST API to fetch all the Capsules.
+     */
+    private val handleAllCapsulesSuccess: () -> Unit = {
+        hideProgress()
+        notifyActionOnUI(POPULATE_CAPSULES)
+    }
+
+    /**
      * Lambda Expression to handle the Error of REST API to fetch the Launches.
      */
     private val handleLaunchesError: (throwable: Throwable) -> Unit = { throwable ->
@@ -167,6 +201,15 @@ class MainViewModel @Inject constructor(
      * Lambda Expression to handle the Error of REST API to fetch all the Rockets.
      */
     private val handleAllRocketsError: (Throwable) -> Unit = { throwable ->
+        hideProgress()
+        android.util.Log.e("MainViewModel", throwable.message ?: "")
+        showPopUpWindow(throwable.message ?: repository.getStringFromResource(R.string.default_error_message))
+    }
+
+    /**
+     * Lambda Expression to handle the Error of REST API to fetch all the Capsules.
+     */
+    private val handleAllCapsulesError: (Throwable) -> Unit = { throwable ->
         hideProgress()
         android.util.Log.e("MainViewModel", throwable.message ?: "")
         showPopUpWindow(throwable.message ?: repository.getStringFromResource(R.string.default_error_message))
@@ -203,6 +246,16 @@ class MainViewModel @Inject constructor(
         }
 
     /**
+     * Lambda Expression to process the Response of REST API to fetch all the Capsules.
+     */
+    private val processAllCapsulesResponse: suspend (capsulesFlow: Flow<List<CapsuleResponse>>) -> Unit =
+        { flow ->
+            flow.collect { capsules ->
+                model.capsules = model.extractCapsulesFromResponse(capsules)
+            }
+        }
+
+    /**
      * Lambda Expression to handle the Error Code of REST API to fetch the Launches.
      */
     private val handleLaunchesErrorCode: (Int, ErrorResponse) -> ResultWrapper.Error<List<LaunchResponse>> =
@@ -214,6 +267,14 @@ class MainViewModel @Inject constructor(
      * Lambda Expression to handle the Error Code of REST API to fetch all the Rockets.
      */
     private val handleAllRocketsErrorCode: (Int, ErrorResponse) -> ResultWrapper.Error<List<RocketResponse>> =
+        { code, errorBody ->
+            ResultWrapper.Error.RecoverableError(code, errorBody.error)
+        }
+
+    /**
+     * Lambda Expression to handle the Error Code of REST API to fetch all the Capsules.
+     */
+    private val handleAllCapsulesErrorCode: (Int, ErrorResponse) -> ResultWrapper.Error<List<CapsuleResponse>> =
         { code, errorBody ->
             ResultWrapper.Error.RecoverableError(code, errorBody.error)
         }

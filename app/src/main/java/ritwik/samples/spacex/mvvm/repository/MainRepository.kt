@@ -4,6 +4,7 @@ import com.squareup.moshi.Moshi
 
 import ritwik.samples.spacex.components.network.RESTInterface
 
+import ritwik.samples.spacex.data.network.CapsuleResponse
 import ritwik.samples.spacex.data.network.LaunchResponse
 import ritwik.samples.spacex.data.network.RocketResponse
 
@@ -53,5 +54,12 @@ class MainRepository @Inject constructor(
      * @return [List] of [RocketResponse] denoting all the Rockets.
      */
     suspend fun getAllRockets(): List<RocketResponse> = restInterface.getAllRockets()
+
+    /**
+     * Fetches the Capsules using [restInterface].
+     *
+     * @return [List] of [CapsuleResponse] denoting all the Capsules.
+     */
+    suspend fun getAllCapsules(): List<CapsuleResponse> = restInterface.getAllCapsules()
 
 }
