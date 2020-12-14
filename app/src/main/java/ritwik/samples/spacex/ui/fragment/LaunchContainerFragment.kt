@@ -2,6 +2,10 @@ package ritwik.samples.spacex.ui.fragment
 
 import android.os.Bundle
 
+import androidx.viewpager2.widget.ViewPager2
+
+import com.google.android.material.tabs.TabLayout
+
 import com.google.android.material.tabs.TabLayoutMediator
 
 import ritwik.samples.spacex.R
@@ -52,7 +56,8 @@ class LaunchContainerFragment :
     override fun onAction(uiData: MainModel) = Unit
 
     override fun cleanUp() = binding?.let { viewBinding ->
-        viewBinding.fragmentLaunchesViewPager.adapter = null
+        cleanUpViewPager(viewBinding.fragmentLaunchesViewPager)
+        cleanUpTabLayoutMediator()
     } ?: Unit
 
     /*------------------------------------- Private Methods --------------------------------------*/
@@ -61,8 +66,6 @@ class LaunchContainerFragment :
      * Sets-up the [androidx.viewpager2.widget.ViewPager2] enclosed under [binding].
      */
     private fun setUpViewPager() = binding?.fragmentLaunchesViewPager?.let { viewPager ->
-        tabLayoutMediator?.detach()
-        tabLayoutMediator = null
         viewPager.adapter = LaunchesAdapter(this)
     } ?: Unit
 
@@ -71,20 +74,46 @@ class LaunchContainerFragment :
      */
     private fun setUpTabLayout() = binding?.fragmentLaunchesTabLayout?.let { tabLayout ->
         binding?.fragmentLaunchesViewPager?.let { viewPager ->
-
-            // Set the TabLayoutMediator to set the Tab Text according to the
-            // position of the Fragment currently rendered by the ViewPager.
-            tabLayoutMediator = TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-                tab.text = when(position) {
-                    0 -> getString(R.string.launch_type_upcoming)
-                    1 -> getString(R.string.launch_type_completed)
-                    else -> ""
-                }
-            }
-
-            tabLayoutMediator?.attach()
-
+            setUpTabLayoutMediator(tabLayout, viewPager)
         }
     } ?: Unit
+
+    /**
+     * Sets-up the [TabLayoutMediator] using [TabLayout] and [ViewPager2].
+     *
+     * @param tabLayout Instance of [TabLayout].
+     * @param viewPager Instance of [ViewPager2].
+     */
+    private fun setUpTabLayoutMediator(tabLayout: TabLayout, viewPager: ViewPager2) {
+
+        // Set the TabLayoutMediator to set the Tab Text according to the
+        // position of the Fragment currently rendered by the ViewPager.
+        tabLayoutMediator = TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = when(position) {
+                0 -> getString(R.string.launch_type_upcoming)
+                1 -> getString(R.string.launch_type_completed)
+                else -> ""
+            }
+        }
+
+        // Attach the TabLayoutMediator in the view.
+        tabLayoutMediator?.attach()
+
+    }
+
+    /**
+     * Cleans-up the [ViewPager2] from the current view.
+     */
+    private fun cleanUpViewPager(viewPager: ViewPager2) {
+        viewPager.adapter = null
+    }
+
+    /**
+     * Cleans-up the [TabLayoutMediator] from the current view.
+     */
+    private fun cleanUpTabLayoutMediator() {
+        tabLayoutMediator?.detach() // Detach the TabLayoutMediator from view first.
+        tabLayoutMediator = null // Re-reference the current instance of TabLayoutMediator for Garbage Collection.
+    }
 
 }
