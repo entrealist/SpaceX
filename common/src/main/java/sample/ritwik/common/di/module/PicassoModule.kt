@@ -3,6 +3,7 @@ package sample.ritwik.common.di.module
 import android.content.Context
 
 import com.jakewharton.picasso.OkHttp3Downloader
+import com.squareup.picasso.BuildConfig
 
 import com.squareup.picasso.Picasso
 
@@ -43,6 +44,7 @@ class PicassoModule {
         downloader : OkHttp3Downloader
     ) : Picasso = Picasso.Builder(context).apply {
         downloader(downloader) // Set the OkHttp3Downloader
+        loggingEnabled(true)
     }.build()
 
     /**
