@@ -72,7 +72,7 @@ class CapsulesFragment : BaseFragment<FragmentCapsulesBinding, MainModel, MainVi
     private fun setUpView() = binding?.let { dataBinding ->
         viewModel?.let { vm ->
             with(dataBinding) {
-                listCapsules.adapter = CapsulesAdapter(vm.rocketListener)
+                listCapsules.adapter = CapsulesAdapter(vm.capsuleListener)
             }
         } ?: Unit
     } ?: Unit
