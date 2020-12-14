@@ -2,6 +2,8 @@ package ritwik.samples.spacex.ui.fragment
 
 import android.os.Bundle
 
+import android.view.View
+
 import ritwik.samples.spacex.R
 
 import ritwik.samples.spacex.databinding.FragmentRocketsBinding
@@ -9,7 +11,10 @@ import ritwik.samples.spacex.databinding.FragmentRocketsBinding
 import ritwik.samples.spacex.mvvm.model.MainModel
 
 import ritwik.samples.spacex.mvvm.viewModel.MainViewModel
+
 import ritwik.samples.spacex.ui.adapter.RocketsAdapter
+
+import ritwik.samples.spacex.utility.constant.POPULATE_ROCKETS
 
 import sample.ritwik.common.ui.fragment.BaseFragment
 
@@ -26,15 +31,34 @@ class RocketsFragment : BaseFragment<FragmentRocketsBinding, MainModel, MainView
 
     override fun extractArguments(arguments: Bundle) = Unit
 
-    override fun initializeViews() = Unit
+    override fun initializeViews() {
+        setUpView()
+        requestData()
+    }
 
-    override fun showLoading() = Unit
+    override fun showLoading() = binding?.placeholderShimmerContainer?.let { shimmer ->
+        shimmer.visibility = View.VISIBLE
+        shimmer.startShimmerAnimation()
+    } ?: Unit
 
-    override fun hideLoading() = Unit
+    override fun hideLoading() = binding?.placeholderShimmerContainer?.let { shimmer ->
+        shimmer.stopShimmerAnimation()
+        shimmer.visibility = View.GONE
+    } ?: Unit
 
     override fun onUIDataChanged(uiData: MainModel) = Unit
 
-    override fun onAction(uiData: MainModel) = Unit
+    override fun onAction(uiData: MainModel) = when(uiData.action) {
+
+        POPULATE_ROCKETS -> {
+            binding?.listRocket?.adapter?.let { adapter ->
+                (adapter as? RocketsAdapter)?.replaceList(uiData.rockets) ?: Unit
+            } ?: Unit
+        }
+
+        else -> Unit
+
+    }
 
     override fun cleanUp() = binding?.let { dataBinding ->
         dataBinding.listRocket.adapter = null
@@ -57,5 +81,10 @@ class RocketsFragment : BaseFragment<FragmentRocketsBinding, MainModel, MainView
             } ?: Unit
         } ?: Unit
     } ?: Unit
+
+    /**
+     * Requests the data through [viewModel].
+     */
+    private fun requestData() = viewModel?.fetchRockets() ?: Unit
 
 }

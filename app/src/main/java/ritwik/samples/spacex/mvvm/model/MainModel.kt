@@ -1,8 +1,9 @@
 package ritwik.samples.spacex.mvvm.model
 
 import ritwik.samples.spacex.data.network.LaunchResponse
+import ritwik.samples.spacex.data.network.RocketResponse
 
-import ritwik.samples.spacex.data.ui.Launch
+import ritwik.samples.spacex.data.ui.*
 
 import sample.ritwik.common.mvvm.model.BaseModel
 
@@ -33,6 +34,11 @@ class MainModel @Inject constructor() : BaseModel() {
      */
     lateinit var completedLaunches: List<Launch>
 
+    /**
+     * [List] of [Rocket] denoting the collection of Rockets.
+     */
+    lateinit var rockets: List<Rocket>
+
     /*-------------------------------------- Public Methods --------------------------------------*/
 
     /**
@@ -54,6 +60,14 @@ class MainModel @Inject constructor() : BaseModel() {
         this::completedLaunches.isInitialized && completedLaunches.isNotEmpty()
 
     /**
+     * Checks whether [rockets] is populated or not,
+     * by checking whether it is initialized as well as it is not empty.
+     *
+     * @return true, if [rockets] is initialized and is not empty, else false.
+     */
+    fun isRocketsPopulated(): Boolean = this::rockets.isInitialized && rockets.isNotEmpty()
+
+    /**
      * Extracts the [List] of [Launch] from the given [responseLaunches].
      *
      * @param responseLaunches [List] of [LaunchResponse] denoting the Launch List from REST API.
@@ -70,6 +84,103 @@ class MainModel @Inject constructor() : BaseModel() {
                             convertUTCDateTime(utcDate ?: ""),
                             0, // TODO : Figure out how to get the Block Number, since it is no longer available.
                             links?.webCast ?: ""
+                        )
+                    )
+                }
+            }
+        }
+
+    /**
+     * Extracts the [List] of [Rocket] from the given [responseRockets].
+     *
+     * @param responseRockets [List] of [RocketResponse] denoting all the Rockets from REST API.
+     * @return Converted [List] of [Launch] using [responseRockets].
+     */
+    fun extractRocketsFromResponse(responseRockets: List<RocketResponse>) =
+        ArrayList<Rocket>().apply {
+            for (responseRocket in responseRockets) {
+                with(responseRocket) {
+                    add(
+                        Rocket(
+                            id ?: "",
+                            name ?: "",
+                            type ?: "",
+                            active ?: false,
+                            description ?: "",
+                            RocketDimensions(
+                                RocketDimension(
+                                    height?.meters ?: 0F,
+                                    height?.feet ?: 0F
+                                ),
+                                RocketDimension(
+                                    diameter?.meters ?: 0F,
+                                    diameter?.feet ?: 0F
+                                )
+                            ),
+                            RocketWeight(
+                                mass?.kilogram ?: 0F,
+                                mass?.pound ?: 0F
+                            ),
+                            RocketEngine(
+                                engine?.engineNumber ?: 0,
+                                engine?.engineVersionName ?: "",
+                                engine?.engineType ?: "",
+                                engine?.engineLayout ?: "",
+                                engine?.maximumEngineLoss?.toFloat() ?: 0F,
+                                ArrayList<String>().apply {
+                                    engine?.let { e ->
+                                        if (!e.propellant1.isNullOrEmpty()) {
+                                            add(e.propellant1)
+                                        }
+                                        if (!e.propellant2.isNullOrEmpty()) {
+                                            add(e.propellant2)
+                                        }
+                                    }
+                                },
+                                engine?.thrustToWeightRatio ?: 0F,
+                                RocketEngineThrusts(
+                                    RocketEngineThrust(
+                                        engine?.seaLevelThrust?.kiloNewton ?: 0F,
+                                        engine?.seaLevelThrust?.poundForce ?: 0F
+                                    ),
+                                    RocketEngineThrust(
+                                        engine?.vacuumThrust?.kiloNewton ?: 0F,
+                                        engine?.vacuumThrust?.poundForce ?: 0F
+                                    )
+                                ),
+                                RocketEngineSpecificImpulse(
+                                    engine?.isp?.seaLevel ?: 0F,
+                                    engine?.isp?.vacuum ?: 0F
+                                )
+                            ),
+                            ArrayList<RocketPayload>().apply {
+                                payloads?.let { p ->
+
+                                    if (p.isEmpty()) return@let
+
+                                    for (responsePayload in p) {
+                                        add(
+                                            RocketPayload(
+                                                responsePayload.id ?: "",
+                                                responsePayload.name ?: "",
+                                                RocketPayloadWeight(
+                                                    responsePayload.massInKilogram ?: 0F,
+                                                    responsePayload.massInPound ?: 0F
+                                                )
+                                            )
+                                        )
+                                    }
+
+                                }
+                            },
+                            stagesCount ?: 0,
+                            boostersCount ?: 0,
+                            costPerLaunch ?: 0L,
+                            successRatePercentage ?: 0,
+                            firstFlightDate ?: "",
+                            country ?: "",
+                            company ?: "",
+                            images ?: ArrayList()
                         )
                     )
                 }

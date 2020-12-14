@@ -11,3 +11,9 @@ const val NAVIGATE_TO_MAIN = 1001
  * [ritwik.samples.spacex.data.ui.Launch] in [ritwik.samples.spacex.ui.fragment.LaunchesFragment].
  */
 const val POPULATE_LAUNCHES = 1002
+
+/**
+ * Constant [Int] denoting the action to populate the [List] of
+ * [ritwik.samples.spacex.data.ui.Rocket] in [ritwik.samples.spacex.ui.fragment.RocketsFragment].
+ */
+const val POPULATE_ROCKETS = 1003

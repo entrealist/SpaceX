@@ -7,6 +7,7 @@ import ritwik.samples.spacex.R
 
 import ritwik.samples.spacex.data.network.ErrorResponse
 import ritwik.samples.spacex.data.network.LaunchResponse
+import ritwik.samples.spacex.data.network.RocketResponse
 
 import ritwik.samples.spacex.data.ui.LaunchType
 
@@ -15,6 +16,7 @@ import ritwik.samples.spacex.mvvm.model.MainModel
 import ritwik.samples.spacex.mvvm.repository.MainRepository
 
 import ritwik.samples.spacex.utility.constant.POPULATE_LAUNCHES
+import ritwik.samples.spacex.utility.constant.POPULATE_ROCKETS
 
 import sample.ritwik.common.data.network.ResultWrapper
 
@@ -75,6 +77,23 @@ class MainViewModel @Inject constructor(
         notifyActionOnUI(POPULATE_LAUNCHES)
     }
 
+    /**
+     * Fetches all the rockets from making REST API Call.
+     */
+    fun fetchRockets() = if (!model.isRocketsPopulated()) {
+        showProgress()
+        launchNetworkDataLoad(
+            allRocketsAPICall,
+            handleAllRocketsSuccess,
+            handleAllRocketsError,
+            processAllRocketsResponse,
+            ErrorResponse::class.java,
+            handleAllRocketsErrorCode
+        )
+    } else {
+        notifyActionOnUI(POPULATE_ROCKETS)
+    }
+
     /*------------------------------------ Lambda Expressions ------------------------------------*/
 
     /**
@@ -113,6 +132,13 @@ class MainViewModel @Inject constructor(
     }
 
     /**
+     * Lambda Expression as the REST API Call Body for fetching all the Rockets.
+     */
+    private val allRocketsAPICall: suspend() -> List<RocketResponse> = {
+        repository.getAllRockets()
+    }
+
+    /**
      * Lambda Expression to handle the Success of REST API to fetch the Launches.
      */
     private val handleLaunchesSuccess: () -> Unit = {
@@ -121,9 +147,26 @@ class MainViewModel @Inject constructor(
     }
 
     /**
+     * Lambda Expression to handle the Success of REST API to fetch all the Rockets.
+     */
+    private val handleAllRocketsSuccess: () -> Unit = {
+        hideProgress()
+        notifyActionOnUI(POPULATE_ROCKETS)
+    }
+
+    /**
      * Lambda Expression to handle the Error of REST API to fetch the Launches.
      */
     private val handleLaunchesError: (throwable: Throwable) -> Unit = { throwable ->
+        hideProgress()
+        android.util.Log.e("MainViewModel", throwable.message ?: "")
+        showPopUpWindow(throwable.message ?: repository.getStringFromResource(R.string.default_error_message))
+    }
+
+    /**
+     * Lambda Expression to handle the Error of REST API to fetch all the Rockets.
+     */
+    private val handleAllRocketsError: (Throwable) -> Unit = { throwable ->
         hideProgress()
         android.util.Log.e("MainViewModel", throwable.message ?: "")
         showPopUpWindow(throwable.message ?: repository.getStringFromResource(R.string.default_error_message))
@@ -150,9 +193,27 @@ class MainViewModel @Inject constructor(
         }
 
     /**
+     * Lambda Expression to process the Response of REST API to fetch all the Rockets.
+     */
+    private val processAllRocketsResponse: suspend (rocketsFlow: Flow<List<RocketResponse>>) -> Unit =
+        { flow ->
+            flow.collect { rockets ->
+                model.rockets = model.extractRocketsFromResponse(rockets)
+            }
+        }
+
+    /**
      * Lambda Expression to handle the Error Code of REST API to fetch the Launches.
      */
     private val handleLaunchesErrorCode: (Int, ErrorResponse) -> ResultWrapper.Error<List<LaunchResponse>> =
+        { code, errorBody ->
+            ResultWrapper.Error.RecoverableError(code, errorBody.error)
+        }
+
+    /**
+     * Lambda Expression to handle the Error Code of REST API to fetch all the Rockets.
+     */
+    private val handleAllRocketsErrorCode: (Int, ErrorResponse) -> ResultWrapper.Error<List<RocketResponse>> =
         { code, errorBody ->
             ResultWrapper.Error.RecoverableError(code, errorBody.error)
         }

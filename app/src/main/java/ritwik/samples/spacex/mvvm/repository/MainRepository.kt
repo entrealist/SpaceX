@@ -5,6 +5,7 @@ import com.squareup.moshi.Moshi
 import ritwik.samples.spacex.components.network.RESTInterface
 
 import ritwik.samples.spacex.data.network.LaunchResponse
+import ritwik.samples.spacex.data.network.RocketResponse
 
 import sample.ritwik.common.component.persistence.DataStorePreference
 
@@ -45,5 +46,12 @@ class MainRepository @Inject constructor(
      * @return [List] of [LaunchResponse] denoting the Completed Launches.
      */
     suspend fun getCompletedLaunches(): List<LaunchResponse> = restInterface.getPastLaunches()
+
+    /**
+     * Fetches the Rockets using [restInterface].
+     *
+     * @return [List] of [RocketResponse] denoting all the Rockets.
+     */
+    suspend fun getAllRockets(): List<RocketResponse> = restInterface.getAllRockets()
 
 }
