@@ -4,6 +4,8 @@ import android.view.View
 
 import com.squareup.picasso.Picasso
 
+import ritwik.samples.spacex.R
+
 import ritwik.samples.spacex.data.ui.Rocket
 
 import ritwik.samples.spacex.databinding.ItemRocketBinding
@@ -62,7 +64,12 @@ class RocketViewHolder(
      */
     fun setRocketItem(rocketItem: Rocket) = with(binding) {
         rocket = rocketItem
-        picasso.load(rocketItem.images[0]).into(valueImageRocket)
+        picasso
+            .load(rocketItem.images[0])
+            .placeholder(R.drawable.ic_space_x_logo)
+            .error(R.drawable.ic_launcher_foreground)
+            .resize(400, 400)
+            .into(valueImageRocket)
     }
 
 }
