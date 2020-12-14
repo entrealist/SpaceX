@@ -43,4 +43,10 @@
     <string name="placeholder_status">Status</string>
     <string name="placeholder_type">Type</string>
 
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ItemCapsuleBinding Texts ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+    <string name="placeholder_rtls_landing">RTLS Landings</string>
+    <string name="placeholder_asds_landing">ASDS Landings</string>
+    <string name="button_core_specs">Core Specs</string>
+
 </resources>

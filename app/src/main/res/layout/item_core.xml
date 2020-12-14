@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="core"
+            type="ritwik.samples.spacex.data.ui.Core" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        app:cardUseCompatPadding="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/root_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_core_item_background">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="10dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="10dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="10dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_end="10dp" />
+
+            <TextView
+                android:id="@+id/value_text_core_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="@{core.coreName}"
+                android:textColor="@color/color_text"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/value_text_block"
+                app:layout_constraintEnd_toStartOf="@id/placeholder_text_block"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toTopOf="@id/placeholder_text_block"
+                tools:text="Phoenix Resurrected" />
+
+            <TextView
+                android:id="@+id/placeholder_text_block"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="@string/placeholder_block"
+                app:layout_constraintBottom_toTopOf="@id/value_text_block"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toEndOf="@id/value_text_core_name"
+                app:layout_constraintTop_toTopOf="@id/guideline_top" />
+
+            <TextView
+                android:id="@+id/value_text_block"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="@{core.blockText}"
+                android:textColor="@color/color_text"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@id/value_text_core_update"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toEndOf="@id/value_text_core_name"
+                app:layout_constraintTop_toBottomOf="@id/placeholder_text_block"
+                tools:text="TBD" />
+
+            <TextView
+                android:id="@+id/value_text_core_update"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/roboto"
+                android:text="@{core.lastUpdate}"
+                android:textColor="@color/color_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@id/placeholder_text_rtls_landing"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/value_text_block"
+                tools:text="This is an dummy update of the Core." />
+
+            <TextView
+                android:id="@+id/placeholder_text_rtls_landing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/placeholder_rtls_landing"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@id/placeholder_text_asds_landing"
+                app:layout_constraintEnd_toStartOf="@id/value_text_rtls_landing"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/value_text_core_update" />
+
+            <TextView
+                android:id="@+id/value_text_rtls_landing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="@{core.rtlsLanding.landingRatio}"
+                android:textColor="@color/color_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/placeholder_text_rtls_landing"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toEndOf="@id/placeholder_text_rtls_landing"
+                app:layout_constraintTop_toTopOf="@id/placeholder_text_rtls_landing"
+                tools:text="0 / 0" />
+
+            <TextView
+                android:id="@+id/placeholder_text_asds_landing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/placeholder_asds_landing"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@id/button_core_specs"
+                app:layout_constraintEnd_toStartOf="@id/value_text_asds_landing"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/placeholder_text_rtls_landing" />
+
+            <TextView
+                android:id="@+id/value_text_asds_landing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="@{core.asdsLanding.landingRatio}"
+                android:textColor="@color/color_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/placeholder_text_asds_landing"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toEndOf="@id/placeholder_text_asds_landing"
+                app:layout_constraintTop_toTopOf="@id/placeholder_text_asds_landing"
+                tools:text="0 / 0" />
+
+            <TextView
+                android:id="@+id/button_core_specs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:paddingStart="0dp"
+                android:paddingEnd="10dp"
+                android:text="@string/button_core_specs"
+                android:textAllCaps="true"
+                android:textColor="@color/color_text"
+                android:textSize="16sp"
+                app:drawableStartCompat="@drawable/ic_planet"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/placeholder_text_asds_landing" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>
