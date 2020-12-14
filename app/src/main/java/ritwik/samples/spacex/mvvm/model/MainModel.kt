@@ -188,6 +188,46 @@ class MainModel @Inject constructor() : BaseModel() {
         }
 
     /**
+     * Calculate the Remaining Time of an Upcoming [Launch] from first element of [upcomingLaunches].
+     *
+     * @return If the [upcomingLaunches] is either null or empty,
+     *   or the first element from [upcomingLaunches] has empty Date-Time,
+     *   then 0 will be returned, else the Value as Milli-Seconds denoting the
+     *   remaining time of launch.
+     */
+    fun calculateTimingForUpcomingLaunch(): Long {
+
+        // Declare a variable denoting the Time Left for Upcoming Launch as 0.
+        var upcomingTimeLeft: Long = 0
+
+        // Halt the further execution and return the current value of 'upcomingTimeLeft'
+        // since the 'upcomingLaunches' is either null or empty.
+        if (upcomingLaunches.isNullOrEmpty()) return upcomingTimeLeft
+
+        // Get the first element from 'upcomingLaunches' and declare the reference as 'latestLaunch'.
+        val latestLaunch = upcomingLaunches[0]
+
+        // Halt the further execution and return the current value of 'upcomingTimeLeft'
+        // since the Date Time of Mission of 'latestLaunch' is empty.
+        if (latestLaunch.missionDateTime.isEmpty()) return upcomingTimeLeft
+
+        // Use SimpleDateFormatter to parse the given Date in String Format to a 'Date' object.
+        SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.ENGLISH).apply {
+            parse(latestLaunch.missionDateTime)?.let { parsedDate ->
+                // Calculate the difference between Parsed Date Time and Current Date Time
+                // and assign to 'upcomingTimeLeft'.
+                upcomingTimeLeft = parsedDate.time - Date().time
+            }
+        }
+
+        // Return the modified value.
+        return upcomingTimeLeft
+
+    }
+
+    /*------------------------------------- Private Methods --------------------------------------*/
+
+    /**
      * Converts an UTC Date Time to Formatted Date Time for display in the UI.
      *
      * Refer below Link for more detail on SimpleDateFormat:
@@ -225,44 +265,6 @@ class MainModel @Inject constructor() : BaseModel() {
         return date?.let {
             outputFormat.format(it)
         } ?: ""
-
-    }
-
-    /**
-     * Calculate the Remaining Time of an Upcoming [Launch] from first element of [upcomingLaunches].
-     *
-     * @return If the [upcomingLaunches] is either null or empty,
-     *   or the first element from [upcomingLaunches] has empty Date-Time,
-     *   then 0 will be returned, else the Value as Milli-Seconds denoting the
-     *   remaining time of launch.
-     */
-    fun calculateTimingForUpcomingLaunch(): Long {
-
-        // Declare a variable denoting the Time Left for Upcoming Launch as 0.
-        var upcomingTimeLeft: Long = 0
-
-        // Halt the further execution and return the current value of 'upcomingTimeLeft'
-        // since the 'upcomingLaunches' is either null or empty.
-        if (upcomingLaunches.isNullOrEmpty()) return upcomingTimeLeft
-
-        // Get the first element from 'upcomingLaunches' and declare the reference as 'latestLaunch'.
-        val latestLaunch = upcomingLaunches[0]
-
-        // Halt the further execution and return the current value of 'upcomingTimeLeft'
-        // since the Date Time of Mission of 'latestLaunch' is empty.
-        if (latestLaunch.missionDateTime.isEmpty()) return upcomingTimeLeft
-
-        // Use SimpleDateFormatter to parse the given Date in String Format to a 'Date' object.
-        SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.ENGLISH).apply {
-            parse(latestLaunch.missionDateTime)?.let { parsedDate ->
-                // Calculate the difference between Parsed Date Time and Current Date Time
-                // and assign to 'upcomingTimeLeft'.
-                upcomingTimeLeft = parsedDate.time - Date().time
-            }
-        }
-
-        // Return the modified value.
-        return upcomingTimeLeft
 
     }
 
