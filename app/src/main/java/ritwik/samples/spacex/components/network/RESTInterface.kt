@@ -3,13 +3,11 @@ package ritwik.samples.spacex.components.network
 import retrofit2.http.GET
 
 import ritwik.samples.spacex.data.network.CapsuleResponse
+import ritwik.samples.spacex.data.network.CoreResponse
 import ritwik.samples.spacex.data.network.LaunchResponse
 import ritwik.samples.spacex.data.network.RocketResponse
 
-import ritwik.samples.spacex.utility.constant.API_CALL_CAPSULES
-import ritwik.samples.spacex.utility.constant.API_CALL_PAST_LAUNCHES
-import ritwik.samples.spacex.utility.constant.API_CALL_ROCKETS
-import ritwik.samples.spacex.utility.constant.API_CALL_UPCOMING_LAUNCHES
+import ritwik.samples.spacex.utility.constant.*
 
 /**
  * Retrofit's Interface to map out different REST End-Points.
@@ -49,5 +47,13 @@ interface RESTInterface {
      */
     @GET(API_CALL_CAPSULES)
     suspend fun getAllCapsules(): List<CapsuleResponse>
+
+    /**
+     * Fetches all the Cores.
+     *
+     * @return [List] of [CoreResponse] denoting the Cores.
+     */
+    @GET(API_CALL_CORES)
+    suspend fun getAllCores(): List<CoreResponse>
 
 }

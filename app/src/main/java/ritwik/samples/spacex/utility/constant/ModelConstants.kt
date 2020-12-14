@@ -23,3 +23,9 @@ const val POPULATE_ROCKETS = 1003
  * [ritwik.samples.spacex.data.ui.Capsule] in [ritwik.samples.spacex.ui.fragment.CapsulesFragment].
  */
 const val POPULATE_CAPSULES = 1004
+
+/**
+ * Constant [Int] denoting the action to populate the [List] of
+ * [ritwik.samples.spacex.data.ui.Core] in [ritwik.samples.spacex.ui.fragment.CoresFragment].
+ */
+const val POPULATE_CORES = 1005

@@ -1,6 +1,7 @@
 package ritwik.samples.spacex.mvvm.model
 
 import ritwik.samples.spacex.data.network.CapsuleResponse
+import ritwik.samples.spacex.data.network.CoreResponse
 import ritwik.samples.spacex.data.network.LaunchResponse
 import ritwik.samples.spacex.data.network.RocketResponse
 
@@ -45,6 +46,11 @@ class MainModel @Inject constructor() : BaseModel() {
      */
     lateinit var capsules: List<Capsule>
 
+    /**
+     * [List] of [Core] denoting the collection of Cores.
+     */
+    lateinit var cores: List<Core>
+
     /*-------------------------------------- Public Methods --------------------------------------*/
 
     /**
@@ -80,6 +86,14 @@ class MainModel @Inject constructor() : BaseModel() {
      * @return true, if [capsules] is initialized and is not empty, else false.
      */
     fun isCapsulesPopulated(): Boolean = this::capsules.isInitialized && capsules.isNotEmpty()
+
+    /**
+     * Checks whether [cores] is populated or not,
+     * by checking whether it is initialized as well as it is not empty.
+     *
+     * @return true, if [cores] is initialized and is not empty, else false.
+     */
+    fun isCoresPopulated(): Boolean = this::cores.isInitialized && cores.isNotEmpty()
 
     /**
      * Extracts the [List] of [Launch] from the given [responseLaunches].
@@ -229,6 +243,38 @@ class MainModel @Inject constructor() : BaseModel() {
                 }
             }
         }
+
+    /**
+     * Extracts the [List] of [Core] from the given [responseCores].
+     *
+     * @param responseCores [List] of [CoreResponse] denoting all the Capsules from REST API.
+     * @return Converted [List] of [Core] using [responseCores].
+     */
+    fun extractCoresFromResponse(responseCores: List<CoreResponse>) = ArrayList<Core>().apply {
+        for (responseCore in responseCores) {
+            with(responseCore) {
+                add(
+                    Core(
+                        id ?: "",
+                        block ?: 0,
+                        reuseCount ?: 0,
+                        CoreLanding(
+                            rtlsAttempts ?: 0,
+                            rtlsLandings ?: 0
+                        ),
+                        CoreLanding(
+                            asdsAttempts ?: 0,
+                            asdsLandings ?: 0
+                        ),
+                        lastUpdate ?: "",
+                        launches ?: ArrayList(),
+                        serial ?: "",
+                        status ?: ""
+                    )
+                )
+            }
+        }
+    }
 
     /**
      * Calculate the Remaining Time of an Upcoming [Launch] from first element of [upcomingLaunches].

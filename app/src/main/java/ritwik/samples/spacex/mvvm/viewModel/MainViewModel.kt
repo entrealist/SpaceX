@@ -5,10 +5,7 @@ import kotlinx.coroutines.flow.collect
 
 import ritwik.samples.spacex.R
 
-import ritwik.samples.spacex.data.network.CapsuleResponse
-import ritwik.samples.spacex.data.network.ErrorResponse
-import ritwik.samples.spacex.data.network.LaunchResponse
-import ritwik.samples.spacex.data.network.RocketResponse
+import ritwik.samples.spacex.data.network.*
 
 import ritwik.samples.spacex.data.ui.LaunchType
 
@@ -17,6 +14,7 @@ import ritwik.samples.spacex.mvvm.model.MainModel
 import ritwik.samples.spacex.mvvm.repository.MainRepository
 
 import ritwik.samples.spacex.utility.constant.POPULATE_CAPSULES
+import ritwik.samples.spacex.utility.constant.POPULATE_CORES
 import ritwik.samples.spacex.utility.constant.POPULATE_LAUNCHES
 import ritwik.samples.spacex.utility.constant.POPULATE_ROCKETS
 
@@ -25,8 +23,6 @@ import sample.ritwik.common.data.network.ResultWrapper
 import sample.ritwik.common.mvvm.viewModel.BaseViewModel
 
 import javax.inject.Inject
-
-import kotlin.Comparator
 
 /**
  * ViewModel of [ritwik.samples.spacex.ui.activity.MainActivity].
@@ -113,6 +109,23 @@ class MainViewModel @Inject constructor(
         notifyActionOnUI(POPULATE_CAPSULES)
     }
 
+    /**
+     * Fetches all the cores from making REST API Call.
+     */
+    fun fetchCores() = if (!model.isCoresPopulated()) {
+        showProgress()
+        launchNetworkDataLoad(
+            allCoresAPICall,
+            handleAllCoresSuccess,
+            handleAllCoresError,
+            processAllCoresResponse,
+            ErrorResponse::class.java,
+            handleAllCoresErrorCode
+        )
+    } else {
+        notifyActionOnUI(POPULATE_CORES)
+    }
+
     /*------------------------------------ Lambda Expressions ------------------------------------*/
 
     /**
@@ -137,10 +150,17 @@ class MainViewModel @Inject constructor(
     }
 
     /**
-     * Lambda Expression to notify about selection of a Rocket.
+     * Lambda Expression to notify about selection of a Capsule.
      */
     val capsuleListener: (Int) -> Unit = { position ->
         // TODO: Use the position in model.rockets to handle the click on Capsule.
+    }
+
+    /**
+     * Lambda Expression to notify about selection of a Core.
+     */
+    val coreListener: (Int) -> Unit = { position ->
+        // TODO: Use the position in model.rockets to handle the click on Core.
     }
 
     /**
@@ -160,7 +180,7 @@ class MainViewModel @Inject constructor(
     /**
      * Lambda Expression as the REST API Call Body for fetching all the Rockets.
      */
-    private val allRocketsAPICall: suspend() -> List<RocketResponse> = {
+    private val allRocketsAPICall: suspend () -> List<RocketResponse> = {
         repository.getAllRockets()
     }
 
@@ -169,6 +189,13 @@ class MainViewModel @Inject constructor(
      */
     private val allCapsulesAPICall: suspend () -> List<CapsuleResponse> = {
         repository.getAllCapsules()
+    }
+
+    /**
+     * Lambda Expression as the REST API Call Body for fetching all the Cores.
+     */
+    private val allCoresAPICall: suspend () -> List<CoreResponse> = {
+        repository.getAllCores()
     }
 
     /**
@@ -196,6 +223,14 @@ class MainViewModel @Inject constructor(
     }
 
     /**
+     * Lambda Expression to handle the Success of REST API to fetch all the Cores.
+     */
+    private val handleAllCoresSuccess: () -> Unit = {
+        hideProgress()
+        notifyActionOnUI(POPULATE_CORES)
+    }
+
+    /**
      * Lambda Expression to handle the Error of REST API to fetch the Launches.
      */
     private val handleLaunchesError: (throwable: Throwable) -> Unit = { throwable ->
@@ -217,6 +252,15 @@ class MainViewModel @Inject constructor(
      * Lambda Expression to handle the Error of REST API to fetch all the Capsules.
      */
     private val handleAllCapsulesError: (Throwable) -> Unit = { throwable ->
+        hideProgress()
+        android.util.Log.e("MainViewModel", throwable.message ?: "")
+        showPopUpWindow(throwable.message ?: repository.getStringFromResource(R.string.default_error_message))
+    }
+
+    /**
+     * Lambda Expression to handle the Error of REST API to fetch all the Cores.
+     */
+    private val handleAllCoresError: (Throwable) -> Unit = { throwable ->
         hideProgress()
         android.util.Log.e("MainViewModel", throwable.message ?: "")
         showPopUpWindow(throwable.message ?: repository.getStringFromResource(R.string.default_error_message))
@@ -263,6 +307,16 @@ class MainViewModel @Inject constructor(
         }
 
     /**
+     * Lambda Expression to process the Response of REST API to fetch all the Cores.
+     */
+    private val processAllCoresResponse: suspend (coresFlow: Flow<List<CoreResponse>>) -> Unit =
+        { flow ->
+            flow.collect { cores ->
+                model.cores = model.extractCoresFromResponse(cores)
+            }
+        }
+
+    /**
      * Lambda Expression to handle the Error Code of REST API to fetch the Launches.
      */
     private val handleLaunchesErrorCode: (Int, ErrorResponse) -> ResultWrapper.Error<List<LaunchResponse>> =
@@ -282,6 +336,14 @@ class MainViewModel @Inject constructor(
      * Lambda Expression to handle the Error Code of REST API to fetch all the Capsules.
      */
     private val handleAllCapsulesErrorCode: (Int, ErrorResponse) -> ResultWrapper.Error<List<CapsuleResponse>> =
+        { code, errorBody ->
+            ResultWrapper.Error.RecoverableError(code, errorBody.error)
+        }
+
+    /**
+     * Lambda Expression to handle the Error Code of REST API to fetch all the Cores.
+     */
+    private val handleAllCoresErrorCode: (Int, ErrorResponse) -> ResultWrapper.Error<List<CoreResponse>> =
         { code, errorBody ->
             ResultWrapper.Error.RecoverableError(code, errorBody.error)
         }
