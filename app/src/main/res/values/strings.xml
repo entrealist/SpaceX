@@ -38,4 +38,9 @@
 
     <string name="button_rocket_specs">Rocket Specs</string>
 
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ItemCapsuleBinding Texts ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+    <string name="placeholder_status">Status</string>
+    <string name="placeholder_type">Type</string>
+
 </resources>
