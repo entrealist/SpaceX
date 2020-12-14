@@ -1,19 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.fragment.CapsulesFragment">
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_capsules"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_capsule" />
 
-    </FrameLayout>
+        <io.supercharge.shimmerlayout.ShimmerLayout
+            android:id="@+id/placeholder_shimmer_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:shimmer_animation_duration="500">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/shimmer_item_capsule" />
+
+                <include layout="@layout/shimmer_item_capsule" />
+
+                <include layout="@layout/shimmer_item_capsule" />
+
+                <include layout="@layout/shimmer_item_capsule" />
+
+                <include layout="@layout/shimmer_item_capsule" />
+
+                <include layout="@layout/shimmer_item_capsule" />
+
+            </LinearLayout>
+
+        </io.supercharge.shimmerlayout.ShimmerLayout>
+
+    </RelativeLayout>
 
 </layout>
