@@ -81,7 +81,7 @@ data class RocketEngineResponse(
     @field: Json(name = "engine_loss_max") val maximumEngineLoss: Int?,
     @field: Json(name = "propellant_1") val propellant1: String?,
     @field: Json(name = "propellant_2") val propellant2: String?,
-    @field: Json(name = "thrust_to_weight") val thrustToWeightRatio: Int?
+    @field: Json(name = "thrust_to_weight") val thrustToWeightRatio: Float?
 )
 
 data class RocketEngineISPResponse(
