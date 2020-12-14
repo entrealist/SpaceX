@@ -9,6 +9,7 @@
 	<color name = "colorBlack">#000</color>
 
 	<color name="item_upcoming_launch_card_background_color">#E6FFF2</color>
+	<color name="item_capsule_card_background_color">#FCEBFFDF</color>
 
 	<color name="shimmer_card_background">#EEEEEE</color>
 	<color name="shimmer_item_background">#CCCCCC</color>
