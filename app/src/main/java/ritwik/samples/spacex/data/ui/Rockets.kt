@@ -87,7 +87,7 @@ data class RocketEngine(
     val layout: String,
     val maximumEngineLoss: Float,
     val propellants: List<String>,
-    val thrustToWeightRatio: Int,
+    val thrustToWeightRatio: Float?,
     val thrust: RocketEngineThrusts,
     val specificImpulse: RocketEngineSpecificImpulse
 )
