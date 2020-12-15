@@ -11,6 +11,7 @@
 	<color name="item_upcoming_launch_card_background_color">#E6FFF2</color>
 	<color name="item_capsule_card_background_color">#FCEBFFDF</color>
 	<color name="item_core_card_background_color">#79F82D</color>
+	<color name="item_rocket_card_background_color">#CBFBD1</color>
 
 	<color name="shimmer_card_background">#EEEEEE</color>
 	<color name="shimmer_item_background">#CCCCCC</color>
