@@ -38,11 +38,11 @@ class CoresFragment : BaseFragment<FragmentCoresBinding, MainModel, MainViewMode
 
     override fun showLoading() = binding?.placeholderShimmerCore?.let { shimmer ->
         shimmer.visibility = View.VISIBLE
-        shimmer.startShimmerAnimation()
+        shimmer.startShimmer()
     } ?: Unit
 
     override fun hideLoading() = binding?.placeholderShimmerCore?.let { shimmer ->
-        shimmer.stopShimmerAnimation()
+        shimmer.stopShimmer()
         shimmer.visibility = View.GONE
     } ?: Unit
 

@@ -17,7 +17,7 @@
             tools:itemCount="5"
             tools:listitem="@layout/item_capsule" />
 
-        <io.supercharge.shimmerlayout.ShimmerLayout
+        <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/placeholder_shimmer_capsule"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -43,7 +43,7 @@
 
             </LinearLayout>
 
-        </io.supercharge.shimmerlayout.ShimmerLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
     </RelativeLayout>
 

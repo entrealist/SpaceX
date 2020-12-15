@@ -38,11 +38,11 @@ class RocketsFragment : BaseFragment<FragmentRocketsBinding, MainModel, MainView
 
     override fun showLoading() = binding?.placeholderShimmerRocket?.let { shimmer ->
         shimmer.visibility = View.VISIBLE
-        shimmer.startShimmerAnimation()
+        shimmer.startShimmer()
     } ?: Unit
 
     override fun hideLoading() = binding?.placeholderShimmerRocket?.let { shimmer ->
-        shimmer.stopShimmerAnimation()
+        shimmer.stopShimmer()
         shimmer.visibility = View.GONE
     } ?: Unit
 
