@@ -12,6 +12,6 @@
 
     </item>
 
-    <item android:drawable="@drawable/core_item_background" />
+    <item android:drawable="@drawable/item_background_launch" />
 
 </ripple>
