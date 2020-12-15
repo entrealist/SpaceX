@@ -75,7 +75,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <io.supercharge.shimmerlayout.ShimmerLayout
-            android:id="@+id/placeholder_shimmer_container"
+            android:id="@+id/placeholder_shimmer_launch"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"

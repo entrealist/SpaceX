@@ -63,12 +63,12 @@ class LaunchesFragment : BaseFragment<FragmentLaunchesBinding, MainModel, MainVi
         requestData()
     }
 
-    override fun showLoading() = binding?.placeholderShimmerContainer?.let { shimmer ->
+    override fun showLoading() = binding?.placeholderShimmerLaunch?.let { shimmer ->
         shimmer.visibility = View.VISIBLE
         shimmer.startShimmerAnimation()
     } ?: Unit
 
-    override fun hideLoading() = binding?.placeholderShimmerContainer?.let { shimmer ->
+    override fun hideLoading() = binding?.placeholderShimmerLaunch?.let { shimmer ->
         shimmer.stopShimmerAnimation()
         shimmer.visibility = View.GONE
     } ?: Unit

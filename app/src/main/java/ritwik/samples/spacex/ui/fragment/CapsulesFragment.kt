@@ -36,12 +36,12 @@ class CapsulesFragment : BaseFragment<FragmentCapsulesBinding, MainModel, MainVi
         requestData()
     }
 
-    override fun showLoading() = binding?.placeholderShimmerContainer?.let { shimmer ->
+    override fun showLoading() = binding?.placeholderShimmerCapsule?.let { shimmer ->
         shimmer.visibility = View.VISIBLE
         shimmer.startShimmerAnimation()
     } ?: Unit
 
-    override fun hideLoading() = binding?.placeholderShimmerContainer?.let { shimmer ->
+    override fun hideLoading() = binding?.placeholderShimmerCapsule?.let { shimmer ->
         shimmer.stopShimmerAnimation()
         shimmer.visibility = View.GONE
     } ?: Unit

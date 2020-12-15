@@ -36,12 +36,12 @@ class RocketsFragment : BaseFragment<FragmentRocketsBinding, MainModel, MainView
         requestData()
     }
 
-    override fun showLoading() = binding?.placeholderShimmerContainer?.let { shimmer ->
+    override fun showLoading() = binding?.placeholderShimmerRocket?.let { shimmer ->
         shimmer.visibility = View.VISIBLE
         shimmer.startShimmerAnimation()
     } ?: Unit
 
-    override fun hideLoading() = binding?.placeholderShimmerContainer?.let { shimmer ->
+    override fun hideLoading() = binding?.placeholderShimmerRocket?.let { shimmer ->
         shimmer.stopShimmerAnimation()
         shimmer.visibility = View.GONE
     } ?: Unit
@@ -73,10 +73,7 @@ class RocketsFragment : BaseFragment<FragmentRocketsBinding, MainModel, MainView
         viewModel?.let { vm ->
             imageLoader?.let { picasso ->
                 with(dataBinding) {
-                    listRocket.adapter = RocketsAdapter(
-                        picasso,
-                        vm.rocketListener
-                    )
+                    listRocket.adapter = RocketsAdapter(picasso, vm.rocketListener)
                 }
             } ?: Unit
         } ?: Unit

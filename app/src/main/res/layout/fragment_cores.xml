@@ -17,7 +17,7 @@
             tools:listitem="@layout/item_core" />
 
         <io.supercharge.shimmerlayout.ShimmerLayout
-            android:id="@+id/placeholder_shimmer_container"
+            android:id="@+id/placeholder_shimmer_core"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
