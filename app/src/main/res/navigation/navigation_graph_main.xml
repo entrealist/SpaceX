@@ -24,4 +24,10 @@
         android:label="fragment_cores"
         tools:layout="@layout/fragment_cores" />
 
+    <fragment
+        android:id="@+id/fragment_about"
+        android:name="ritwik.samples.spacex.ui.fragment.AboutCompanyFragment"
+        android:label="@string/menu_item_about"
+        tools:layout="@layout/fragment_about_company" />
+
 </navigation>

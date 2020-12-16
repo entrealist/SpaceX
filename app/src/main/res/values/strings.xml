@@ -18,6 +18,7 @@
     <string name="menu_item_launches">Launches</string>
     <string name="menu_item_vehicles">Vehicles</string>
     <string name="menu_item_cores">Cores</string>
+    <string name="menu_item_about">About the Company</string>
 
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ LaunchContainerFragment Texts ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
