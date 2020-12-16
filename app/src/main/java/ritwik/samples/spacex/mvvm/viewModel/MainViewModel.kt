@@ -265,7 +265,9 @@ class MainViewModel @Inject constructor(
      */
     private val handleLaunchesError: (throwable: Throwable) -> Unit = { throwable ->
         hideProgress()
-        showPopUpWindow(throwable.message ?: repository.getStringFromResource(R.string.default_error_message))
+        showPopUpWindow(
+            throwable.message ?: repository.getStringFromResource(R.string.default_error_message)
+        )
     }
 
     /**
@@ -273,7 +275,9 @@ class MainViewModel @Inject constructor(
      */
     private val handleAllRocketsError: (Throwable) -> Unit = { throwable ->
         hideProgress()
-        showPopUpWindow(throwable.message ?: repository.getStringFromResource(R.string.default_error_message))
+        showPopUpWindow(
+            throwable.message ?: repository.getStringFromResource(R.string.default_error_message)
+        )
     }
 
     /**
@@ -281,7 +285,9 @@ class MainViewModel @Inject constructor(
      */
     private val handleAllCapsulesError: (Throwable) -> Unit = { throwable ->
         hideProgress()
-        showPopUpWindow(throwable.message ?: repository.getStringFromResource(R.string.default_error_message))
+        showPopUpWindow(
+            throwable.message ?: repository.getStringFromResource(R.string.default_error_message)
+        )
     }
 
     /**
@@ -289,7 +295,9 @@ class MainViewModel @Inject constructor(
      */
     private val handleAllCoresError: (Throwable) -> Unit = { throwable ->
         hideProgress()
-        showPopUpWindow(throwable.message ?: repository.getStringFromResource(R.string.default_error_message))
+        showPopUpWindow(
+            throwable.message ?: repository.getStringFromResource(R.string.default_error_message)
+        )
     }
 
     /**
@@ -298,7 +306,9 @@ class MainViewModel @Inject constructor(
      */
     private val handleAboutCompanyError: (Throwable) -> Unit = { throwable ->
         hideProgress()
-        showPopUpWindow(throwable.message ?: repository.getStringFromResource(R.string.default_error_message))
+        showPopUpWindow(
+            throwable.message ?: repository.getStringFromResource(R.string.default_error_message)
+        )
     }
 
     /**
@@ -307,34 +317,36 @@ class MainViewModel @Inject constructor(
     private val processUpcomingLaunchesResponse: suspend (launchesFlow: Flow<List<LaunchResponse>>) -> Unit =
         { flow ->
             flow.collect { launches ->
-                model.upcomingLaunches = model.extractLaunchesFromResponse(launches.sortedWith(upcomingLaunchesComparator))
+                model.upcomingLaunches =
+                    model.extractLaunchesFromResponse(launches.sortedWith(upcomingLaunchesComparator))
             }
         }
 
     /**
      * Lambda Expression to process the Response of REST API to fetch the Completed Launches.
      */
-    private val processCompletedLaunchesResponse: suspend (launchesFlow: Flow<List<LaunchResponse>>) -> Unit =
+    private val processCompletedLaunchesResponse: suspend (Flow<List<LaunchResponse>>) -> Unit =
         { flow ->
             flow.collect { launches ->
-                model.completedLaunches = model.extractLaunchesFromResponse(launches.sortedWith(completedLaunchesComparator))
+                model.completedLaunches = model.extractLaunchesFromResponse(
+                    launches.sortedWith(completedLaunchesComparator)
+                )
             }
         }
 
     /**
      * Lambda Expression to process the Response of REST API to fetch all the Rockets.
      */
-    private val processAllRocketsResponse: suspend (rocketsFlow: Flow<List<RocketResponse>>) -> Unit =
-        { flow ->
-            flow.collect { rockets ->
-                model.rockets = model.extractRocketsFromResponse(rockets)
-            }
+    private val processAllRocketsResponse: suspend (Flow<List<RocketResponse>>) -> Unit = { flow ->
+        flow.collect { rockets ->
+            model.rockets = model.extractRocketsFromResponse(rockets)
         }
+    }
 
     /**
      * Lambda Expression to process the Response of REST API to fetch all the Capsules.
      */
-    private val processAllCapsulesResponse: suspend (capsulesFlow: Flow<List<CapsuleResponse>>) -> Unit =
+    private val processAllCapsulesResponse: suspend (Flow<List<CapsuleResponse>>) -> Unit =
         { flow ->
             flow.collect { capsules ->
                 model.capsules = model.extractCapsulesFromResponse(capsules)
@@ -344,23 +356,21 @@ class MainViewModel @Inject constructor(
     /**
      * Lambda Expression to process the Response of REST API to fetch all the Cores.
      */
-    private val processAllCoresResponse: suspend (coresFlow: Flow<List<CoreResponse>>) -> Unit =
-        { flow ->
-            flow.collect { cores ->
-                model.cores = model.extractCoresFromResponse(cores)
-            }
+    private val processAllCoresResponse: suspend (Flow<List<CoreResponse>>) -> Unit = { flow ->
+        flow.collect { cores ->
+            model.cores = model.extractCoresFromResponse(cores)
         }
+    }
 
     /**
      * Lambda Expression to process the Response of REST API for fetching the information
      * about the Company.
      */
-    private val processAboutCompanyResponse: suspend(companyFlow: Flow<CompanyResponse>) -> Unit =
-        { flow ->
-            flow.collect { company ->
-                model.company = model.extractAboutCompanyFromResponse(company)
-            }
+    private val processAboutCompanyResponse: suspend (Flow<CompanyResponse>) -> Unit = { flow ->
+        flow.collect { company ->
+            model.company = model.extractAboutCompanyFromResponse(company)
         }
+    }
 
     /**
      * Lambda Expression to handle the Error Code of REST API to fetch the Launches.
