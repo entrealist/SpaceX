@@ -76,7 +76,6 @@ class MainViewModel @Inject constructor(
      * Fetches all the rockets from making REST API Call.
      */
     fun fetchRockets() = if (!model.isRocketsPopulated()) {
-        android.util.Log.e("MainViewModel", "Rocket not populated")
         showProgress()
         launchNetworkDataLoad(
             allRocketsAPICall,
@@ -87,7 +86,6 @@ class MainViewModel @Inject constructor(
             handleAllRocketsErrorCode
         )
     } else {
-        android.util.Log.e("MainViewModel", "Rocket already populated")
         notifyActionOnUI(ACTION_UPDATE_UI)
     }
 
@@ -267,7 +265,6 @@ class MainViewModel @Inject constructor(
      */
     private val handleLaunchesError: (throwable: Throwable) -> Unit = { throwable ->
         hideProgress()
-        android.util.Log.e("MainViewModel", throwable.message ?: "")
         showPopUpWindow(throwable.message ?: repository.getStringFromResource(R.string.default_error_message))
     }
 
@@ -276,7 +273,6 @@ class MainViewModel @Inject constructor(
      */
     private val handleAllRocketsError: (Throwable) -> Unit = { throwable ->
         hideProgress()
-        android.util.Log.e("MainViewModel", throwable.message ?: "")
         showPopUpWindow(throwable.message ?: repository.getStringFromResource(R.string.default_error_message))
     }
 
@@ -285,7 +281,6 @@ class MainViewModel @Inject constructor(
      */
     private val handleAllCapsulesError: (Throwable) -> Unit = { throwable ->
         hideProgress()
-        android.util.Log.e("MainViewModel", throwable.message ?: "")
         showPopUpWindow(throwable.message ?: repository.getStringFromResource(R.string.default_error_message))
     }
 
@@ -294,7 +289,6 @@ class MainViewModel @Inject constructor(
      */
     private val handleAllCoresError: (Throwable) -> Unit = { throwable ->
         hideProgress()
-        android.util.Log.e("MainViewModel", throwable.message ?: "")
         showPopUpWindow(throwable.message ?: repository.getStringFromResource(R.string.default_error_message))
     }
 
@@ -304,7 +298,6 @@ class MainViewModel @Inject constructor(
      */
     private val handleAboutCompanyError: (Throwable) -> Unit = { throwable ->
         hideProgress()
-        android.util.Log.e("MainViewModel", throwable.message ?: "")
         showPopUpWindow(throwable.message ?: repository.getStringFromResource(R.string.default_error_message))
     }
 
