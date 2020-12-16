@@ -2,10 +2,7 @@ package ritwik.samples.spacex.components.network
 
 import retrofit2.http.GET
 
-import ritwik.samples.spacex.data.network.CapsuleResponse
-import ritwik.samples.spacex.data.network.CoreResponse
-import ritwik.samples.spacex.data.network.LaunchResponse
-import ritwik.samples.spacex.data.network.RocketResponse
+import ritwik.samples.spacex.data.network.*
 
 import ritwik.samples.spacex.utility.constant.*
 
@@ -55,5 +52,13 @@ interface RESTInterface {
      */
     @GET(API_CALL_CORES)
     suspend fun getAllCores(): List<CoreResponse>
+
+    /**
+     * Fetches the details of the Company.
+     *
+     * @return Instance of [CompanyResponse] encapsulating the details of the Company.
+     */
+    @GET(API_CALL_ABOUT_COMPANY)
+    suspend fun getInfoAboutCompany(): CompanyResponse
 
 }

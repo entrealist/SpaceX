@@ -125,6 +125,23 @@ class MainViewModel @Inject constructor(
         notifyActionOnUI(ACTION_UPDATE_UI)
     }
 
+    /**
+     * Fetches the information about the Company.
+     */
+    fun fetchInfoAboutCompany() = if (!model.isAboutCompanyPopulated()) {
+        showProgress()
+        launchNetworkDataLoad(
+            aboutCompanyAPICall,
+            handleAboutCompanySuccess,
+            handleAboutCompanyError,
+            processAboutCompanyResponse,
+            ErrorResponse::class.java,
+            handleAboutCompanyErrorCode
+        )
+    } else {
+        notifyActionOnUI(ACTION_UPDATE_UI)
+    }
+
     /*------------------------------------ Lambda Expressions ------------------------------------*/
 
     /**
@@ -198,6 +215,13 @@ class MainViewModel @Inject constructor(
     }
 
     /**
+     * Lambda Expression as the REST API Call Body for fetching the information about the Company.
+     */
+    private val aboutCompanyAPICall: suspend () -> CompanyResponse = {
+        repository.getInfoAboutCompany()
+    }
+
+    /**
      * Lambda Expression to handle the Success of REST API to fetch the Launches.
      */
     private val handleLaunchesSuccess: () -> Unit = {
@@ -225,6 +249,15 @@ class MainViewModel @Inject constructor(
      * Lambda Expression to handle the Success of REST API to fetch all the Cores.
      */
     private val handleAllCoresSuccess: () -> Unit = {
+        hideProgress()
+        notifyActionOnUI(ACTION_UPDATE_UI)
+    }
+
+    /**
+     * Lambda Expression to handle the Success of REST API for fetching the
+     * information about the Company.
+     */
+    private val handleAboutCompanySuccess: () -> Unit = {
         hideProgress()
         notifyActionOnUI(ACTION_UPDATE_UI)
     }
@@ -260,6 +293,16 @@ class MainViewModel @Inject constructor(
      * Lambda Expression to handle the Error of REST API to fetch all the Cores.
      */
     private val handleAllCoresError: (Throwable) -> Unit = { throwable ->
+        hideProgress()
+        android.util.Log.e("MainViewModel", throwable.message ?: "")
+        showPopUpWindow(throwable.message ?: repository.getStringFromResource(R.string.default_error_message))
+    }
+
+    /**
+     * Lambda Expression to handle the Error of REST API for fetching the
+     * information about the Company.
+     */
+    private val handleAboutCompanyError: (Throwable) -> Unit = { throwable ->
         hideProgress()
         android.util.Log.e("MainViewModel", throwable.message ?: "")
         showPopUpWindow(throwable.message ?: repository.getStringFromResource(R.string.default_error_message))
@@ -316,6 +359,17 @@ class MainViewModel @Inject constructor(
         }
 
     /**
+     * Lambda Expression to process the Response of REST API for fetching the information
+     * about the Company.
+     */
+    private val processAboutCompanyResponse: suspend(companyFlow: Flow<CompanyResponse>) -> Unit =
+        { flow ->
+            flow.collect { company ->
+                model.company = model.extractAboutCompanyFromResponse(company)
+            }
+        }
+
+    /**
      * Lambda Expression to handle the Error Code of REST API to fetch the Launches.
      */
     private val handleLaunchesErrorCode: (Int, ErrorResponse) -> ResultWrapper.Error<List<LaunchResponse>> =
@@ -343,6 +397,15 @@ class MainViewModel @Inject constructor(
      * Lambda Expression to handle the Error Code of REST API to fetch all the Cores.
      */
     private val handleAllCoresErrorCode: (Int, ErrorResponse) -> ResultWrapper.Error<List<CoreResponse>> =
+        { code, errorBody ->
+            ResultWrapper.Error.RecoverableError(code, errorBody.error)
+        }
+
+    /**
+     * Lambda Expression to handle the Error Code of REST API for fetching the information
+     * about the Company.
+     */
+    private val handleAboutCompanyErrorCode: (Int, ErrorResponse) -> ResultWrapper.Error<CompanyResponse> =
         { code, errorBody ->
             ResultWrapper.Error.RecoverableError(code, errorBody.error)
         }

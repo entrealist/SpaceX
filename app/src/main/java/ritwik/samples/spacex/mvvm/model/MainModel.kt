@@ -1,9 +1,6 @@
 package ritwik.samples.spacex.mvvm.model
 
-import ritwik.samples.spacex.data.network.CapsuleResponse
-import ritwik.samples.spacex.data.network.CoreResponse
-import ritwik.samples.spacex.data.network.LaunchResponse
-import ritwik.samples.spacex.data.network.RocketResponse
+import ritwik.samples.spacex.data.network.*
 
 import ritwik.samples.spacex.data.ui.*
 
@@ -51,6 +48,11 @@ class MainModel @Inject constructor() : BaseModel() {
      */
     lateinit var cores: List<Core>
 
+    /**
+     * Reference of [Company] denoting the details of the Company.
+     */
+    lateinit var company: Company
+
     /*-------------------------------------- Public Methods --------------------------------------*/
 
     /**
@@ -94,6 +96,14 @@ class MainModel @Inject constructor() : BaseModel() {
      * @return true, if [cores] is initialized and is not empty, else false.
      */
     fun isCoresPopulated(): Boolean = this::cores.isInitialized && cores.isNotEmpty()
+
+    /**
+     * Checks whether [company] is populated or not,
+     * by checking whether it is initialized or not.
+     *
+     * @return true, if [company] is initialized, else false.
+     */
+    fun isAboutCompanyPopulated(): Boolean = this::company.isInitialized
 
     /**
      * Extracts the [List] of [Launch] from the given [responseLaunches].
@@ -274,6 +284,45 @@ class MainModel @Inject constructor() : BaseModel() {
                 )
             }
         }
+    }
+
+    /**
+     * Extracts the [Company] from given [responseCompany].
+     *
+     * @param responseCompany Instance of [CompanyResponse] denoting the info about the company
+     *   from REST API.
+     * @return New Instance of [Company] encapsulating the values under [responseCompany].
+     */
+    fun extractAboutCompanyFromResponse(responseCompany: CompanyResponse) = with(responseCompany) {
+        Company(
+            id ?: "5eb75edc42fea42237d7f3ed",
+            name ?: "SpaceX",
+            founder ?: "Elon Musk",
+            founded?.toString() ?: "2002",
+            employees ?: 8000,
+            vehicles ?: 3,
+            launchSites ?: 3,
+            testSites ?: 1,
+            CompanyHeadExecutives(
+                ceo ?: "Elon Musk",
+                cto ?: "Elon Musk",
+                coo ?: "Gwynne Shotwell",
+                propulsionCTO ?: "Tom Mueller"
+            ),
+            valuation ?: 52000000000,
+            summary ?: "",
+            CompanyHeadQuarters(
+                headQuarters?.address ?: "Rocket Road",
+                headQuarters?.city ?: "Hawthorne",
+                headQuarters?.state ?: "California"
+            ),
+            CompanyLinks(
+                links?.website ?: "https://www.spacex.com/",
+                links?.flickr ?: "https://www.flickr.com/photos/spacex/",
+                links?.twitterSpaceX ?: "https://twitter.com/SpaceX",
+                links?.twitterElon ?: "https://twitter.com/elonmusk"
+            )
+        )
     }
 
     /**

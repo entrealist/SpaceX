@@ -3,11 +3,7 @@ package ritwik.samples.spacex.mvvm.repository
 import com.squareup.moshi.Moshi
 
 import ritwik.samples.spacex.components.network.RESTInterface
-
-import ritwik.samples.spacex.data.network.CapsuleResponse
-import ritwik.samples.spacex.data.network.CoreResponse
-import ritwik.samples.spacex.data.network.LaunchResponse
-import ritwik.samples.spacex.data.network.RocketResponse
+import ritwik.samples.spacex.data.network.*
 
 import sample.ritwik.common.component.persistence.DataStorePreference
 
@@ -69,5 +65,12 @@ class MainRepository @Inject constructor(
      * @return [List] of [CoreResponse] denoting all the Cores.
      */
     suspend fun getAllCores(): List<CoreResponse> = restInterface.getAllCores()
+
+    /**
+     * Fetches the information about the Company using [restInterface].
+     *
+     * @return Instance of [CompanyResponse] encapsulating the information about the Company.
+     */
+    suspend fun getInfoAboutCompany(): CompanyResponse = restInterface.getInfoAboutCompany()
 
 }
