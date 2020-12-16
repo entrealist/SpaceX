@@ -19,7 +19,6 @@ import ritwik.samples.spacex.ui.adapter.CompletedLaunchAdapter
 import ritwik.samples.spacex.ui.adapter.UpcomingLaunchAdapter
 
 import ritwik.samples.spacex.utility.constant.LAUNCH_TYPE
-import ritwik.samples.spacex.utility.constant.POPULATE_LAUNCHES
 
 import sample.ritwik.common.ui.fragment.BaseFragment
 
@@ -73,38 +72,44 @@ class LaunchesFragment : BaseFragment<FragmentLaunchesBinding, MainModel, MainVi
         shimmer.visibility = View.GONE
     } ?: Unit
 
-    override fun onUIDataChanged(uiData: MainModel) = Unit
-
-    override fun onAction(uiData: MainModel) = when (uiData.action) {
-
-        POPULATE_LAUNCHES -> binding?.let { dataBinding ->
+    override fun onUIDataChanged(uiData: MainModel) = with(uiData) {
+        binding?.let { dataBinding ->
             with(dataBinding) {
-                when (launchType) {
 
-                    LaunchType.UPCOMING -> {
-                        isLaunchesEmpty = !uiData.isUpcomingLaunchesPopulated()
-                        listLaunches.setItemViewCacheSize(uiData.upcomingLaunches.size)
-                        (listLaunches.adapter as? UpcomingLaunchAdapter)?.replaceList(
-                            uiData.upcomingLaunches
-                        ) ?: Unit
-                        handleCountDownTimer(uiData.calculateTimingForUpcomingLaunch())
-                    }
-
-                    LaunchType.COMPLETED -> {
-                        isLaunchesEmpty = !uiData.isCompletedLaunchesPopulated()
-                        listLaunches.setItemViewCacheSize(uiData.completedLaunches.size)
-                        (listLaunches.adapter as? CompletedLaunchAdapter)?.replaceList(
-                            uiData.completedLaunches
-                        ) ?: Unit
-                    }
-
+                isLaunchesEmpty = when(launchType) {
+                    LaunchType.UPCOMING -> !isUpcomingLaunchesPopulated()
+                    LaunchType.COMPLETED -> !isCompletedLaunchesPopulated()
                 }
+
+                listLaunches.setItemViewCacheSize(
+                    when(launchType) {
+                        LaunchType.UPCOMING -> upcomingLaunches.size
+                        LaunchType.COMPLETED -> completedLaunches.size
+                    }
+                )
+
+                val (adapter, list) = with(listLaunches) {
+                    when(launchType) {
+                        LaunchType.UPCOMING -> {
+                            Pair(adapter as? UpcomingLaunchAdapter, upcomingLaunches)
+                        }
+                        LaunchType.COMPLETED -> {
+                            Pair(adapter as? CompletedLaunchAdapter, completedLaunches)
+                        }
+                    }
+                }
+
+                adapter?.replaceList(list)
+
+                if (LaunchType.UPCOMING == launchType) {
+                    handleCountDownTimer(uiData.calculateTimingForUpcomingLaunch())
+                }
+
             }
         } ?: Unit
-
-        else -> Unit
-
     }
+
+    override fun onAction(uiData: MainModel) = Unit
 
     override fun cleanUp() = binding?.let { dataBinding ->
         dataBinding.listLaunches.adapter = null

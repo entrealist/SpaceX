@@ -14,8 +14,6 @@ import ritwik.samples.spacex.mvvm.viewModel.MainViewModel
 
 import ritwik.samples.spacex.ui.adapter.CoresAdapter
 
-import ritwik.samples.spacex.utility.constant.POPULATE_CORES
-
 import sample.ritwik.common.ui.fragment.BaseFragment
 
 /**
@@ -46,19 +44,15 @@ class CoresFragment : BaseFragment<FragmentCoresBinding, MainModel, MainViewMode
         shimmer.visibility = View.GONE
     } ?: Unit
 
-    override fun onUIDataChanged(uiData: MainModel) = Unit
-
-    override fun onAction(uiData: MainModel) = when(uiData.action) {
-
-        POPULATE_CORES -> {
+    override fun onUIDataChanged(uiData: MainModel) = with(uiData) {
+        if (isCoresPopulated()) {
             binding?.listCores?.adapter?.let { adapter ->
                 (adapter as? CoresAdapter)?.replaceList(uiData.cores) ?: Unit
             } ?: Unit
         }
-
-        else -> Unit
-
     }
+
+    override fun onAction(uiData: MainModel) = Unit
 
     override fun cleanUp() = binding?.let { dataBinding ->
         dataBinding.listCores.adapter = null

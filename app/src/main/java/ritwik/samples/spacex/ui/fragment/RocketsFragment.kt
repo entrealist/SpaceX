@@ -14,8 +14,6 @@ import ritwik.samples.spacex.mvvm.viewModel.MainViewModel
 
 import ritwik.samples.spacex.ui.adapter.RocketsAdapter
 
-import ritwik.samples.spacex.utility.constant.POPULATE_ROCKETS
-
 import sample.ritwik.common.ui.fragment.BaseFragment
 
 /**
@@ -46,19 +44,16 @@ class RocketsFragment : BaseFragment<FragmentRocketsBinding, MainModel, MainView
         shimmer.visibility = View.GONE
     } ?: Unit
 
-    override fun onUIDataChanged(uiData: MainModel) = Unit
-
-    override fun onAction(uiData: MainModel) = when(uiData.action) {
-
-        POPULATE_ROCKETS -> {
+    override fun onUIDataChanged(uiData: MainModel) = with(uiData) {
+        if (isRocketsPopulated()) {
             binding?.listRocket?.adapter?.let { adapter ->
-                (adapter as? RocketsAdapter)?.replaceList(uiData.rockets) ?: Unit
+                android.util.Log.e("RocketsFragment", "List Populated")
+                (adapter as? RocketsAdapter)?.replaceList(rockets) ?: Unit
             } ?: Unit
         }
-
-        else -> Unit
-
     }
+
+    override fun onAction(uiData: MainModel) = Unit
 
     override fun cleanUp() = binding?.let { dataBinding ->
         dataBinding.listRocket.adapter = null

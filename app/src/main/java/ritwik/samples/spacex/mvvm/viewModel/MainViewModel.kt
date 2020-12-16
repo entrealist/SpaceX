@@ -13,14 +13,11 @@ import ritwik.samples.spacex.mvvm.model.MainModel
 
 import ritwik.samples.spacex.mvvm.repository.MainRepository
 
-import ritwik.samples.spacex.utility.constant.POPULATE_CAPSULES
-import ritwik.samples.spacex.utility.constant.POPULATE_CORES
-import ritwik.samples.spacex.utility.constant.POPULATE_LAUNCHES
-import ritwik.samples.spacex.utility.constant.POPULATE_ROCKETS
-
 import sample.ritwik.common.data.network.ResultWrapper
 
 import sample.ritwik.common.mvvm.viewModel.BaseViewModel
+
+import sample.ritwik.common.utility.constant.ACTION_UPDATE_UI
 
 import javax.inject.Inject
 
@@ -72,13 +69,14 @@ class MainViewModel @Inject constructor(
             handleLaunchesErrorCode
         )
     } else {
-        notifyActionOnUI(POPULATE_LAUNCHES)
+        notifyActionOnUI(ACTION_UPDATE_UI)
     }
 
     /**
      * Fetches all the rockets from making REST API Call.
      */
     fun fetchRockets() = if (!model.isRocketsPopulated()) {
+        android.util.Log.e("MainViewModel", "Rocket not populated")
         showProgress()
         launchNetworkDataLoad(
             allRocketsAPICall,
@@ -89,7 +87,8 @@ class MainViewModel @Inject constructor(
             handleAllRocketsErrorCode
         )
     } else {
-        notifyActionOnUI(POPULATE_ROCKETS)
+        android.util.Log.e("MainViewModel", "Rocket already populated")
+        notifyActionOnUI(ACTION_UPDATE_UI)
     }
 
     /**
@@ -106,7 +105,7 @@ class MainViewModel @Inject constructor(
             handleAllCapsulesErrorCode
         )
     } else {
-        notifyActionOnUI(POPULATE_CAPSULES)
+        notifyActionOnUI(ACTION_UPDATE_UI)
     }
 
     /**
@@ -123,7 +122,7 @@ class MainViewModel @Inject constructor(
             handleAllCoresErrorCode
         )
     } else {
-        notifyActionOnUI(POPULATE_CORES)
+        notifyActionOnUI(ACTION_UPDATE_UI)
     }
 
     /*------------------------------------ Lambda Expressions ------------------------------------*/
@@ -203,7 +202,7 @@ class MainViewModel @Inject constructor(
      */
     private val handleLaunchesSuccess: () -> Unit = {
         hideProgress()
-        notifyActionOnUI(POPULATE_LAUNCHES)
+        notifyActionOnUI(ACTION_UPDATE_UI)
     }
 
     /**
@@ -211,7 +210,7 @@ class MainViewModel @Inject constructor(
      */
     private val handleAllRocketsSuccess: () -> Unit = {
         hideProgress()
-        notifyActionOnUI(POPULATE_ROCKETS)
+        notifyActionOnUI(ACTION_UPDATE_UI)
     }
 
     /**
@@ -219,7 +218,7 @@ class MainViewModel @Inject constructor(
      */
     private val handleAllCapsulesSuccess: () -> Unit = {
         hideProgress()
-        notifyActionOnUI(POPULATE_CAPSULES)
+        notifyActionOnUI(ACTION_UPDATE_UI)
     }
 
     /**
@@ -227,7 +226,7 @@ class MainViewModel @Inject constructor(
      */
     private val handleAllCoresSuccess: () -> Unit = {
         hideProgress()
-        notifyActionOnUI(POPULATE_CORES)
+        notifyActionOnUI(ACTION_UPDATE_UI)
     }
 
     /**

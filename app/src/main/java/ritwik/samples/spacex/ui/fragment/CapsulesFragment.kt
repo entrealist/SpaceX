@@ -14,8 +14,6 @@ import ritwik.samples.spacex.mvvm.viewModel.MainViewModel
 
 import ritwik.samples.spacex.ui.adapter.CapsulesAdapter
 
-import ritwik.samples.spacex.utility.constant.POPULATE_CAPSULES
-
 import sample.ritwik.common.ui.fragment.BaseFragment
 
 /**
@@ -46,19 +44,15 @@ class CapsulesFragment : BaseFragment<FragmentCapsulesBinding, MainModel, MainVi
         shimmer.visibility = View.GONE
     } ?: Unit
 
-    override fun onUIDataChanged(uiData: MainModel) = Unit
-
-    override fun onAction(uiData: MainModel) = when(uiData.action) {
-
-        POPULATE_CAPSULES -> {
+    override fun onUIDataChanged(uiData: MainModel) = with(uiData) {
+        if (isCapsulesPopulated()) {
             binding?.listCapsules?.adapter?.let { adapter ->
-                (adapter as? CapsulesAdapter)?.replaceList(uiData.capsules) ?: Unit
+                (adapter as? CapsulesAdapter)?.replaceList(capsules) ?: Unit
             } ?: Unit
         }
-
-        else -> Unit
-
     }
+
+    override fun onAction(uiData: MainModel) = Unit
 
     override fun cleanUp() = binding?.let { dataBinding ->
         dataBinding.listCapsules.adapter = null
