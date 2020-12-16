@@ -32,7 +32,18 @@ data class Company(
     val summary: String,
     val headQuarters: CompanyHeadQuarters,
     val links: CompanyLinks
-)
+) {
+
+    /*-------------------------------------- Public Methods --------------------------------------*/
+
+    /**
+     * Provides the name of the Founder and when the [Company] was founded.
+     *
+     * @return [String] denoting the details as the concatenation of [founder] and [founded].
+     */
+    fun getFounderAndFoundedAt(): String = "$founder, $founded"
+
+}
 
 /**
  * Data Class encapsulating the details of the Head Executives of this [Company].
@@ -57,7 +68,19 @@ data class CompanyHeadExecutives(
  * @param city [String] denoting the name of City on which Headquarter is situated.
  * @param state [String] denoting the name of State on which Headquarter is situated.
  */
-data class CompanyHeadQuarters(val address: String, val city: String, val state: String)
+data class CompanyHeadQuarters(val address: String, val city: String, val state: String) {
+
+    /*-------------------------------------- Public Methods --------------------------------------*/
+
+    /**
+     * Provides the complete Headquarter Address.
+     *
+     * @return [String] denoting the complete address as the concatenation of
+     *   [address], [city] and [state].
+     */
+    fun getHeadQuarterAddress(): String = "$address, $city, $state"
+
+}
 
 /**
  * Data Class encapsulating the links of the [Company].
