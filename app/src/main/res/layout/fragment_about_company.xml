@@ -1,19 +1,415 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.fragment.AboutCompanyFragment">
 
-    <FrameLayout
+    <data>
+
+        <variable
+            name="company"
+            type="ritwik.samples.spacex.data.ui.Company" />
+
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            android:layout_height="wrap_content">
 
-    </FrameLayout>
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="10dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="10dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="10dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_end="10dp" />
+
+            <ImageView
+                android:id="@+id/placeholder_image_logo_space_x"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:contentDescription="@string/imcd_space_x_logo"
+                android:src="@drawable/ic_space_x_logo"
+                app:layout_constraintBottom_toTopOf="@id/value_text_founder_and_founded"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toTopOf="@id/guideline_top" />
+
+            <TextView
+                android:id="@+id/value_text_founder_and_founded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/roboto"
+                android:text="@{company.founderAndFoundedAt}"
+                android:textColor="@color/color_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@id/value_text_head_quarter_address"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/placeholder_image_logo_space_x"
+                tools:text="Elon Musk, 2002" />
+
+            <TextView
+                android:id="@+id/value_text_head_quarter_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/roboto"
+                android:text="@{company.headQuarters.headQuarterAddress}"
+                android:textColor="@color/color_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@id/value_text_company_summary"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/value_text_founder_and_founded"
+                tools:text="Rocket Road, Hawthorne, California" />
+
+            <TextView
+                android:id="@+id/value_text_company_summary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:text="@{company.summary}"
+                android:textColor="@color/color_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@id/placeholder_text_lead"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/value_text_head_quarter_address"
+                tools:text="SpaceX designs, manufactures and launches advanced rockets" />
+
+            <TextView
+                android:id="@+id/placeholder_text_lead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/placeholder_lead"
+                android:textColor="@color/color_text"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/placeholder_text_ceo"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/value_text_company_summary" />
+
+            <TextView
+                android:id="@+id/placeholder_text_ceo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/placeholder_ceo"
+                android:textColor="@color/color_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@id/placeholder_text_cto"
+                app:layout_constraintEnd_toStartOf="@id/value_text_ceo"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/placeholder_text_lead" />
+
+            <TextView
+                android:id="@+id/value_text_ceo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="@{company.headExecutives.chiefExecutiveOfficer}"
+                android:textColor="@color/color_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/placeholder_text_ceo"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toEndOf="@id/placeholder_text_ceo"
+                app:layout_constraintTop_toTopOf="@id/placeholder_text_ceo"
+                tools:text="Elon Musk" />
+
+            <TextView
+                android:id="@+id/placeholder_text_cto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/placeholder_cto"
+                android:textColor="@color/color_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@id/placeholder_text_cto_propulsion"
+                app:layout_constraintEnd_toStartOf="@id/value_text_cto"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/placeholder_text_ceo" />
+
+            <TextView
+                android:id="@+id/value_text_cto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="@{company.headExecutives.chiefTechnologyOfficer}"
+                android:textColor="@color/color_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/placeholder_text_cto"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toEndOf="@id/placeholder_text_cto"
+                app:layout_constraintTop_toTopOf="@id/placeholder_text_cto"
+                tools:text="Elon Musk" />
+
+            <TextView
+                android:id="@+id/placeholder_text_cto_propulsion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/placeholder_cto_propulsion"
+                android:textColor="@color/color_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@id/placeholder_text_coo"
+                app:layout_constraintEnd_toStartOf="@id/value_text_cto_propulsion"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/placeholder_text_cto" />
+
+            <TextView
+                android:id="@+id/value_text_cto_propulsion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="@{company.headExecutives.chiefTechnologyOfficerPropulsion}"
+                android:textColor="@color/color_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/placeholder_text_cto_propulsion"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toEndOf="@+id/placeholder_text_cto_propulsion"
+                app:layout_constraintTop_toTopOf="@+id/placeholder_text_cto_propulsion"
+                tools:text="Tom Mueller" />
+
+            <TextView
+                android:id="@+id/placeholder_text_coo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/placeholder_coo"
+                android:textColor="@color/color_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@id/placeholder_text_statistics"
+                app:layout_constraintEnd_toStartOf="@id/value_text_coo"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/placeholder_text_cto_propulsion" />
+
+            <TextView
+                android:id="@+id/value_text_coo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="@{company.headExecutives.chiefOperationsOfficer}"
+                android:textColor="@color/color_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/placeholder_text_coo"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toEndOf="@id/placeholder_text_coo"
+                app:layout_constraintTop_toTopOf="@id/placeholder_text_coo"
+                tools:text="Gwynne Shotwell" />
+
+            <TextView
+                android:id="@+id/placeholder_text_statistics"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/placeholder_statistics"
+                android:textColor="@color/color_text"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/placeholder_text_value"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/placeholder_text_coo" />
+
+            <TextView
+                android:id="@+id/placeholder_text_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/placeholder_value"
+                android:textColor="@color/color_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@id/placeholder_text_employees"
+                app:layout_constraintEnd_toStartOf="@id/value_text_value"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/placeholder_text_statistics" />
+
+            <TextView
+                android:id="@+id/value_text_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="@{company.formattedValuation}"
+                android:textColor="@color/color_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/placeholder_text_value"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toEndOf="@id/placeholder_text_value"
+                app:layout_constraintTop_toTopOf="@id/placeholder_text_value"
+                tools:text="$270009999999" />
+
+            <TextView
+                android:id="@+id/placeholder_text_employees"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/placeholder_employees"
+                android:textColor="@color/color_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@id/placeholder_text_vehicles"
+                app:layout_constraintEnd_toStartOf="@id/value_text_employees"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/placeholder_text_value" />
+
+            <TextView
+                android:id="@+id/value_text_employees"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="@{company.formattedEmployees}"
+                android:textColor="@color/color_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/placeholder_text_employees"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toEndOf="@id/placeholder_text_employees"
+                app:layout_constraintTop_toTopOf="@id/placeholder_text_employees"
+                tools:text="8000" />
+
+            <TextView
+                android:id="@+id/placeholder_text_vehicles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/placeholder_vehicles"
+                android:textColor="@color/color_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@id/placeholder_text_launch_sites"
+                app:layout_constraintEnd_toStartOf="@id/value_text_vehicles"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/placeholder_text_employees" />
+
+            <TextView
+                android:id="@+id/value_text_vehicles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="@{company.formattedVehicles}"
+                android:textColor="@color/color_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/placeholder_text_vehicles"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toEndOf="@id/placeholder_text_vehicles"
+                app:layout_constraintTop_toTopOf="@id/placeholder_text_vehicles"
+                tools:text="3" />
+
+            <TextView
+                android:id="@+id/placeholder_text_launch_sites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/placeholder_launch_sites"
+                android:textColor="@color/color_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@id/placeholder_text_testing_sites"
+                app:layout_constraintEnd_toStartOf="@id/value_text_launch_sites"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/placeholder_text_vehicles" />
+
+            <TextView
+                android:id="@+id/value_text_launch_sites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="@{company.formattedLaunchSites}"
+                android:textColor="@color/color_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/placeholder_text_launch_sites"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toEndOf="@id/placeholder_text_launch_sites"
+                app:layout_constraintTop_toTopOf="@id/placeholder_text_launch_sites"
+                tools:text="3" />
+
+            <TextView
+                android:id="@+id/placeholder_text_testing_sites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/placeholder_testing_sites"
+                android:textColor="@color/color_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+                app:layout_constraintEnd_toStartOf="@id/value_text_testing_sites"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/placeholder_text_launch_sites" />
+
+            <TextView
+                android:id="@+id/value_text_testing_sites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="@{company.formattedTestingSites}"
+                android:textColor="@color/color_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/placeholder_text_testing_sites"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toEndOf="@id/placeholder_text_testing_sites"
+                app:layout_constraintTop_toTopOf="@id/placeholder_text_testing_sites"
+                tools:text="1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </layout>
