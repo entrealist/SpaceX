@@ -2,6 +2,8 @@ package ritwik.samples.spacex.ui.fragment
 
 import android.os.Bundle
 
+import android.view.View
+
 import ritwik.samples.spacex.R
 
 import ritwik.samples.spacex.databinding.FragmentAboutCompanyBinding
@@ -25,16 +27,35 @@ class AboutCompanyFragment : BaseFragment<FragmentAboutCompanyBinding, MainModel
 
     override fun extractArguments(arguments: Bundle) = Unit
 
-    override fun initializeViews() = Unit
+    override fun initializeViews() = requestData()
 
-    override fun showLoading() = Unit
+    override fun showLoading() = binding?.placeholderShimmerAboutCompany?.let { shimmer ->
+        shimmer.visibility = View.VISIBLE
+        shimmer.startShimmer()
+    } ?: Unit
 
-    override fun hideLoading() = Unit
+    override fun hideLoading() = binding?.placeholderShimmerAboutCompany?.let { shimmer ->
+        shimmer.stopShimmer()
+        shimmer.visibility = View.GONE
+    } ?: Unit
 
-    override fun onUIDataChanged(uiData: MainModel) = Unit
+    override fun onUIDataChanged(uiData: MainModel) = binding?.let { dataBinding ->
+        with(uiData) {
+            if (isAboutCompanyPopulated()) {
+                dataBinding.company = company
+            }
+        }
+    } ?: Unit
 
     override fun onAction(uiData: MainModel) = Unit
 
     override fun cleanUp() = Unit
+
+    /*------------------------------------- Private Methods --------------------------------------*/
+
+    /**
+     * Requests the data through [viewModel].
+     */
+    private fun requestData() = viewModel?.fetchInfoAboutCompany() ?: Unit
 
 }
