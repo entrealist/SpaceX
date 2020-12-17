@@ -43,6 +43,41 @@ data class Company(
      */
     fun getFounderAndFoundedAt(): String = "$founder, $founded"
 
+    /**
+     * Provides the valuation amount of the [Company].
+     *
+     * @return [String] value of [valuation] appended with prefix '$'.
+     */
+    fun getFormattedValuation(): String = "$$valuation"
+
+    /**
+     * Provides the count of Employees working for this [Company].
+     *
+     * @return [String] value of [employees].
+     */
+    fun getFormattedEmployees(): String = "$employees"
+
+    /**
+     * Provides the count of Space Vehicles used by this [Company].
+     *
+     * @return [String] value of [vehicles].
+     */
+    fun getFormattedVehicles(): String = "$vehicles"
+
+    /**
+     * Provides the count of Launch Sites used by this [Company].
+     *
+     * @return [String] value of [launchSites].
+     */
+    fun getFormattedLaunchSites(): String = "$launchSites"
+
+    /**
+     * Provides the count of Testing Sites used by this [Company].
+     *
+     * @return [String] value of [testingSites].
+     */
+    fun getFormattedTestingSites(): String = "$testingSites"
+
 }
 
 /**
