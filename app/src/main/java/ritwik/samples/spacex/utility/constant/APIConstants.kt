@@ -30,3 +30,9 @@ const val API_CALL_CORES = "cores"
  * of the Company.
  */
 const val API_CALL_ABOUT_COMPANY = "company"
+
+/**
+ * Constant [String] denoting the API Call End-Point for REST API to fetch
+ * all the Historic Events of SpaceX.
+ */
+const val API_CALL_HISTORY = "history"

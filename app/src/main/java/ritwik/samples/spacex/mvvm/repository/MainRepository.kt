@@ -3,6 +3,7 @@ package ritwik.samples.spacex.mvvm.repository
 import com.squareup.moshi.Moshi
 
 import ritwik.samples.spacex.components.network.RESTInterface
+
 import ritwik.samples.spacex.data.network.*
 
 import sample.ritwik.common.component.persistence.DataStorePreference
@@ -72,5 +73,12 @@ class MainRepository @Inject constructor(
      * @return Instance of [CompanyResponse] encapsulating the information about the Company.
      */
     suspend fun getInfoAboutCompany(): CompanyResponse = restInterface.getInfoAboutCompany()
+
+    /**
+     * Fetches the Historic Events of SpaceX using [restInterface].
+     *
+     * @return [List] of [HistoricEventResponse] denoting all the Historic Events.
+     */
+    suspend fun getHistoricEvents(): List<HistoricEventResponse> = restInterface.getHistoricEvents()
 
 }

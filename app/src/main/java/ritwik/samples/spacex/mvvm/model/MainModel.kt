@@ -53,6 +53,11 @@ class MainModel @Inject constructor() : BaseModel() {
      */
     lateinit var company: Company
 
+    /**
+     * [List] of [HistoricEvent] denoting the collection of Historic Event.
+     */
+    lateinit var historicEvents: List<HistoricEvent>
+
     /*-------------------------------------- Public Methods --------------------------------------*/
 
     /**
@@ -104,6 +109,15 @@ class MainModel @Inject constructor() : BaseModel() {
      * @return true, if [company] is initialized, else false.
      */
     fun isAboutCompanyPopulated(): Boolean = this::company.isInitialized
+
+    /**
+     * Checks whether [historicEvents] is populated or not,
+     * by checking whether it is initialized as well as it is not empty.
+     *
+     * @return true, if [historicEvents] is initialized and is not empty, else false.
+     */
+    fun isHistoricEventsPopulated(): Boolean =
+        this::historicEvents.isInitialized && historicEvents.isNotEmpty()
 
     /**
      * Extracts the [List] of [Launch] from the given [responseLaunches].
@@ -257,7 +271,7 @@ class MainModel @Inject constructor() : BaseModel() {
     /**
      * Extracts the [List] of [Core] from the given [responseCores].
      *
-     * @param responseCores [List] of [CoreResponse] denoting all the Capsules from REST API.
+     * @param responseCores [List] of [CoreResponse] denoting all the Cores from REST API.
      * @return Converted [List] of [Core] using [responseCores].
      */
     fun extractCoresFromResponse(responseCores: List<CoreResponse>) = ArrayList<Core>().apply {
@@ -324,6 +338,35 @@ class MainModel @Inject constructor() : BaseModel() {
             )
         )
     }
+
+    /**
+     * Extracts the [List] of [HistoricEvent] from the given [responseHistoricEvents].
+     *
+     * @param responseHistoricEvents [List] of [HistoricEvent] denoting
+     *   all the Historic Events of SpaceX from REST API.
+     * @return Converted [List] of [Core] using [responseHistoricEvents].
+     */
+    fun extractHistoricEventsFromResponse(responseHistoricEvents: List<HistoricEventResponse>) =
+        ArrayList<HistoricEvent>().apply {
+            for (responseHistoricEvent in responseHistoricEvents) {
+                with(responseHistoricEvent) {
+                    add(
+                        HistoricEvent(
+                            id ?: "",
+                            title ?: "",
+                            details ?: "",
+                            HistoricEventDate(
+                                convertUTCDateTime(utcEventDate ?: ""),
+                                unixEventDate ?: 0L
+                            ),
+                            HistoricEventLinks(
+                                links?.article ?: ""
+                            )
+                        )
+                    )
+                }
+            }
+        }
 
     /**
      * Calculate the Remaining Time of an Upcoming [Launch] from first element of [upcomingLaunches].

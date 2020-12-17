@@ -61,4 +61,12 @@ interface RESTInterface {
     @GET(API_CALL_ABOUT_COMPANY)
     suspend fun getInfoAboutCompany(): CompanyResponse
 
+    /**
+     * Fetches all the Historic Events of SpaceX.
+     *
+     * @return [List] of [HistoricEventResponse] denoting the Historic Events of SpaceX.
+     */
+    @GET(API_CALL_HISTORY)
+    suspend fun getHistoricEvents(): List<HistoricEventResponse>
+
 }

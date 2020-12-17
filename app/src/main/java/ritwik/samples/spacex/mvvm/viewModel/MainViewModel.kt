@@ -140,6 +140,23 @@ class MainViewModel @Inject constructor(
         notifyActionOnUI(ACTION_UPDATE_UI)
     }
 
+    /**
+     * Fetches all the Historic Events from making REST API Call.
+     */
+    fun fetchAllHistoricEvents() = if (!model.isHistoricEventsPopulated()) {
+        showProgress()
+        launchNetworkDataLoad(
+            allHistoricEventsAPICall,
+            handleAllHistoricEventsSuccess,
+            handleAllHistoricEventsError,
+            processAllHistoricEventsResponse,
+            ErrorResponse::class.java,
+            handleAllHistoricEventsErrorCode
+        )
+    } else {
+        notifyActionOnUI(ACTION_UPDATE_UI)
+    }
+
     /*------------------------------------ Lambda Expressions ------------------------------------*/
 
     /**
@@ -175,6 +192,13 @@ class MainViewModel @Inject constructor(
      */
     val coreListener: (Int) -> Unit = { position ->
         // TODO: Use the position in model.rockets to handle the click on Core.
+    }
+
+    /**
+     * Lambda Expression to notify about selection of a Historic Event.
+     */
+    val historicEventListener: (Int) -> Unit = {
+        // TODO: Use the position in model.rockets to handle the click on Historic Event.
     }
 
     /**
@@ -220,6 +244,13 @@ class MainViewModel @Inject constructor(
     }
 
     /**
+     * Lambda Expression as the REST API Call Body for fetching all the Historic Events.
+     */
+    private val allHistoricEventsAPICall: suspend () -> List<HistoricEventResponse> = {
+        repository.getHistoricEvents()
+    }
+
+    /**
      * Lambda Expression to handle the Success of REST API to fetch the Launches.
      */
     private val handleLaunchesSuccess: () -> Unit = {
@@ -256,6 +287,14 @@ class MainViewModel @Inject constructor(
      * information about the Company.
      */
     private val handleAboutCompanySuccess: () -> Unit = {
+        hideProgress()
+        notifyActionOnUI(ACTION_UPDATE_UI)
+    }
+
+    /**
+     * Lambda Expression to handle the Success of REST API to fetch all the Historic Events.
+     */
+    private val handleAllHistoricEventsSuccess: () -> Unit = {
         hideProgress()
         notifyActionOnUI(ACTION_UPDATE_UI)
     }
@@ -305,6 +344,16 @@ class MainViewModel @Inject constructor(
      * information about the Company.
      */
     private val handleAboutCompanyError: (Throwable) -> Unit = { throwable ->
+        hideProgress()
+        showPopUpWindow(
+            throwable.message ?: repository.getStringFromResource(R.string.default_error_message)
+        )
+    }
+
+    /**
+     * Lambda Expression to handle the Error of REST API to fetch all the Historic Events.
+     */
+    private val handleAllHistoricEventsError: (Throwable) -> Unit = { throwable ->
         hideProgress()
         showPopUpWindow(
             throwable.message ?: repository.getStringFromResource(R.string.default_error_message)
@@ -373,6 +422,16 @@ class MainViewModel @Inject constructor(
     }
 
     /**
+     * Lambda Expression to process the Response of REST API to fetch all the Historic Events.
+     */
+    private val processAllHistoricEventsResponse: suspend (Flow<List<HistoricEventResponse>>) -> Unit =
+        { flow ->
+            flow.collect { historicEvents ->
+                model.historicEvents = model.extractHistoricEventsFromResponse(historicEvents)
+            }
+        }
+
+    /**
      * Lambda Expression to handle the Error Code of REST API to fetch the Launches.
      */
     private val handleLaunchesErrorCode: (Int, ErrorResponse) -> ResultWrapper.Error<List<LaunchResponse>> =
@@ -409,6 +468,14 @@ class MainViewModel @Inject constructor(
      * about the Company.
      */
     private val handleAboutCompanyErrorCode: (Int, ErrorResponse) -> ResultWrapper.Error<CompanyResponse> =
+        { code, errorBody ->
+            ResultWrapper.Error.RecoverableError(code, errorBody.error)
+        }
+
+    /**
+     * Lambda Expression to handle the Error Code of REST API to fetch all the Historic Events.
+     */
+    private val handleAllHistoricEventsErrorCode: (Int, ErrorResponse) -> ResultWrapper.Error<List<HistoricEventResponse>> =
         { code, errorBody ->
             ResultWrapper.Error.RecoverableError(code, errorBody.error)
         }
