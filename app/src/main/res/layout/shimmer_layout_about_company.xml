@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="10dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="10dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="10dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="10dp" />
+
+    <ImageView
+        android:id="@+id/placeholder_image_logo_space_x"
+        android:layout_width="0dp"
+        android:layout_height="41dp"
+        android:layout_marginBottom="15dp"
+        android:contentDescription="@string/imcd_space_x_logo"
+        android:src="@drawable/shimmer_rectangle_grey"
+        app:layout_constraintBottom_toTopOf="@id/value_text_founder_and_founded"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toTopOf="@id/guideline_top" />
+
+    <ImageView
+        android:id="@+id/value_text_founder_and_founded"
+        android:layout_width="100dp"
+        android:layout_height="10dp"
+        android:layout_marginBottom="15dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toTopOf="@id/value_text_head_quarter_address"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/placeholder_image_logo_space_x" />
+
+    <ImageView
+        android:id="@+id/value_text_head_quarter_address"
+        android:layout_width="220dp"
+        android:layout_height="10dp"
+        android:layout_marginBottom="18dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toTopOf="@id/value_text_company_summary_1"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/value_text_founder_and_founded" />
+
+    <ImageView
+        android:id="@+id/value_text_company_summary_1"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toTopOf="@id/value_text_company_summary_2"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/value_text_head_quarter_address" />
+
+    <ImageView
+        android:id="@+id/value_text_company_summary_2"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toTopOf="@id/value_text_company_summary_3"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/value_text_company_summary_1" />
+
+    <ImageView
+        android:id="@+id/value_text_company_summary_3"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toTopOf="@id/value_text_company_summary_4"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/value_text_company_summary_2" />
+
+    <ImageView
+        android:id="@+id/value_text_company_summary_4"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toTopOf="@id/value_text_company_summary_5"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/value_text_company_summary_3" />
+
+    <ImageView
+        android:id="@+id/value_text_company_summary_5"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toTopOf="@id/placeholder_text_lead"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/value_text_company_summary_4" />
+
+    <ImageView
+        android:id="@+id/placeholder_text_lead"
+        android:layout_width="45dp"
+        android:layout_height="12dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="5dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toTopOf="@id/placeholder_text_ceo"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/value_text_company_summary_5" />
+
+    <ImageView
+        android:id="@+id/placeholder_text_ceo"
+        android:layout_width="30dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="5dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toTopOf="@id/placeholder_text_cto"
+        app:layout_constraintEnd_toStartOf="@id/value_text_ceo"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/placeholder_text_lead" />
+
+    <ImageView
+        android:id="@+id/value_text_ceo"
+        android:layout_width="120dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toBottomOf="@id/placeholder_text_ceo"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintStart_toEndOf="@id/placeholder_text_ceo"
+        app:layout_constraintTop_toTopOf="@id/placeholder_text_ceo" />
+
+    <ImageView
+        android:id="@+id/placeholder_text_cto"
+        android:layout_width="30dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="5dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toTopOf="@id/placeholder_text_cto_propulsion"
+        app:layout_constraintEnd_toStartOf="@id/value_text_cto"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/placeholder_text_ceo" />
+
+    <ImageView
+        android:id="@+id/value_text_cto"
+        android:layout_width="120dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toBottomOf="@id/placeholder_text_cto"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintStart_toEndOf="@id/placeholder_text_cto"
+        app:layout_constraintTop_toTopOf="@id/placeholder_text_cto" />
+
+    <ImageView
+        android:id="@+id/placeholder_text_cto_propulsion"
+        android:layout_width="30dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginBottom="5dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toTopOf="@id/placeholder_text_coo"
+        app:layout_constraintEnd_toStartOf="@id/value_text_cto_propulsion"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/placeholder_text_cto" />
+
+    <ImageView
+        android:id="@+id/value_text_cto_propulsion"
+        android:layout_width="120dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toBottomOf="@+id/placeholder_text_cto_propulsion"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintStart_toEndOf="@+id/placeholder_text_cto_propulsion"
+        app:layout_constraintTop_toTopOf="@+id/placeholder_text_cto_propulsion" />
+
+    <ImageView
+        android:id="@+id/placeholder_text_coo"
+        android:layout_width="30dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="14dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toTopOf="@id/placeholder_text_statistics"
+        app:layout_constraintEnd_toStartOf="@id/value_text_coo"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/placeholder_text_cto_propulsion" />
+
+    <ImageView
+        android:id="@+id/value_text_coo"
+        android:layout_width="120dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toBottomOf="@id/placeholder_text_coo"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintStart_toEndOf="@id/placeholder_text_coo"
+        app:layout_constraintTop_toTopOf="@id/placeholder_text_coo" />
+
+    <ImageView
+        android:id="@+id/placeholder_text_statistics"
+        android:layout_width="75dp"
+        android:layout_height="12dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginBottom="5dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toTopOf="@id/placeholder_text_value"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/placeholder_text_coo" />
+
+    <ImageView
+        android:id="@+id/placeholder_text_value"
+        android:layout_width="50dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="5dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toTopOf="@id/placeholder_text_employees"
+        app:layout_constraintEnd_toStartOf="@id/value_text_value"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/placeholder_text_statistics" />
+
+    <ImageView
+        android:id="@+id/value_text_value"
+        android:layout_width="140dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toBottomOf="@id/placeholder_text_value"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintStart_toEndOf="@id/placeholder_text_value"
+        app:layout_constraintTop_toTopOf="@id/placeholder_text_value" />
+
+    <ImageView
+        android:id="@+id/placeholder_text_employees"
+        android:layout_width="60dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="5dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toTopOf="@id/placeholder_text_vehicles"
+        app:layout_constraintEnd_toStartOf="@id/value_text_employees"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/placeholder_text_value" />
+
+    <ImageView
+        android:id="@+id/value_text_employees"
+        android:layout_width="40dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toBottomOf="@id/placeholder_text_employees"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintStart_toEndOf="@id/placeholder_text_employees"
+        app:layout_constraintTop_toTopOf="@id/placeholder_text_employees"
+        tools:text="8000" />
+
+    <ImageView
+        android:id="@+id/placeholder_text_vehicles"
+        android:layout_width="55dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="5dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toTopOf="@id/placeholder_text_launch_sites"
+        app:layout_constraintEnd_toStartOf="@id/value_text_vehicles"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/placeholder_text_employees" />
+
+    <ImageView
+        android:id="@+id/value_text_vehicles"
+        android:layout_width="20dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toBottomOf="@id/placeholder_text_vehicles"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintStart_toEndOf="@id/placeholder_text_vehicles"
+        app:layout_constraintTop_toTopOf="@id/placeholder_text_vehicles" />
+
+    <ImageView
+        android:id="@+id/placeholder_text_launch_sites"
+        android:layout_width="80dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="5dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toTopOf="@id/placeholder_text_testing_sites"
+        app:layout_constraintEnd_toStartOf="@id/value_text_launch_sites"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/placeholder_text_vehicles" />
+
+    <ImageView
+        android:id="@+id/value_text_launch_sites"
+        android:layout_width="20dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toBottomOf="@id/placeholder_text_launch_sites"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintStart_toEndOf="@id/placeholder_text_launch_sites"
+        app:layout_constraintTop_toTopOf="@id/placeholder_text_launch_sites" />
+
+    <ImageView
+        android:id="@+id/placeholder_text_testing_sites"
+        android:layout_width="80dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="5dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+        app:layout_constraintEnd_toStartOf="@id/value_text_testing_sites"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/placeholder_text_launch_sites" />
+
+    <ImageView
+        android:id="@+id/value_text_testing_sites"
+        android:layout_width="20dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toBottomOf="@id/placeholder_text_testing_sites"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintStart_toEndOf="@id/placeholder_text_testing_sites"
+        app:layout_constraintTop_toTopOf="@id/placeholder_text_testing_sites" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
