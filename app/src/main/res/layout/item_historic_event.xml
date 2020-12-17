@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="historicEvent"
+            type="ritwik.samples.spacex.data.ui.HistoricEvent" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="30dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_bullet_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="10dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="10dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="10dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="10dp" />
+
+        <ImageView
+            android:id="@+id/placeholder_image_bullet_point_small"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:contentDescription="@string/imcd_bullet_point"
+            android:src="@drawable/ic_circle_color_primary_dark"
+            app:layout_constraintStart_toStartOf="@id/guideline_bullet_point"
+            app:layout_constraintEnd_toEndOf="@id/guideline_bullet_point"
+            app:layout_constraintTop_toTopOf="@id/value_text_date"
+            app:layout_constraintBottom_toBottomOf="@id/value_text_date"/>
+
+        <TextView
+            android:id="@+id/value_text_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:text="@{historicEvent.date}"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@id/value_text_title"
+            app:layout_constraintEnd_toEndOf="@id/guideline_right"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@id/guideline_left"
+            app:layout_constraintTop_toTopOf="@id/guideline_top"
+            tools:text="29 Sep" />
+
+        <TextView
+            android:id="@+id/value_text_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:text="@{historicEvent.title}"
+            android:textColor="@color/color_text"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@id/value_text_details"
+            app:layout_constraintEnd_toEndOf="@id/guideline_right"
+            app:layout_constraintStart_toStartOf="@id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/value_text_date"
+            tools:text="Falcon X makes history" />
+
+        <TextView
+            android:id="@+id/value_text_details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@{historicEvent.details}"
+            android:textSize="14sp"
+            android:textColor="@color/color_text"
+            app:layout_constraintBottom_toTopOf="@id/button_more_info"
+            app:layout_constraintStart_toStartOf="@id/guideline_left"
+            app:layout_constraintEnd_toEndOf="@id/guideline_right"
+            app:layout_constraintTop_toBottomOf="@id/value_text_title"
+            tools:text="Falcon X makes the history as the X privately developed Liquid Fuel Rocket to reach Earth orbit"/>
+
+        <TextView
+            android:id="@+id/button_more_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintHorizontal_bias="0"
+            android:drawablePadding="10dp"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:text="@string/button_historic_event_more_info"
+            android:textColor="@color/colorPrimaryDark"
+            app:layout_constraintStart_toStartOf="@id/guideline_left"
+            app:layout_constraintEnd_toEndOf="@id/guideline_right"
+            app:layout_constraintTop_toBottomOf="@id/value_text_details"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+            app:drawableStartCompat="@drawable/ic_baseline_link_color_primary_dark_24" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
