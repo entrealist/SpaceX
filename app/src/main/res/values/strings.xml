@@ -12,6 +12,7 @@
     <string name="imcd_shimmer_view">Loading</string>
     <string name="imcd_rocket_image">Rocket Image</string>
     <string name="imcd_arrow">Arrow</string>
+    <string name="imcd_bullet_point">Bullet Point</string>
 
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu Item Names ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
@@ -64,5 +65,9 @@
     <string name="placeholder_testing_sites">Testing Sites</string>
     <string name="placeholder_launch_sites">Launch Sites</string>
     <string name="placeholder_vehicles">Vehicles</string>
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ItemHistoricEventBinding Texts ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+    <string name="button_historic_event_more_info">More Info</string>
 
 </resources>
