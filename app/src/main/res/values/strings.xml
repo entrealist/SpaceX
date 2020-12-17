@@ -50,4 +50,19 @@
     <string name="placeholder_asds_landing">ASDS Landings</string>
     <string name="button_core_specs">Core Specs</string>
 
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ AboutCompanyFragment Texts ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+    <string name="placeholder_about_company">About SpaceX</string>
+    <string name="placeholder_lead">Lead</string>
+    <string name="placeholder_ceo">CEO</string>
+    <string name="placeholder_cto">CTO</string>
+    <string name="placeholder_cto_propulsion">CTO (Propulsion)</string>
+    <string name="placeholder_coo">COO</string>
+    <string name="placeholder_statistics">Statistics</string>
+    <string name="placeholder_value">Value</string>
+    <string name="placeholder_employees">Employees</string>
+    <string name="placeholder_testing_sites">Testing Sites</string>
+    <string name="placeholder_launch_sites">Launch Sites</string>
+    <string name="placeholder_vehicles">Vehicles</string>
+
 </resources>
