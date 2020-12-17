@@ -56,7 +56,7 @@ class MainModel @Inject constructor() : BaseModel() {
     /**
      * [List] of [HistoricEvent] denoting the collection of Historic Event.
      */
-    lateinit var historicEvents: List<HistoricEvent>
+    lateinit var historicEvents: List<HistoricEvents>
 
     /*-------------------------------------- Public Methods --------------------------------------*/
 
@@ -347,25 +347,68 @@ class MainModel @Inject constructor() : BaseModel() {
      * @return Converted [List] of [Core] using [responseHistoricEvents].
      */
     fun extractHistoricEventsFromResponse(responseHistoricEvents: List<HistoricEventResponse>) =
-        ArrayList<HistoricEvent>().apply {
+        ArrayList<HistoricEvents>().apply {
+
+            // Instantiate a Map of Integer and Array List of HistoricEvent,
+            // where Int as Key is the Year,
+            // and Array List of HistoricEvent as Value is the List of Events of that Year.
+            val historicEventMap = HashMap<Int, ArrayList<HistoricEvent>>()
+
+            // Iterate over the Response.
             for (responseHistoricEvent in responseHistoricEvents) {
+
+                // Halt the further execution and proceed to next iteration if the Event Date is empty.
+                if (responseHistoricEvent.utcEventDate.isNullOrEmpty()) continue
+
                 with(responseHistoricEvent) {
-                    add(
-                        HistoricEvent(
-                            id ?: "",
-                            title ?: "",
-                            details ?: "",
-                            HistoricEventDate(
-                                convertUTCDateTime(utcEventDate ?: ""),
-                                unixEventDate ?: 0L
-                            ),
-                            HistoricEventLinks(
-                                links?.article ?: ""
-                            )
-                        )
-                    )
+
+                    // Convert the Date-Time from UTC Format to Local Format.
+                    convertUTCDateTime(utcEventDate ?: "").let { dateTime ->
+
+                        // Split the converted UTC Date Time with ','
+                        dateTime.split(",").let { dateTimeSplit ->
+
+                            // Split the Date-Time Split with ' '.
+                            dateTimeSplit[0].split(" ").let { dateSplit ->
+
+                                // Evaluate the Year from the Date Split.
+                                val year = dateSplit[2].toInt()
+
+                                // Instantiate the Historic Event.
+                                val event = HistoricEvent(
+                                    id ?: "",
+                                    title ?: "",
+                                    details ?: "",
+                                    "${dateSplit[0]} ${dateSplit[1]}",
+                                    HistoricEventLinks(
+                                        links?.article ?: ""
+                                    )
+                                )
+
+                                // Add the Historic Event to 'historicEventMap' based on whether
+                                // it was added to this Map or not.
+                                if (!historicEventMap.containsKey(year)) {
+                                    historicEventMap[year] = ArrayList<HistoricEvent>().apply {
+                                        add(event)
+                                    }
+                                } else {
+                                    historicEventMap[year]?.add(event)
+                                }
+
+                            }
+                        }
+
+                    }
+
                 }
             }
+
+            // Iterate over all the Keys of the map 'historicEventMap' and
+            // populate the List of HistoricEvents.
+            for (key in historicEventMap.keys) {
+                add(HistoricEvents(key, historicEventMap[key] ?: ArrayList()))
+            }
+
         }
 
     /**
