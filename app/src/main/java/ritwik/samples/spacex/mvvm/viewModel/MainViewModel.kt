@@ -3,11 +3,14 @@ package ritwik.samples.spacex.mvvm.viewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 
+import kotlinx.coroutines.launch
+
 import ritwik.samples.spacex.R
 
 import ritwik.samples.spacex.data.network.*
 
 import ritwik.samples.spacex.data.ui.HistoricEvent
+import ritwik.samples.spacex.data.ui.HistoricEvents
 import ritwik.samples.spacex.data.ui.LaunchType
 
 import ritwik.samples.spacex.mvvm.model.MainModel
@@ -156,6 +159,31 @@ class MainViewModel @Inject constructor(
         )
     } else {
         notifyActionOnUI(ACTION_UPDATE_UI)
+    }
+
+    /**
+     * Performs sorting of all the [HistoricEvents] in the order provided.
+     *
+     * @param isAscending [Boolean] to decide whether the Order to be sorted to
+     *   is Ascending or Descending.
+     */
+    fun sortAllHistoricEvents(isAscending: Boolean) {
+        showProgress()
+        ioThreadScope.launch { // Switch to IO Thread to not make an impact on Main Thread.
+            // Sort the events, based on the parameter 'isAscending'.
+            model.historicEvents = model.historicEvents.sortedWith(
+                if (isAscending) {
+                    ascendingHistoricEventComparator
+                } else {
+                    descendingHistoricEventsComparator
+                }
+            )
+            mainThreadScope.launch { // Switch back to Main Thread.
+                // Notify the UI that the Historic Events are populated.
+                hideProgress()
+                notifyActionOnUI(ACTION_UPDATE_UI)
+            }
+        }
     }
 
     /*------------------------------------ Lambda Expressions ------------------------------------*/
@@ -429,6 +457,7 @@ class MainViewModel @Inject constructor(
         { flow ->
             flow.collect { historicEvents ->
                 model.historicEvents = model.extractHistoricEventsFromResponse(historicEvents)
+                    .sortedWith(ascendingHistoricEventComparator)
             }
         }
 
@@ -501,6 +530,30 @@ class MainViewModel @Inject constructor(
         when {
             launch1.flightNumber ?: 0 > launch2.flightNumber ?: 0 -> -1
             launch1.flightNumber ?: 0 < launch2.flightNumber ?: 0 -> 1
+            else -> 0
+        }
+    }
+
+    /**
+     * [Comparator] to sort the [List] of [HistoricEvents] in the
+     * ascending order of [HistoricEvents.year].
+     */
+    private val ascendingHistoricEventComparator = Comparator<HistoricEvents> { event1, event2 ->
+        when {
+            event1.year > event2.year -> 1
+            event1.year < event2.year -> -1
+            else -> 0
+        }
+    }
+
+    /**
+     * [Comparator] to sort the [List] of [HistoricEvents] in the
+     * descending order of [HistoricEvents.year].
+     */
+    private val descendingHistoricEventsComparator = Comparator<HistoricEvents> { event1, event2 ->
+        when {
+            event1.year > event2.year -> -1
+            event1.year < event2.year -> 1
             else -> 0
         }
     }
