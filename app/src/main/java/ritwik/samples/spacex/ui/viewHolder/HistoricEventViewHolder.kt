@@ -26,7 +26,9 @@ class HistoricEventViewHolder(
      * [View.OnClickListener] to intercept click on 'More Info'.
      */
     private val moreInfoClickListener = View.OnClickListener {
-        listener.invoke(binding.historicEvent)
+        binding.historicEvent?.let { event ->
+            listener.invoke(event)
+        }
     }
 
     /*--------------------------------- BaseViewHolder Callbacks ---------------------------------*/
