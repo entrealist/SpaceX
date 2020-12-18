@@ -80,6 +80,7 @@ class MainActivity : BaseActivity<MainModel, MainViewModel, ActivityMainBinding>
                     R.id.fragment_vehicle_container -> R.id.menu_item_vehicles
                     R.id.fragment_cores -> R.id.menu_item_cores
                     R.id.fragment_about -> R.id.menu_item_about
+                    R.id.fragment_history -> R.id.menu_item_history
                     else -> R.id.fragment_launch_container
                 }
             ).isChecked = true
@@ -98,6 +99,7 @@ class MainActivity : BaseActivity<MainModel, MainViewModel, ActivityMainBinding>
                     R.id.menu_item_vehicles -> R.id.fragment_vehicle_container
                     R.id.menu_item_cores -> R.id.fragment_cores
                     R.id.menu_item_about -> R.id.fragment_about
+                    R.id.menu_item_history -> R.id.fragment_history
                     else -> 0
                 }
             )

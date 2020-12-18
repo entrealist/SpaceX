@@ -20,6 +20,7 @@
     <string name="menu_item_vehicles">Vehicles</string>
     <string name="menu_item_cores">Cores</string>
     <string name="menu_item_about">About the Company</string>
+    <string name="menu_item_history">History</string>
 
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ LaunchContainerFragment Texts ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 

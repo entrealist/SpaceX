@@ -30,4 +30,10 @@
         android:label="@string/menu_item_about"
         tools:layout="@layout/fragment_about_company" />
 
+    <fragment
+        android:id="@+id/fragment_history"
+        android:name="ritwik.samples.spacex.ui.fragment.HistoryFragment"
+        android:label="@string/menu_item_history"
+        tools:layout="@layout/fragment_history" />
+
 </navigation>
