@@ -4,6 +4,10 @@ import ritwik.samples.spacex.data.network.*
 
 import ritwik.samples.spacex.data.ui.*
 
+import ritwik.samples.spacex.utility.constant.HISTORIC_EVENT_DATE_TIME_FORMAT
+import ritwik.samples.spacex.utility.constant.LAUNCH_DATE_TIME_FORMAT
+import ritwik.samples.spacex.utility.constant.UI_DATE_TIME_FORMAT
+
 import sample.ritwik.common.mvvm.model.BaseModel
 
 import java.text.SimpleDateFormat
@@ -133,7 +137,7 @@ class MainModel @Inject constructor() : BaseModel() {
                         Launch(
                             flightNumber ?: 0,
                             name ?: "",
-                            convertUTCDateTime(utcDate ?: ""),
+                            convertUTCDateTime(utcDate ?: "", LAUNCH_DATE_TIME_FORMAT, UI_DATE_TIME_FORMAT),
                             0, // TODO : Figure out how to get the Block Number, since it is no longer available.
                             links?.webCast ?: ""
                         )
@@ -363,7 +367,7 @@ class MainModel @Inject constructor() : BaseModel() {
                 with(responseHistoricEvent) {
 
                     // Convert the Date-Time from UTC Format to Local Format.
-                    convertUTCDateTime(utcEventDate ?: "").let { dateTime ->
+                    convertUTCDateTime(utcEventDate ?: "", HISTORIC_EVENT_DATE_TIME_FORMAT, UI_DATE_TIME_FORMAT).let { dateTime ->
 
                         // Split the converted UTC Date Time with ','
                         dateTime.split(",").let { dateTimeSplit ->
@@ -460,21 +464,28 @@ class MainModel @Inject constructor() : BaseModel() {
      * https://www.journaldev.com/17899/java-simpledateformat-java-date-format
      *
      * @param utcDate [String] containing UTC Date and Time.
-     * @return [String] containing formatted Date and Time.
+     * @param inputDateTimeFormat [String] denoting the Date-Time format of [utcDate].
+     * @param outputDateTimeFormat [String] denoting the Date-Time format
+     *   from which [String] as Date-Time is to be returned.
+     * @return [String] containing Date and Time according to [outputDateTimeFormat].
      */
-    private fun convertUTCDateTime(utcDate: String): String {
+    private fun convertUTCDateTime(
+        utcDate: String,
+        inputDateTimeFormat: String,
+        @Suppress("SameParameterValue") outputDateTimeFormat: String
+    ): String {
 
         // Halt the further execution and return empty string if 'utcDate' is empty.
         if (utcDate.isEmpty()) return ""
 
         // Define an Input Format of Date and Time.
-        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH)
+        val inputFormat = SimpleDateFormat(inputDateTimeFormat, Locale.ENGLISH)
 
         // Set the Time Zone of Input Format as the UTC Time Zone.
         inputFormat.timeZone = TimeZone.getTimeZone(TimeZone.getAvailableIDs()[588])
 
         // Define an Output Format of Date and Time.
-        val outputFormat = SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.ENGLISH)
+        val outputFormat = SimpleDateFormat(outputDateTimeFormat, Locale.ENGLISH)
 
         // Set the Time Zone of the device.
         // This can potentially be the source of bug
