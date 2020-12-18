@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/placeholder_view_line"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:background="@color/shimmer_item_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/placeholder_image_bullet_point"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/imcd_bullet_point"
+        app:tint="@color/shimmer_item_background"
+        android:src="@drawable/ic_circle_color_primary_dark"
+        app:layout_constraintBottom_toTopOf="@id/dummy_container"
+        app:layout_constraintEnd_toEndOf="@id/placeholder_view_line"
+        app:layout_constraintStart_toStartOf="@id/placeholder_view_line"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/value_text_year"
+        android:layout_width="50dp"
+        android:layout_height="12dp"
+        android:layout_marginStart="20dp"
+        android:contentDescription="@string/imcd_shimmer_view"
+        android:src="@drawable/shimmer_rounded_rectangle_grey"
+        app:layout_constraintBottom_toBottomOf="@id/placeholder_image_bullet_point"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/placeholder_view_line"
+        app:layout_constraintTop_toTopOf="@id/placeholder_image_bullet_point" />
+
+    <LinearLayout
+        android:id="@+id/dummy_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/placeholder_image_bullet_point"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <include layout="@layout/shimmer_item_historic_event"/>
+
+        <include layout="@layout/shimmer_item_historic_event"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
