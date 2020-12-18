@@ -53,8 +53,8 @@
 
         <ImageView
             android:id="@+id/placeholder_image_bullet_point_small"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
             android:contentDescription="@string/imcd_bullet_point"
             android:src="@drawable/ic_circle_color_primary_dark"
             app:layout_constraintStart_toStartOf="@id/guideline_bullet_point"
