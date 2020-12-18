@@ -23,13 +23,9 @@ class HistoricYearViewHolder(
 
     /*--------------------------------- BaseViewHolder Callbacks ---------------------------------*/
 
-    override fun initializeComponents() = with(binding) {
-        listHistoricEvents.adapter = HistoricEventsAdapter(listener)
-    }
+    override fun initializeComponents() = Unit
 
-    override fun cleanUp() = with(binding) {
-        listHistoricEvents.adapter = null
-    }
+    override fun cleanUp() = Unit
 
     /*-------------------------------------- Public Methods --------------------------------------*/
 
@@ -40,8 +36,9 @@ class HistoricYearViewHolder(
      */
     fun setHistoricEventsItem(historicEventsItem: HistoricEvents) = with(binding) {
         year = historicEventsItem.year.toString()
-        (listHistoricEvents.adapter as? HistoricEventsAdapter)?.replaceList(historicEventsItem.events)
-            ?: Unit
+        listHistoricEvents.adapter = HistoricEventsAdapter(listener).apply {
+            replaceList(historicEventsItem.events)
+        }
     }
 
 }
