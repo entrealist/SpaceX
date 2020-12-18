@@ -7,6 +7,7 @@ import ritwik.samples.spacex.R
 
 import ritwik.samples.spacex.data.network.*
 
+import ritwik.samples.spacex.data.ui.HistoricEvent
 import ritwik.samples.spacex.data.ui.LaunchType
 
 import ritwik.samples.spacex.mvvm.model.MainModel
@@ -197,7 +198,7 @@ class MainViewModel @Inject constructor(
     /**
      * Lambda Expression to notify about selection of a Historic Event.
      */
-    val historicEventListener: (Int) -> Unit = {
+    val historicEventListener: (HistoricEvent) -> Unit = {
         // TODO: Use the position in model.rockets to handle the click on Historic Event.
     }
 
