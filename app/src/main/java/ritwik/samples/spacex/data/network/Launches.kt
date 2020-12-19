@@ -38,9 +38,12 @@ data class LaunchCoreResponse(
     @field: Json(name = "legs") val legs: Boolean?,
     @field: Json(name = "reused") val reused: Boolean?,
     @field: Json(name = "land_success") val landSuccess: Boolean?,
+    @field: Json(name = "landing_attempt") val landingAttempt: Boolean?,
+    @field: Json(name = "landing_success") val landingSuccess: Boolean?,
     @field: Json(name = "landing_intent") val landingIntent: Boolean?,
     @field: Json(name = "landing_type") val landingType: String?,
-    @field: Json(name = "landing_vehicle") val landingVehicle: String?
+    @field: Json(name = "landing_vehicle") val landingVehicle: String?,
+    @field: Json(name = "landpad") val landPad: String?
 )
 
 data class LaunchFairingResponse(
