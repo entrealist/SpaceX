@@ -63,7 +63,8 @@
                 android:text="@{launch.missionNumberText}"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toTopOf="@id/value_text_mission_name"
-                app:layout_constraintEnd_toStartOf="@id/placeholder_text_block"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="@id/guideline_left"
                 app:layout_constraintTop_toTopOf="@id/guideline_top"
@@ -73,11 +74,13 @@
                 android:id="@+id/value_text_mission_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:text="@{launch.missionName}"
                 android:textColor="@color/color_text"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toTopOf="@id/value_text_mission_date_time"
-                app:layout_constraintEnd_toStartOf="@id/placeholder_text_block"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
                 app:layout_constraintStart_toStartOf="@id/guideline_left"
                 app:layout_constraintTop_toBottomOf="@id/value_text_mission_number"
                 tools:text="SPF-12" />
@@ -86,41 +89,16 @@
                 android:id="@+id/value_text_mission_date_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{launch.missionDateTime}"
+                android:text="@{launch.date.utc}"
                 android:textColor="@color/color_text"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
-                app:layout_constraintEnd_toStartOf="@id/value_text_block"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="@id/guideline_left"
                 app:layout_constraintTop_toBottomOf="@id/value_text_mission_name"
                 tools:text="01 Jan, 2020 : 09:00 PM" />
-
-            <TextView
-                android:id="@+id/placeholder_text_block"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/placeholder_block"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@id/value_text_block"
-                app:layout_constraintEnd_toEndOf="@id/guideline_right"
-                app:layout_constraintStart_toEndOf="@id/value_text_mission_number"
-                app:layout_constraintTop_toTopOf="@id/guideline_top" />
-
-            <TextView
-                android:id="@+id/value_text_block"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:fontFamily="@font/roboto"
-                android:gravity="center"
-                android:text="@{launch.blockNumberText}"
-                android:textColor="@color/color_text"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="@id/value_text_mission_date_time"
-                app:layout_constraintEnd_toEndOf="@id/guideline_right"
-                app:layout_constraintStart_toEndOf="@id/value_text_mission_date_time"
-                app:layout_constraintTop_toBottomOf="@id/placeholder_text_block"
-                tools:text="10" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

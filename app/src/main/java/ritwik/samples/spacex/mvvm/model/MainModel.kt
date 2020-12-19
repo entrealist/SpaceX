@@ -135,11 +135,81 @@ class MainModel @Inject constructor() : BaseModel() {
                 with(responseLaunch) {
                     add(
                         Launch(
+                            id ?: "",
                             flightNumber ?: 0,
                             name ?: "",
-                            convertUTCDateTime(utcDate ?: "", LAUNCH_DATE_TIME_FORMAT, UI_DATE_TIME_FORMAT),
-                            0, // TODO : Figure out how to get the Block Number, since it is no longer available.
-                            links?.webCast ?: ""
+                            LaunchDate(
+                                convertUTCDateTime(utcDate ?: "", LAUNCH_DATE_TIME_FORMAT, UI_DATE_TIME_FORMAT),
+                                unixDate ?: 0L
+                            ),
+                            LaunchDate(
+                                convertUTCDateTime(utcStaticFireDate ?: "", LAUNCH_DATE_TIME_FORMAT, UI_DATE_TIME_FORMAT),
+                                unixStaticFireDate ?: 0L
+                            ),
+                            LaunchFairings(
+                                fairings?.reused ?: false,
+                                fairings?.recoveryAttempt ?: false,
+                                fairings?.recovered ?: false,
+                                fairings?.ship ?: ArrayList()
+                            ),
+                            LaunchLinks(
+                                LaunchLinksPatch(
+                                    links?.patch?.small ?: "",
+                                    links?.patch?.large ?: ""
+                                ),
+                                LaunchLinksReddit(
+                                    links?.reddit?.campaign ?: "",
+                                    links?.reddit?.launch ?: "",
+                                    links?.reddit?.media ?: "",
+                                    links?.reddit?.recovery ?: ""
+                                ),
+                                LaunchLinksFlickr(
+                                    links?.flickr?.small ?: ArrayList(),
+                                    links?.flickr?.original ?: ArrayList()
+                                ),
+                                links?.pressKit ?: "",
+                                links?.webCast ?: "",
+                                links?.youtubeID ?: "",
+                                links?.article ?: "",
+                                links?.wikipedia ?: ""
+                            ),
+                            ArrayList<LaunchCore>().apply {
+                                if (!cores.isNullOrEmpty()) {
+                                    for (core in cores) {
+                                        with(core) {
+                                            add(
+                                                LaunchCore(
+                                                    id ?: "",
+                                                    reused ?: false,
+                                                    landingType ?: "",
+                                                    landPad ?: ""
+                                                )
+                                            )
+                                        }
+                                    }
+                                }
+                            },
+                            payloads ?: ArrayList(),
+                            capsules ?: ArrayList(),
+                            ships ?: ArrayList(),
+                            rocket ?: "",
+                            launchPad ?: "",
+                            success ?: false,
+                            window ?: 0,
+                            crew ?: ArrayList(),
+                            ArrayList<LaunchFailure>().apply {
+                                if(!failures.isNullOrEmpty()) {
+                                    for (failure in failures) {
+                                        with(failure) {
+                                            LaunchFailure(
+                                                time ?: 0,
+                                                altitude ?: 0,
+                                                reason ?: ""
+                                            )
+                                        }
+                                    }
+                                }
+                            }
                         )
                     )
                 }
@@ -437,11 +507,11 @@ class MainModel @Inject constructor() : BaseModel() {
 
         // Halt the further execution and return the current value of 'upcomingTimeLeft'
         // since the Date Time of Mission of 'latestLaunch' is empty.
-        if (latestLaunch.missionDateTime.isEmpty()) return upcomingTimeLeft
+        if (latestLaunch.date.utc.isEmpty()) return upcomingTimeLeft
 
         // Use SimpleDateFormatter to parse the given Date in String Format to a 'Date' object.
         SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.ENGLISH).apply {
-            parse(latestLaunch.missionDateTime)?.let { parsedDate ->
+            parse(latestLaunch.date.utc)?.let { parsedDate ->
                 // Calculate the difference between Parsed Date Time and Current Date Time
                 // and assign to 'upcomingTimeLeft'.
                 upcomingTimeLeft = parsedDate.time - Date().time
